@@ -1,0 +1,27 @@
+{
+    "name": "EditorTools.Internal",
+    "rootNamespace": "Tailwind",
+    "references": [
+        "GUID:23f3c6063e13e4fd9addce3606ff4e42",
+        "GUID:0a0471484b079be408cb3a0d7fe94736",
+        "GUID:894a6cc6ed5cd2645bb542978cbed6a9",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:9c19b3d930a4d7c4d832faed1b53de59",
+        "GUID:6cd706090119d6344a7bec1191fb75f6",
+        "GUID:ca7bcce3ae02b624bb9096cc03769382",
+        "GUID:71b72c482dfe1904588003a0ecec260a",
+        "GUID:b1ca1f4e291bbef4e884160111f7bea8",
+        "GUID:4c25c05f410a3a447a75c3b0909152ef",
+        "GUID:5b3df8fede1b6d6488f04f38ecec01bc",
+        "GUID:3d24fdc6c785ed64bb6d8da6d942239d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,18 @@
+{
+    "name": "EditorTools.External",
+    "rootNamespace": "Tailwind",
+    "references": [
+        "GUID:4c25c05f410a3a447a75c3b0909152ef",
+        "GUID:9c19b3d930a4d7c4d832faed1b53de59",
+        "GUID:b1ca1f4e291bbef4e884160111f7bea8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

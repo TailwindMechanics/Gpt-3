@@ -1,0 +1,20 @@
+{
+    "name": "ModulesSystem.Internal",
+    "rootNamespace": "Tailwind",
+    "references": [
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:9c19b3d930a4d7c4d832faed1b53de59",
+        "GUID:fded7556486d078469368fed1110d827",
+        "GUID:05f62247fff2ab04696dfa7985183f65",
+        "GUID:6ef7ba3beb5189540a388ec265d42e4f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
