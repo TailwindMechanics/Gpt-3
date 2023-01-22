@@ -2,8 +2,9 @@
     "name": "OpenAI.Internal",
     "rootNamespace": "Modules",
     "references": [
+        "GUID:9c19b3d930a4d7c4d832faed1b53de59",
         "GUID:ac74810195be3f24fac2ebaa732e3431",
-        "GUID:9c19b3d930a4d7c4d832faed1b53de59"
+        "GUID:d65bec57faaea644b8b40014db584acc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

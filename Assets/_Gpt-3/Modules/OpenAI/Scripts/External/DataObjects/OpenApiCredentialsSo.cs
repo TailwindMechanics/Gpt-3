@@ -1,5 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Modules.OpenAI.External.DataObjects
@@ -7,7 +6,7 @@ namespace Modules.OpenAI.External.DataObjects
 	[CreateAssetMenu(fileName = "new _openApiCredentials", menuName = "Tailwind/OpenApi/Credentials")]
 	public class OpenApiCredentialsSo : ScriptableObject
 	{
-		public OpenApiCredentialsVo Credentials => credentials;
-		[HideLabel, SerializeField] OpenApiCredentialsVo credentials;
+		public string ApiKey => apiKey;
+		[SerializeField] string apiKey;
 	}
 }

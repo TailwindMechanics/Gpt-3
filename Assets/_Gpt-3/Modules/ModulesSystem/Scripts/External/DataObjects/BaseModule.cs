@@ -6,16 +6,16 @@ using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Modules.ModulesSystem.External.DataObjects
 {
 	public abstract class BaseModule : MonoBehaviour
 	{
 		#region Fields
+		protected abstract string ModuleName {get;}
 		[FoldoutGroup("Base Settings"), GUIColor("$GetModuleColor"), SerializeField]
 		bool enableLogs = true;
-		[FoldoutGroup("Base Settings"), GUIColor("$GetModuleColor"), SerializeField]
-		string moduleName = "Module";
 		[FoldoutGroup("Base Settings"), GUIColor("$GetModuleColor"), SerializeField]
 		List<Color> moduleColors = new(){Color.white};
 
@@ -26,10 +26,11 @@ namespace Modules.ModulesSystem.External.DataObjects
 
 
 		#region Output
-		public abstract int OutputCount();
+		protected abstract int OutputCount();
 		public Type OutputType;
 		public readonly ISubject<Scene> onSceneLoaded = new Subject<Scene>();
 		public readonly ISubject<Component> OtherModuleAddOutput = new Subject<Component>();
+		protected string ThisName (Object thisObject) => thisObject.GetType().Name;
 		#endregion Output
 
 
@@ -94,10 +95,10 @@ namespace Modules.ModulesSystem.External.DataObjects
 			message = message?.Replace("\n", "");
 			var log = logType switch
 			{
-				ModuleLogType.OutputLog when outputCount > 0 => $"<color={hexColor}><b>>>> {moduleName}:<color=white> {message}</color>{colorMessage}</b></color>",
-				ModuleLogType.OutputLog => $"<color={hexColor}><b>>>> {moduleName}:<color=white> {message}</color> has no outputs.</b></color>",
-				ModuleLogType.RuntimeLog => $"<color={hexColor}><b>>>> {moduleName}:<color=white> {message}</color>{colorMessage}</b></color>",
-				ModuleLogType.EditorLog => $"<color={hexColor}><b>~~~ {moduleName}:<color=white> {message}</color>{colorMessage}</b></color>",
+				ModuleLogType.OutputLog when outputCount > 0 => $"<color={hexColor}><b>>>> {ModuleName}:<color=white> {message}</color>{colorMessage}</b></color>",
+				ModuleLogType.OutputLog => $"<color={hexColor}><b>>>> {ModuleName}:<color=white> {message}</color> has no outputs.</b></color>",
+				ModuleLogType.RuntimeLog => $"<color={hexColor}><b>>>> {ModuleName}:<color=white> {message}</color>{colorMessage}</b></color>",
+				ModuleLogType.EditorLog => $"<color={hexColor}><b>~~~ {ModuleName}:<color=white> {message}</color>{colorMessage}</b></color>",
 				_ => ""
 			};
 
