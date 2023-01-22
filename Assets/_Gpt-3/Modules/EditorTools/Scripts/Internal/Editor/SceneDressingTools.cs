@@ -5,8 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-
-namespace Tailwind.EditorTools.Internal.Editor
+namespace Modules.EditorTools.Internal.Editor
 {
     public class SceneDressingTools : MonoBehaviour
     {

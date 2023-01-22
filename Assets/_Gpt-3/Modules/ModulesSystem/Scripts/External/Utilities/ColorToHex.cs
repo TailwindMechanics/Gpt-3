@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-namespace Tailwind.ModulesSystem.External.Utilities
+namespace Modules.ModulesSystem.External.Utilities
 {
 	public static class ColorToHex
 	{

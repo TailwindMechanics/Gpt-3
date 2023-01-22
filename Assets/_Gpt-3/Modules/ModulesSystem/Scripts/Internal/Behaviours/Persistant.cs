@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-namespace Tailwind.ModulesSystem.Internal.Behaviours
+namespace Modules.ModulesSystem.Internal.Behaviours
 {
     public class Persistant : MonoBehaviour
     {

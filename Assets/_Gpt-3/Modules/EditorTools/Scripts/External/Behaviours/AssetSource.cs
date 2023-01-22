@@ -1,10 +1,8 @@
+using Modules.EditorTools.External.DataObjects;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-using Tailwind.EditorTools.External.DataObjects;
-
-
-namespace Tailwind.EditorTools.External.Behaviours
+namespace Modules.EditorTools.External.Behaviours
 {
     public class AssetSource : Lockable
     {

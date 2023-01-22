@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
-#if UNITY_EDITOR
+using Modules.Utilities.External;
 using UnityEditor;
+using UnityEngine;
+#if UNITY_EDITOR
 #endif
 
-using Tailwind.Utilities.External;
-using UnityEngine;
 
-
-namespace Tailwind.EditorTools.Internal.Editor
+namespace Modules.EditorTools.Internal.Editor
 {
 	internal static class MenuItems
 	{

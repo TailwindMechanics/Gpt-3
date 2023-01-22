@@ -1,6 +1,6 @@
 
 
-namespace Tailwind.ModulesSystem.External.DataObjects
+namespace Modules.ModulesSystem.External.DataObjects
 {
 	public enum ModuleLogType
 	{

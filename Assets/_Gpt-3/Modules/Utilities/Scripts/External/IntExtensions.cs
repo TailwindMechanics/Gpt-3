@@ -1,6 +1,6 @@
 ﻿
 
-namespace Tailwind.Utilities.External
+namespace Modules.Utilities.External
 {
 	public static class IntExtensions
 	{

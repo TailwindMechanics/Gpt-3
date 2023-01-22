@@ -1,9 +1,9 @@
-﻿using Object = UnityEngine.Object;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using Object = UnityEngine.Object;
 
 
-namespace Tailwind.EditorTools.External.DataObjects
+namespace Modules.EditorTools.External.DataObjects
 {
 	[Serializable]
 	public class AssetDependencyVo

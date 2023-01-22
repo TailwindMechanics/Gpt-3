@@ -1,6 +1,6 @@
 ﻿
 
-namespace Tailwind.EditorTools.External.DataObjects
+namespace Modules.EditorTools.External.DataObjects
 {
 	public static class AssetAuthors
 	{

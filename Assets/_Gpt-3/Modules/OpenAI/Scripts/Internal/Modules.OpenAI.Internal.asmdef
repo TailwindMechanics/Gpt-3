@@ -1,10 +1,9 @@
 {
-    "name": "EditorTools.External",
-    "rootNamespace": "Tailwind",
+    "name": "OpenAI.Internal",
+    "rootNamespace": "Modules",
     "references": [
-        "GUID:4c25c05f410a3a447a75c3b0909152ef",
-        "GUID:9c19b3d930a4d7c4d832faed1b53de59",
-        "GUID:b1ca1f4e291bbef4e884160111f7bea8"
+        "GUID:ac74810195be3f24fac2ebaa732e3431",
+        "GUID:9c19b3d930a4d7c4d832faed1b53de59"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

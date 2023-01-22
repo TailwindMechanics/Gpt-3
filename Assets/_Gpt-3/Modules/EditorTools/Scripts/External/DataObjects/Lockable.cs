@@ -1,8 +1,7 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
 
-
-namespace Tailwind.EditorTools.External.DataObjects
+namespace Modules.EditorTools.External.DataObjects
 {
 	public abstract class Lockable : MonoBehaviour
 	{

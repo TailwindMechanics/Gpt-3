@@ -1,8 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-
-namespace Tailwind.EditorTools.Internal.Behaviours
+namespace Modules.EditorTools.Internal.Behaviours
 {
     public class Dashboard : MonoBehaviour
     {

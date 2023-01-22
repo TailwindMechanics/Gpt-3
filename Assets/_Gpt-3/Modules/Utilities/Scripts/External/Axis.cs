@@ -1,7 +1,6 @@
 using System;
 
-
-namespace Tailwind.Utilities.External
+namespace Modules.Utilities.External
 {
 	[Serializable]
 	public enum Axis

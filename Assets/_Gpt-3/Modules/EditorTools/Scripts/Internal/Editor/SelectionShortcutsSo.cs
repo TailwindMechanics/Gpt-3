@@ -5,8 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-
-namespace Tailwind.EditorTools.Internal.Editor
+namespace Modules.EditorTools.Internal.Editor
 {
 	// [CreateAssetMenu(fileName = "SelectionShortcuts", menuName = "Tailwind/Tools/New SelectionShortcuts")]
 	public class SelectionShortcutsSo : ScriptableObject

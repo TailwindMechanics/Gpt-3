@@ -1,15 +1,13 @@
-﻿using UnityEngine.SceneManagement;
+﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Modules.ModulesSystem.External.Utilities;
 using Sirenix.OdinInspector;
-using UnityEngine;
-using System;
 using UniRx;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-using Tailwind.ModulesSystem.External.Utilities;
-
-
-namespace Tailwind.ModulesSystem.External.DataObjects
+namespace Modules.ModulesSystem.External.DataObjects
 {
 	public abstract class BaseModule : MonoBehaviour
 	{

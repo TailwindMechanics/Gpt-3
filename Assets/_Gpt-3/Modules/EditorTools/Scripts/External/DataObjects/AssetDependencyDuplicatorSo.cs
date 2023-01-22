@@ -15,7 +15,7 @@ using UnityEditor;
 #endif
 
 
-namespace Tailwind.EditorTools.External.DataObjects
+namespace Modules.EditorTools.External.DataObjects
 {
     [CreateAssetMenu(fileName = "AssetDependencyDuplicator", menuName = "Tailwind/Character Lab/Asset Dependency Duplicator")]
     public class AssetDependencyDuplicatorSo : ScriptableObject

@@ -1,0 +1,17 @@
+{
+    "name": "EditorTools.External",
+    "rootNamespace": "Modules",
+    "references": [
+        "GUID:9c19b3d930a4d7c4d832faed1b53de59",
+        "GUID:b1ca1f4e291bbef4e884160111f7bea8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
