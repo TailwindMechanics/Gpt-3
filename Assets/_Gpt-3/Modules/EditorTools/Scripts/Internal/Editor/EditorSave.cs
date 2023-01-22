@@ -1,10 +1,8 @@
 using Random = UnityEngine.Random;
 using UnityEditor.SceneManagement;
-using System.Threading.Tasks;
 using System.Reflection;
 using UnityEngine;
 using UnityEditor;
-using System;
 
 using Tailwind.ModulesSystem.External.DataObjects;
 using Tailwind.ModulesSystem.External.Utilities;
@@ -29,10 +27,8 @@ namespace Tailwind.EditorTools.Internal.Editor
 			method?.Invoke(new object(), null);
 		}
 
-		internal static async void SaveAll()
+		static void SaveAll()
 		{
-			await Task.Delay(TimeSpan.FromSeconds(.01f));
-
 			var logColor = Random.ColorHSV().ToHex();
 			if (Application.isPlaying)
 			{
