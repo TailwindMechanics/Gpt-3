@@ -1,11 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uss.uss?fileID=7433441132597879392&amp;guid=61f398287e4db0d408797d9d34d1023f&amp;type=3#OpenAI_uss" />
-    <ui:VisualElement name="Container_ve" class="bg" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; opacity: 1;">
-        <ui:VisualElement name="chat_ve" class="chatView" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-            <ui:ListView focusable="true" />
+    <ui:VisualElement name="rootContainer_visualElement" class="bg">
+        <ui:VisualElement name="chatView_visualElement" class="chatView">
+            <ui:ScrollView name="chatBox_scrollView" class="chatBox" />
         </ui:VisualElement>
-        <ui:VisualElement name="Input_ve" class="inputView">
-            <ui:TextField picking-mode="Ignore" value="Enter text..." multiline="true" max-length="-1" name="InputBox" class="inputBox" />
+        <ui:VisualElement name="inputView_visualElement" class="inputView">
+            <ui:TextField picking-mode="Ignore" value="Enter text..." multiline="true" max-length="-1" name="inputBox_textField" class="inputBox" />
+            <ui:Button text="Send" display-tooltip-when-elided="true" name="send_button" class="sendButton" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
