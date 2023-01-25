@@ -15,12 +15,10 @@ namespace Modules.OpenAI.Editor
 
         const string inputBoxTextFieldName  = "inputBox_textField";
         const string chatBoxScrollViewName  = "chatBox_scrollView";
-        const string sendButtonName         = "send_button";
 
         ScrollView chatBoxScrollView;
         TextField inputBoxTextField;
         VisualElement root;
-        Button sendButton;
 
         // todo
         // Learn how to add a pre-made visual element
@@ -51,12 +49,15 @@ namespace Modules.OpenAI.Editor
 
             inputBoxTextField   = root.Q<TextField>(inputBoxTextFieldName);
             chatBoxScrollView   = root.Q<ScrollView>(chatBoxScrollViewName);
-            sendButton          = root.Q<Button>(sendButtonName);
-            sendButton.clicked += () =>
+
+            inputBoxTextField.RegisterCallback<KeyDownEvent>(keyEvent =>
             {
-                chatBoxScrollView.Add(new Label(inputBoxTextField.text));
-                inputBoxTextField.SetValueWithoutNotify("");
-            };
+                if (Event.current.Equals(Event.KeyboardEvent("Return")))
+                {
+                    chatBoxScrollView.Add(new Label(inputBoxTextField.text));
+                    inputBoxTextField.SetValueWithoutNotify("");
+                }
+            });
         }
     }
 }

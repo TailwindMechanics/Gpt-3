@@ -80,24 +80,9 @@
     flex-grow: 1;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 75%;
+    height: 100%;
     align-self: stretch;
-    flex-basis: 75%;
-    flex-shrink: 1;
-    width: 100%;
-}
-
-.sendButton {
-    justify-content: space-around;
-    align-items: stretch;
-    flex-grow: 1;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 25%;
-    align-self: stretch;
-    flex-basis: 25%;
-    flex-shrink: 1;
-    width: 100%;
-    min-height: auto;
-    transform-origin: center;
+    flex-basis: auto;
+    flex-shrink: 0;
+    width: auto;
 }

@@ -5,8 +5,7 @@
             <ui:ScrollView name="chatBox_scrollView" class="chatBox" />
         </ui:VisualElement>
         <ui:VisualElement name="inputView_visualElement" class="inputView">
-            <ui:TextField picking-mode="Ignore" value="Enter text..." multiline="true" max-length="-1" name="inputBox_textField" class="inputBox" />
-            <ui:Button text="Send" display-tooltip-when-elided="true" name="send_button" class="sendButton" />
+            <ui:TextField value="Enter text..." name="inputBox_textField" class="inputBox" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
