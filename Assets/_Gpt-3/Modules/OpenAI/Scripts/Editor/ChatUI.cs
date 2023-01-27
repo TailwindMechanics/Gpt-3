@@ -49,14 +49,16 @@ namespace Modules.OpenAI.Editor
 
             inputBoxTextField   = root.Q<TextField>(inputBoxTextFieldName);
             chatBoxScrollView   = root.Q<ScrollView>(chatBoxScrollViewName);
+            inputBoxTextField.Focus();
 
-            inputBoxTextField.RegisterCallback<KeyDownEvent>(keyEvent =>
+            inputBoxTextField.RegisterCallback<KeyDownEvent>(_ =>
             {
-                if (Event.current.Equals(Event.KeyboardEvent("Return")))
-                {
-                    chatBoxScrollView.Add(new Label(inputBoxTextField.text));
-                    inputBoxTextField.SetValueWithoutNotify("");
-                }
+                if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
+                if (string.IsNullOrWhiteSpace(inputBoxTextField.text)) return;
+
+                chatBoxScrollView.Add(new Label(inputBoxTextField.text));
+                inputBoxTextField.SetValueWithoutNotify("");
+                inputBoxTextField.Focus();
             });
         }
     }
