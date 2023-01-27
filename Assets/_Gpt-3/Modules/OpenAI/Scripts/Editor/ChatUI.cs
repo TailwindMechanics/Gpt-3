@@ -43,6 +43,7 @@ namespace Modules.OpenAI.Editor
 
             inputBoxTextField = root.Q<TextField>(inputBoxTextFieldName);
             chatBoxScrollView = root.Q<ScrollView>(chatBoxScrollViewName);
+            chatBoxScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(ScrollToLatest);
 
             history.History.ForEach(AddMessage);
 
@@ -53,8 +54,8 @@ namespace Modules.OpenAI.Editor
                 if (string.IsNullOrWhiteSpace(inputBoxTextField.text)) return;
 
                 var newMessage = new ChatMessageVo(history.CurrentUser, inputBoxTextField.text);
-                history.Add(newMessage);
                 AddMessage(newMessage);
+                SaveHistory(history, newMessage);
                 inputBoxTextField.SetValueWithoutNotify("");
                 inputBoxTextField.Focus();
             });
@@ -65,15 +66,26 @@ namespace Modules.OpenAI.Editor
             var continuedMessage = previousSender == messageVo.SenderName;
             previousSender = messageVo.SenderName;
 
-            var senderName = continuedMessage ? "" : $"{messageVo.SenderName}\n";
+            var senderName = continuedMessage ? "" : $"   {messageVo.SenderName}\n";
 
-            chatBoxScrollView.Add
-            (new Label
+            var newLabel = new Label
             (
                 $"<b>{senderName}</b>"
                 + $"       {messageVo.Message}"
-            ));
+            );
 
+            chatBoxScrollView.Add(newLabel);
+        }
+
+        void ScrollToLatest (GeometryChangedEvent data)
+            => chatBoxScrollView.scrollOffset = new Vector2(0, data.newRect.height);
+
+        void SaveHistory (ChatHistorySo history, ChatMessageVo newMessage)
+        {
+            history.Add(newMessage);
+            EditorUtility.SetDirty(history);
+            AssetDatabase.SaveAssetIfDirty(history);
+            AssetDatabase.Refresh();
         }
 
         // todo

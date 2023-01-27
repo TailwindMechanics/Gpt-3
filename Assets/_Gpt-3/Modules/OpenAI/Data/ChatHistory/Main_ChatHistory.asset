@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
   m_Name: Main_ChatHistory
   m_EditorClassIdentifier: 
-  currentUser: John Smith
+  currentUser: Jane Doe
   history:
   - senderName: Jane Doe
     message: Hello and good evening
@@ -76,3 +76,33 @@ MonoBehaviour:
     message: '"It"?'
   - senderName: John Smith
     message: ...
+  - senderName: John Smith
+    message: What time do you wanna head down?
+  - senderName: Jane Doe
+    message: Well we should probably figure out accomodation first
+  - senderName: Jane Doe
+    message: Would be nice if we could head down early
+  - senderName: Jane Doe
+    message: Hmm
+  - senderName: John Smith
+    message: '?'
+  - senderName: Jane Doe
+    message: Oh, nothing, my phone being weird
+  - senderName: John Smith
+    message: So how would you feel about sharing a hotel room? We could see if they
+      have anything available in the venue
+  - senderName: Jane Doe
+    message: Yeah I'd like that
+  - senderName: John Smith
+    message: Me too! I'll call the hotel now and see what they have
+  - senderName: John Smith
+    message: Hmm they've no rooms left, I found a few places in the area though,
+      I'll email you the links
+  - senderName: Jane Doe
+    message: Do you like any of them?
+  - senderName: John Smith
+    message: Yeah how about that one near the beach?
+  - senderName: Jane Doe
+    message: Yeah seems like a good balance of price and fanciness
+  - senderName: Jane Doe
+    message: And we are awfully fancy
