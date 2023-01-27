@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
+  m_Name: Main_ChatHistory
+  m_EditorClassIdentifier: 
+  currentUser: John Smith
+  history:
+  - senderName: Jane Doe
+    message: Hello and good evening
+  - senderName: John Smith
+    message: Good evening Jane
+  - senderName: John Smith
+    message: How are you today?
+  - senderName: Jane Doe
+    message: Fine, and you?
+  - senderName: John Smith
+    message: Yeah not bad
+  - senderName: Jane Doe
+    message: That good eh...
+  - senderName: Jane Doe
+    message: How's work going?
+  - senderName: John Smith
+    message: Ah
+  - senderName: John Smith
+    message: Not great, not terrible
+  - senderName: John Smith
+    message: You know how it is
+  - senderName: John Smith
+    message: You?
+  - senderName: Jane Doe
+    message: Could be better
+  - senderName: Jane Doe
+    message: Donna has finally gotten off my back anyway
+  - senderName: John Smith
+    message: Oh yeah? Did you talk to her?
+  - senderName: Jane Doe
+    message: Yeah
+  - senderName: Jane Doe
+    message: I had to, no choice really
+  - senderName: Jane Doe
+    message: Sorted now anyway
+  - senderName: John Smith
+    message: Well that's progress
+  - senderName: John Smith
+    message: Are you going to the wedding this weekend?
+  - senderName: Jane Doe
+    message: Oh, yeah, wanna go together?
+  - senderName: John Smith
+    message: As a date!?
+  - senderName: Jane Doe
+    message: If you want to put a label on it...
+  - senderName: Jane Doe
+    message: We'll both be there anyway
+  - senderName: John Smith
+    message: Yeah let's do it!
+  - senderName: John Smith
+    message: Well I mean let's go together, not IT it
+  - senderName: John Smith
+    message: ... uhh
+  - senderName: Jane Doe
+    message: You made that weird in record time
+  - senderName: John Smith
+    message: Yeah
+  - senderName: John Smith
+    message: Well at least it's out of the way
+  - senderName: Jane Doe
+    message: '"It"?'
+  - senderName: John Smith
+    message: ...
