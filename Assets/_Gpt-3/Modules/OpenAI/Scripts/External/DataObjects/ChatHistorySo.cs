@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Modules.OpenAI.External.DataObjects
 {
-	[CreateAssetMenu(fileName = "new _ChatHistory", menuName = "Tailwind/Chat/History")]
+	[CreateAssetMenu(fileName = "new _chatHistory", menuName = "Tailwind/Chat/History")]
 	public class ChatHistorySo : ScriptableObject
 	{
 		public string CurrentUser => currentUser;
