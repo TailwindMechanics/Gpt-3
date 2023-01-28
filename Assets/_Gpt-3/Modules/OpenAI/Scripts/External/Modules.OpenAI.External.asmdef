@@ -1,7 +1,7 @@
 {
     "name": "OpenAI.External",
     "rootNamespace": "Modules",
-    "references": [],
+    "references": ["GUID:d65bec57faaea644b8b40014db584acc"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -11,6 +11,7 @@ namespace OpenAI_API
 	/// <summary>
 	/// Represents a language model
 	/// </summary>
+	[Serializable]
 	public class Model
 	{
 		/// <summary>

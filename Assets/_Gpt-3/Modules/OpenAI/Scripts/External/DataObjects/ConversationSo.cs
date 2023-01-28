@@ -12,17 +12,21 @@ namespace Modules.OpenAI.External.DataObjects
 		public void AppendMessage (int index, string appendage)
 			=> history.Data[index - 1].AppendMessage(appendage);
 
+		public OpenAISettingsVo OpenAISettings	=> openAISettings;
 		public bool ApiCallsEnabled				=> apiCallsEnabled;
-		public MessageVo Latest					=> history.Data[LatestIndex - 1];
 		public int LatestIndex					=> history.Data.Count;
 		public string CurrentUser				=> currentUser;
 		public List<MessageVo> History			=> history.Data;
 		public void Add (MessageVo newMessage)	=> history.Data.Add(newMessage);
 
-		[SerializeField]
+		[FoldoutGroup("Settings"), SerializeField]
 		bool apiCallsEnabled;
-		[SerializeField, ValueDropdown("$users")]
+		[FoldoutGroup("Settings"), SerializeField, ValueDropdown("$users")]
 		string currentUser = "Guest";
+
+		[FoldoutGroup("OpenAI Settings"), HideLabel, SerializeField]
+		OpenAISettingsVo openAISettings;
+
 		[InlineEditor, SerializeField]
 		HistorySo history;
 

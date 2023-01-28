@@ -26,6 +26,11 @@ namespace Modules.OpenAI.Editor
         ConversationSo conversation;
 
 
+        // todo
+        // Implement up/down keys for repopulating previous messages
+        // Make text copy/paste-able
+        // gpt has a window of 8000 characters
+
         [MenuItem("Testing/Show Window")]
         public static void ShowWindow ()
         {
@@ -146,12 +151,12 @@ namespace Modules.OpenAI.Editor
             var api = new OpenAIAPI(openApiCredentialsSo.ApiKey);
             var request = new CompletionRequest
             (
-                messageText,
-                Model.DavinciText,
-                200,
-                0.5,
-                presencePenalty: 0.1,
-                frequencyPenalty: 0.1
+                prompt:             messageText,
+                model:              MapModelToEnum(conversation.OpenAISettings.Model),
+                max_tokens:         conversation.OpenAISettings.MaxTokens,
+                temperature:        conversation.OpenAISettings.Temperature,
+                presencePenalty:    conversation.OpenAISettings.PresencePenalty,
+                frequencyPenalty:   conversation.OpenAISettings.FrequencyPenalty
             );
 
             var message = "";
@@ -175,6 +180,21 @@ namespace Modules.OpenAI.Editor
             EditorUtility.SetDirty(conversation);
             AssetDatabase.SaveAssetIfDirty(conversation);
             AssetDatabase.Refresh();
+        }
+
+        Model MapModelToEnum (OpenAiModel enumModel)
+        {
+            return enumModel switch
+            {
+                OpenAiModel.AdaText             => Model.AdaText,
+                OpenAiModel.AdaTextEmbedding    => Model.AdaTextEmbedding,
+                OpenAiModel.BabbageText         => Model.BabbageText,
+                OpenAiModel.CurieText           => Model.CurieText,
+                OpenAiModel.CushmanCode         => Model.CushmanCode,
+                OpenAiModel.DavinciCode         => Model.DavinciCode,
+                OpenAiModel.DavinciText         => Model.DavinciText,
+                _ => Model.DavinciCode
+            };
         }
     }
 }
