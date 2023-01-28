@@ -3,6 +3,6 @@
     <ui:VisualElement name="rootContainer_visualElement" class="root">
         <ui:Label tabindex="-1" text="Timestamp" display-tooltip-when-elided="true" name="timestamp_label" class="timestamp" />
         <ui:Label tabindex="-1" text="Sender" display-tooltip-when-elided="true" name="sender_label" class="sender" />
-        <ui:Label tabindex="-1" text="Message" display-tooltip-when-elided="true" name="message_label" class="message" />
+        <ui:Label tabindex="-1" text="Message message message message message message message message" display-tooltip-when-elided="true" name="message_label" class="message" />
     </ui:VisualElement>
 </ui:UXML>

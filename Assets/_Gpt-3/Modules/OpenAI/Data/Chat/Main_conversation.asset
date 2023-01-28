@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945e2496b9938e94b979bcc4c8654950, type: 3}
-  m_Name: SelectionShortcuts
-  m_EditorClassIdentifier: EditorShortcuts.Editor:Tailwind.Modules.EditorShortcuts.Editor:SelectionShortcuts
-  GameObjectNames:
-  - Main_conversation
-  - OpenAI
+  m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
+  m_Name: Main_conversation
+  m_EditorClassIdentifier: 
+  apiCallsEnabled: 0
+  currentUser: Wadsworth Bromwich
+  history: {fileID: 11400000, guid: f3bb93619720cc64bb94b96cbafb492e, type: 2}

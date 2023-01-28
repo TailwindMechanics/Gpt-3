@@ -7,9 +7,9 @@ using System;
 namespace Modules.OpenAI.External.DataObjects
 {
 	[Serializable]
-	public class ChatMessageVo
+	public class MessageVo
 	{
-		public ChatMessageVo (string newSender, string newMessage)
+		public MessageVo (string newSender, string newMessage)
 		{
 			senderName = newSender;
 			message = newMessage;
@@ -18,7 +18,8 @@ namespace Modules.OpenAI.External.DataObjects
 
 		public void SetTimestamp ()
 			=> timestamp = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-
+		public void AppendMessage (string appendage)
+			=> message += appendage;
 		public string SenderName => !string.IsNullOrWhiteSpace(senderName)
 			? senderName
 			: "Unassigned";
@@ -40,6 +41,8 @@ namespace Modules.OpenAI.External.DataObjects
 		string message;
 
 		[UsedImplicitly]
-		string groupName => $"{Timestamp}: {SenderName}, {Message.Substring(0, Math.Min(Message.Length, 10))}...";
+		string groupName => $"{Timestamp.Substring(0, 5)} "
+		                    + $"{SenderName.Substring(0, Math.Min(SenderName.Length, 10)).TrimEnd()}... "
+		                    + $"{Message.Substring(0, Math.Min(Message.Length, 10)).Split("\n")[0]}...";
 	}
 }

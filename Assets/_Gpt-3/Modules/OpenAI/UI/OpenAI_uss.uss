@@ -89,4 +89,5 @@
     font-size: 15px;
     top: auto;
     transform-origin: center;
+    padding-left: 0;
 }

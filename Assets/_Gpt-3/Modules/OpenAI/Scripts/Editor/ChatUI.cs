@@ -12,116 +12,142 @@ namespace Modules.OpenAI.Editor
 {
     public class ChatUI : EditorWindow
     {
-        const string openAiCredsPath    = "Assets/_Gpt-3/GitIgnored/Credentials/OpenAI/TM_openApiCredentials.asset";
-        const string demoHistoryPath    = "Assets/_Gpt-3/Modules/OpenAI/Data/ChatHistory/Demo_chatHistory.asset";
-        const string aiHistoryPath      = "Assets/_Gpt-3/Modules/OpenAI/Data/ChatHistory/AI_ChatHistory.asset";
-        const string uxmlPath           = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_visualTree.uxml";
-        const string ussPath            = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uss.uss";
-
+        const string openAiCredsPath        = "Assets/_Gpt-3/GitIgnored/Credentials/OpenAI/TM_openApiCredentials.asset";
+        const string conversationPath       = "Assets/_Gpt-3/Modules/OpenAI/Data/Chat/Main_conversation.asset";
+        const string uxmlPath               = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_visualTree.uxml";
+        const string ussPath                = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uss.uss";
         const string inputBoxTextFieldName  = "inputBox_textField";
         const string chatBoxScrollViewName  = "chatBox_scrollView";
 
         OpenApiCredentialsSo openApiCredentialsSo;
+        ChatMessageVisualElement activeElement;
         ScrollView chatBoxScrollView;
         TextField inputBoxTextField;
-        ChatHistorySo conversation;
-        VisualElement root;
+        ConversationSo conversation;
 
 
         [MenuItem("Testing/Show Window")]
         public static void ShowWindow ()
         {
-            var window = GetWindow<ChatUI>();
-            window.titleContent = new GUIContent("Chat");
-            window.minSize = new Vector2(100, 100);
+            var window              = GetWindow<ChatUI>();
+            window.titleContent     = new GUIContent("Chat");
+            window.minSize          = new Vector2(100, 100);
         }
 
         void CreateGUI()
         {
-            openApiCredentialsSo = AssetDatabase.LoadAssetAtPath<OpenApiCredentialsSo>(openAiCredsPath);
-            conversation = AssetDatabase.LoadAssetAtPath<ChatHistorySo>(demoHistoryPath);
+            rootVisualElement.Add(AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath).Instantiate());
+            rootVisualElement.styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(ussPath));
+            openApiCredentialsSo    = AssetDatabase.LoadAssetAtPath<OpenApiCredentialsSo>(openAiCredsPath);
+            conversation            = AssetDatabase.LoadAssetAtPath<ConversationSo>(conversationPath);
+            inputBoxTextField       = rootVisualElement.Q<TextField>(inputBoxTextFieldName);
+            chatBoxScrollView       = rootVisualElement.Q<ScrollView>(chatBoxScrollViewName);
+            inputBoxTextField.Focus();
 
-            root = rootVisualElement;
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
-            root.Add(visualTree.Instantiate());
+            LoadChatHistory();
+            ListenForKeyPress();
+            ListenForScrollViewChange();
+        }
 
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(ussPath);
-            root.styleSheets.Add(styleSheet);
-
-            inputBoxTextField = root.Q<TextField>(inputBoxTextFieldName);
-            chatBoxScrollView = root.Q<ScrollView>(chatBoxScrollViewName);
+        void ListenForScrollViewChange ()
+        {
             chatBoxScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(data =>
             {
                 chatBoxScrollView.scrollOffset = new Vector2(0, data.newRect.height);
             });
+        }
 
-            for (var i = 0; i < conversation.History.Count; i++)
-            {
-                var previous = i > 0 ? conversation.History[i-1] : null;
-                AddMessage(conversation.History[i], previous);
-            }
-
-            inputBoxTextField.Focus();
+        void ListenForKeyPress ()
+        {
             inputBoxTextField.RegisterCallback<KeyDownEvent>(_ =>
             {
                 if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
                 if (string.IsNullOrWhiteSpace(inputBoxTextField.text)) return;
 
-                // Construct new user message, display it, and save it
-                var newUserMessage = new ChatMessageVo(conversation.CurrentUser, inputBoxTextField.text);
-                AddMessage(newUserMessage, conversation.Latest);
-                SaveHistory(newUserMessage);
-
-                // Clear input box
-                inputBoxTextField.SetValueWithoutNotify("");
-                inputBoxTextField.Focus();
-
-                if (conversation.ApiCallsEnabled)
-                {
-                    Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
-                    inputBoxTextField.SetEnabled(false);
-                    RequestAiReply(newUserMessage, aiReply =>
-                    {
-                        var newAiMessage = new ChatMessageVo("AI", aiReply);
-                        AddMessage(newAiMessage, newUserMessage);
-                        SaveHistory(newAiMessage);
-                    });
-                }
-                else
-                {
-                    Debug.Log("<color=orange><b>>>> API Disabled</b></color>");
-                }
+                OnReturnKeyPress();
             });
         }
 
-        void AddMessage (ChatMessageVo messageVo, ChatMessageVo previous)
+        void LoadChatHistory ()
         {
-            var continuedMessage    = previous != null && previous.SenderName == messageVo.SenderName;
-            var dayChanged          = previous == null || previous.TimestampDateTime.Date != messageVo.TimestampDateTime.Date;
-
-            var senderText          = continuedMessage ? "" : $"{messageVo.SenderName}";
-            var messageText         = messageVo.Message.Trim();
-            var timestampText       = dayChanged ? messageVo.Timestamp : "";
-
-            var newMessage = new ChatMessageVisualElement(senderText, messageText, timestampText);
-            chatBoxScrollView.Add(newMessage);
+            for (var i = 0; i < conversation.History.Count; i++)
+            {
+                AddMessage(conversation.History[i].SenderName, conversation.History[i].Message, conversation.History[i].TimestampDateTime, i, true);
+            }
         }
 
-        void SaveHistory (ChatMessageVo newMessage)
+        void AddMessage (string sender, string messageText, DateTime timestamp, int index, bool reloading)
         {
-            conversation.Add(newMessage);
-            EditorUtility.SetDirty(conversation);
-            AssetDatabase.SaveAssetIfDirty(conversation);
-            AssetDatabase.Refresh();
+            var isLocalUser         = sender == conversation.CurrentUser;
+            var previous            = index > 0 ? conversation.History[index-1] : null;
+            var dayChanged          = previous != null && previous.TimestampDateTime.Date != timestamp.Date;
+            var continuedMessage    = previous != null && !dayChanged && previous.SenderName == sender;
+            var senderText          = continuedMessage ? "" : $"{sender}";
+            var timestampText       = previous == null || dayChanged ? DateTime.Now.ToString("dd/MM/yyyy HH:mm") : "";
+
+            if (continuedMessage == false)
+            {
+                AddUIMessage(senderText, messageText, timestampText, isLocalUser);
+                if (!reloading)
+                {
+                    UpdateMessageHistory();
+                }
+            }
+            else if (reloading == false)
+            {
+                AppendExistingMessage(messageText, index);
+            }
         }
 
-        async Task RequestAiReply (ChatMessageVo input, Action<string> callback)
+        void OnReturnKeyPress ()
+        {
+            var message = inputBoxTextField.text.Trim();
+            AddMessage(conversation.CurrentUser, message, DateTime.Now, conversation.LatestIndex, false);
+            ResetInputBox();
+
+            if (!conversation.ApiCallsEnabled)
+            {
+                Debug.Log("<color=orange><b>>>> API Disabled</b></color>");
+                return;
+            }
+
+            Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
+            inputBoxTextField.SetEnabled(false);
+            RequestAiReply(message, aiReply =>
+            {
+                AddMessage("AI", aiReply, DateTime.Now, conversation.LatestIndex, false);
+            });
+        }
+
+        void AddUIMessage (string senderText, string messageText, string timestampText, bool isLocalUser)
+        {
+            var newMessageVe = new ChatMessageVisualElement(senderText, messageText, timestampText);
+            newMessageVe.ToggleAlignment(isLocalUser);
+            chatBoxScrollView.Add(newMessageVe);
+            activeElement = newMessageVe;
+        }
+
+        void UpdateMessageHistory()
+        {
+            var newMessageVo = new MessageVo(conversation.CurrentUser, inputBoxTextField.text);
+            conversation.Add(newMessageVo);
+            SaveHistory();
+        }
+
+        void AppendExistingMessage (string messageText, int index)
+        {
+            activeElement.AppendMessage($"\n{messageText}");
+            conversation.AppendMessage(index, $"\n{messageText}");
+            SaveHistory();
+        }
+
+        async Task RequestAiReply (string messageText, Action<string> callback)
         {
             Debug.Log("<color=cyan><b>>>> API Enabled: RequestAiReply</b></color>");
             var api = new OpenAIAPI(openApiCredentialsSo.ApiKey);
             var request = new CompletionRequest
             (
-                input.Message,
+                messageText,
                 Model.DavinciText,
                 200,
                 0.5,
@@ -136,6 +162,19 @@ namespace Modules.OpenAI.Editor
             }
 
             callback.Invoke(message);
+        }
+
+        void ResetInputBox ()
+        {
+            inputBoxTextField.SetValueWithoutNotify("");
+            inputBoxTextField.Focus();
+        }
+
+        void SaveHistory ()
+        {
+            EditorUtility.SetDirty(conversation);
+            AssetDatabase.SaveAssetIfDirty(conversation);
+            AssetDatabase.Refresh();
         }
     }
 }
