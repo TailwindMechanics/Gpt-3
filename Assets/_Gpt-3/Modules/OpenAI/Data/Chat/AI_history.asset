@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
-  m_Name: Main_conversation
+  m_Script: {fileID: 11500000, guid: 0ab0ef6dd18b41788641c65e55f622fa, type: 3}
+  m_Name: AI_history
   m_EditorClassIdentifier: 
-  apiCallsEnabled: 1
-  currentUser: You
-  history: {fileID: 11400000, guid: f91bf771bb0e89243a2606cf83dc869d, type: 2}
+  data: []

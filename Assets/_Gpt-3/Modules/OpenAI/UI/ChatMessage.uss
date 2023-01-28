@@ -43,7 +43,7 @@
     -unity-font-style: bold;
     margin-left: 5px;
     margin-right: 5px;
-    font-size: 15px;
+    font-size: 14px;
     color: rgb(204, 204, 204);
     align-self: auto;
     white-space: normal;
@@ -56,7 +56,7 @@
     flex-wrap: nowrap;
     width: auto;
     margin-right: 20px;
-    font-size: 15px;
+    font-size: 14px;
     color: rgb(204, 204, 204);
     align-self: flex-start;
     white-space: normal;

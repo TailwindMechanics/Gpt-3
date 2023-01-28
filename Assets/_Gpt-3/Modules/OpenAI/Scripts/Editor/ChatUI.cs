@@ -42,6 +42,8 @@ namespace Modules.OpenAI.Editor
             conversation            = AssetDatabase.LoadAssetAtPath<ConversationSo>(conversationPath);
             inputBoxTextField       = rootVisualElement.Q<TextField>(inputBoxTextFieldName);
             chatBoxScrollView       = rootVisualElement.Q<ScrollView>(chatBoxScrollViewName);
+
+            inputBoxTextField.SetValueWithoutNotify("");
             inputBoxTextField.Focus();
 
             LoadChatHistory();
@@ -64,7 +66,7 @@ namespace Modules.OpenAI.Editor
                 if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
                 if (string.IsNullOrWhiteSpace(inputBoxTextField.text)) return;
 
-                OnReturnKeyPress();
+                OnSendButtonPressed();
             });
         }
 
@@ -74,6 +76,30 @@ namespace Modules.OpenAI.Editor
             {
                 AddMessage(conversation.History[i].SenderName, conversation.History[i].Message, conversation.History[i].TimestampDateTime, i, true);
             }
+        }
+
+        void OnSendButtonPressed ()
+        {
+            var message = inputBoxTextField.text.Trim();
+            AddMessage(conversation.CurrentUser, message, DateTime.Now, conversation.LatestIndex, false);
+            inputBoxTextField.SetValueWithoutNotify("");
+            SaveChatHistory();
+
+            if (!conversation.ApiCallsEnabled)
+            {
+                Debug.Log("<color=orange><b>>>> API Disabled</b></color>");
+                return;
+            }
+
+            Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
+            inputBoxTextField.SetEnabled(false);
+
+            RequestAiReply(message, aiReply =>
+            {
+                // AddMessage("AI", aiReply, DateTime.Now, conversation.LatestIndex, false);
+                inputBoxTextField.SetEnabled(true);
+                inputBoxTextField.Focus();
+            });
         }
 
         void AddMessage (string sender, string messageText, DateTime timestamp, int index, bool reloading)
@@ -87,39 +113,18 @@ namespace Modules.OpenAI.Editor
 
             if (continuedMessage == false)
             {
-                AddUIMessage(senderText, messageText, timestampText, isLocalUser);
-                if (!reloading)
-                {
-                    UpdateMessageHistory();
-                }
+                AddNewUIMessage(senderText, messageText, timestampText, isLocalUser);
             }
             else if (reloading == false)
             {
+                if (isLocalUser) messageText = $"\n{messageText}";
                 AppendExistingMessage(messageText, index);
             }
+
+            if (!reloading) AddNewMessageHistory(senderText, messageText);
         }
 
-        void OnReturnKeyPress ()
-        {
-            var message = inputBoxTextField.text.Trim();
-            AddMessage(conversation.CurrentUser, message, DateTime.Now, conversation.LatestIndex, false);
-            ResetInputBox();
-
-            if (!conversation.ApiCallsEnabled)
-            {
-                Debug.Log("<color=orange><b>>>> API Disabled</b></color>");
-                return;
-            }
-
-            Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
-            inputBoxTextField.SetEnabled(false);
-            RequestAiReply(message, aiReply =>
-            {
-                AddMessage("AI", aiReply, DateTime.Now, conversation.LatestIndex, false);
-            });
-        }
-
-        void AddUIMessage (string senderText, string messageText, string timestampText, bool isLocalUser)
+        void AddNewUIMessage (string senderText, string messageText, string timestampText, bool isLocalUser)
         {
             var newMessageVe = new ChatMessageVisualElement(senderText, messageText, timestampText);
             newMessageVe.ToggleAlignment(isLocalUser);
@@ -127,23 +132,17 @@ namespace Modules.OpenAI.Editor
             activeElement = newMessageVe;
         }
 
-        void UpdateMessageHistory()
-        {
-            var newMessageVo = new MessageVo(conversation.CurrentUser, inputBoxTextField.text);
-            conversation.Add(newMessageVo);
-            SaveHistory();
-        }
+        void AddNewMessageHistory(string senderText, string messageText)
+            => conversation.Add(new MessageVo(senderText, messageText));
 
         void AppendExistingMessage (string messageText, int index)
         {
-            activeElement.AppendMessage($"\n{messageText}");
-            conversation.AppendMessage(index, $"\n{messageText}");
-            SaveHistory();
+            activeElement.AppendMessage($"{messageText}");
+            conversation.AppendMessage(index, $"{messageText}");
         }
 
         async Task RequestAiReply (string messageText, Action<string> callback)
         {
-            Debug.Log("<color=cyan><b>>>> API Enabled: RequestAiReply</b></color>");
             var api = new OpenAIAPI(openApiCredentialsSo.ApiKey);
             var request = new CompletionRequest
             (
@@ -156,21 +155,22 @@ namespace Modules.OpenAI.Editor
             );
 
             var message = "";
+            AddMessage("AI", message, DateTime.Now, conversation.LatestIndex, false);
+
             await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(request))
             {
-                message += token.ToString();
+                var tokenString = token.ToString();
+                message += tokenString;
+                if (string.IsNullOrWhiteSpace(message)) continue;
+
+                AppendExistingMessage(tokenString, conversation.LatestIndex);
             }
 
-            callback.Invoke(message);
+            callback.Invoke(message.Trim());
+            SaveChatHistory();
         }
 
-        void ResetInputBox ()
-        {
-            inputBoxTextField.SetValueWithoutNotify("");
-            inputBoxTextField.Focus();
-        }
-
-        void SaveHistory ()
+        void SaveChatHistory ()
         {
             EditorUtility.SetDirty(conversation);
             AssetDatabase.SaveAssetIfDirty(conversation);
