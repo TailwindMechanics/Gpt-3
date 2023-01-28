@@ -1,24 +1,30 @@
-using Modules.OpenAI.External.DataObjects;
-using Label = UnityEngine.UIElements.Label;
+using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEngine;
+using System;
+
+using Modules.OpenAI.External.DataObjects;
+using OpenAI_API;
 
 
 namespace Modules.OpenAI.Editor
 {
     public class ChatUI : EditorWindow
     {
-        const string uxmlPath       = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_visualTree.uxml";
-        const string ussPath        = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uss.uss";
-        const string historyPath    = "Assets/_Gpt-3/Modules/OpenAI/Data/ChatHistory/Main_ChatHistory.asset";
+        const string openAiCredsPath    = "Assets/_Gpt-3/GitIgnored/Credentials/OpenAI/TM_openApiCredentials.asset";
+        const string demoHistoryPath    = "Assets/_Gpt-3/Modules/OpenAI/Data/ChatHistory/Demo_chatHistory.asset";
+        const string aiHistoryPath      = "Assets/_Gpt-3/Modules/OpenAI/Data/ChatHistory/AI_ChatHistory.asset";
+        const string uxmlPath           = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_visualTree.uxml";
+        const string ussPath            = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uss.uss";
 
         const string inputBoxTextFieldName  = "inputBox_textField";
         const string chatBoxScrollViewName  = "chatBox_scrollView";
 
+        OpenApiCredentialsSo openApiCredentialsSo;
         ScrollView chatBoxScrollView;
         TextField inputBoxTextField;
-        string previousSender;
+        ChatHistorySo conversation;
         VisualElement root;
 
 
@@ -32,7 +38,8 @@ namespace Modules.OpenAI.Editor
 
         void CreateGUI()
         {
-            var history = AssetDatabase.LoadAssetAtPath<ChatHistorySo>(historyPath);
+            openApiCredentialsSo = AssetDatabase.LoadAssetAtPath<OpenApiCredentialsSo>(openAiCredsPath);
+            conversation = AssetDatabase.LoadAssetAtPath<ChatHistorySo>(demoHistoryPath);
 
             root = rootVisualElement;
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
@@ -43,9 +50,16 @@ namespace Modules.OpenAI.Editor
 
             inputBoxTextField = root.Q<TextField>(inputBoxTextFieldName);
             chatBoxScrollView = root.Q<ScrollView>(chatBoxScrollViewName);
-            chatBoxScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(ScrollToLatest);
+            chatBoxScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(data =>
+            {
+                chatBoxScrollView.scrollOffset = new Vector2(0, data.newRect.height);
+            });
 
-            history.History.ForEach(AddMessage);
+            for (var i = 0; i < conversation.History.Count; i++)
+            {
+                var previous = i > 0 ? conversation.History[i-1] : null;
+                AddMessage(conversation.History[i], previous);
+            }
 
             inputBoxTextField.Focus();
             inputBoxTextField.RegisterCallback<KeyDownEvent>(_ =>
@@ -53,49 +67,75 @@ namespace Modules.OpenAI.Editor
                 if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
                 if (string.IsNullOrWhiteSpace(inputBoxTextField.text)) return;
 
-                var newMessage = new ChatMessageVo(history.CurrentUser, inputBoxTextField.text);
-                AddMessage(newMessage);
-                SaveHistory(history, newMessage);
+                // Construct new user message, display it, and save it
+                var newUserMessage = new ChatMessageVo(conversation.CurrentUser, inputBoxTextField.text);
+                AddMessage(newUserMessage, conversation.Latest);
+                SaveHistory(newUserMessage);
+
+                // Clear input box
                 inputBoxTextField.SetValueWithoutNotify("");
                 inputBoxTextField.Focus();
+
+                if (conversation.ApiCallsEnabled)
+                {
+                    Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
+                    inputBoxTextField.SetEnabled(false);
+                    RequestAiReply(newUserMessage, aiReply =>
+                    {
+                        var newAiMessage = new ChatMessageVo("AI", aiReply);
+                        AddMessage(newAiMessage, newUserMessage);
+                        SaveHistory(newAiMessage);
+                    });
+                }
+                else
+                {
+                    Debug.Log("<color=orange><b>>>> API Disabled</b></color>");
+                }
             });
         }
 
-        void AddMessage (ChatMessageVo messageVo)
+        void AddMessage (ChatMessageVo messageVo, ChatMessageVo previous)
         {
-            var continuedMessage = previousSender == messageVo.SenderName;
-            previousSender = messageVo.SenderName;
+            var continuedMessage    = previous != null && previous.SenderName == messageVo.SenderName;
+            var dayChanged          = previous == null || previous.TimestampDateTime.Date != messageVo.TimestampDateTime.Date;
 
-            var senderName = continuedMessage ? "" : $"   {messageVo.SenderName}\n";
+            var senderText          = continuedMessage ? "" : $"{messageVo.SenderName}";
+            var messageText         = messageVo.Message.Trim();
+            var timestampText       = dayChanged ? messageVo.Timestamp : "";
 
-            var newLabel = new Label
-            (
-                $"<b>{senderName}</b>"
-                + $"       {messageVo.Message}"
-            );
-
-            chatBoxScrollView.Add(newLabel);
+            var newMessage = new ChatMessageVisualElement(senderText, messageText, timestampText);
+            chatBoxScrollView.Add(newMessage);
         }
 
-        void ScrollToLatest (GeometryChangedEvent data)
-            => chatBoxScrollView.scrollOffset = new Vector2(0, data.newRect.height);
-
-        void SaveHistory (ChatHistorySo history, ChatMessageVo newMessage)
+        void SaveHistory (ChatMessageVo newMessage)
         {
-            history.Add(newMessage);
-            EditorUtility.SetDirty(history);
-            AssetDatabase.SaveAssetIfDirty(history);
+            conversation.Add(newMessage);
+            EditorUtility.SetDirty(conversation);
+            AssetDatabase.SaveAssetIfDirty(conversation);
             AssetDatabase.Refresh();
         }
 
-        // todo
-        // Learn how to add a pre-made visual element
-        // with a title and body and uss already applied
-        // So all that's needed is to pass in the name of who sent the reply
-        // Learn how to capture keyboard input
-        // So return button sends reply, then remove send button
-        // Make the reply box grow in size as the reply length increases
-        // Learn how to setup same functionality at runtime
-        // so it is clear how and how to abstract the chat system
+        async Task RequestAiReply (ChatMessageVo input, Action<string> callback)
+        {
+            Debug.Log("<color=cyan><b>>>> API Enabled: RequestAiReply</b></color>");
+            var api = new OpenAIAPI(openApiCredentialsSo.ApiKey);
+            var request = new CompletionRequest
+            (
+                input.Message,
+                Model.DavinciText,
+                200,
+                0.5,
+                presencePenalty: 0.1,
+                frequencyPenalty: 0.1
+            );
+
+            var message = "";
+            await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(request))
+            {
+                message += token.ToString();
+            }
+
+            callback.Invoke(message);
+        }
     }
 }

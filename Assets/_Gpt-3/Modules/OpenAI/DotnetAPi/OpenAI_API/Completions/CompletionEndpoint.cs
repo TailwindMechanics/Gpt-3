@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Unity.Plastic.Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -288,7 +288,7 @@ namespace OpenAI_API
         }
 
         /// <summary>
-        /// Ask the API to complete the prompt(s) using the specified parameters. 
+        /// Ask the API to complete the prompt(s) using the specified parameters.
         /// Any non-specified parameters will fall back to default values specified in <see cref="DefaultCompletionRequestArgs"/> if present.
         /// If you are not using C# 8 supporting async enumerables or if you are using the .NET Framework, you may need to use <see cref="StreamCompletionAsync(CompletionRequest, Action{CompletionResult})"/> instead.
         /// </summary>

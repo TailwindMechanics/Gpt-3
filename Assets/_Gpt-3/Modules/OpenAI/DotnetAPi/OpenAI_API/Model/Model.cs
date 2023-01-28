@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Plastic.Newtonsoft.Json;
 
 namespace OpenAI_API
 {
@@ -107,6 +108,6 @@ namespace OpenAI_API
         public async Task<Model> RetrieveModelDetailsAsync(APIAuthentication auth = null)
 		{
 			return await ModelsEndpoint.RetrieveModelDetailsAsync(this.ModelID, auth);
-		}		
+		}
 	}
 }

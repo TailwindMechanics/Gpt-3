@@ -1,0 +1,40 @@
+.root {
+    background-color: rgba(96, 96, 96, 0);
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+    opacity: 1;
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-grow: 1;
+    align-self: stretch;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-left-color: rgb(100, 100, 100);
+    border-right-color: rgb(100, 100, 100);
+    border-top-color: rgb(100, 100, 100);
+    border-bottom-color: rgb(100, 100, 100);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.timestamp {
+}
+
+.sender {
+}
+
+.message {
+    flex-grow: 1;
+    color: rgb(236, 236, 236);
+}

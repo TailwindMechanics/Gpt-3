@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Unity.Plastic.Newtonsoft.Json;
 
 namespace OpenAI_API
 {
 	/// <summary>
-	/// Represents a completion choice returned by the Completion API.  
+	/// Represents a completion choice returned by the Completion API.
 	/// </summary>
 	public class Choice
 	{
