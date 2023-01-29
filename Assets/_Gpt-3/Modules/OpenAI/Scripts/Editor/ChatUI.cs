@@ -30,12 +30,18 @@ namespace Modules.OpenAI.Editor
         // Implement up/down keys for repopulating previous messages
         // Make text copy/paste-able
         // gpt has a window of 8000 characters
+        // Allow text input while ai is typing, just don't allow sending
+            // Or maybe sending a message mid-reply shuts it up
+        // Enable canceling of ai reply
+        // Maybe add a scroll to latest button
+        // Maybe add some kind of "AI is thinking" indicator (window title?)
+        // Name the AI
 
-        [MenuItem("Testing/Show Window")]
+        [MenuItem("AI/UniGpt")]
         public static void ShowWindow ()
         {
             var window              = GetWindow<ChatUI>();
-            window.titleContent     = new GUIContent("Chat");
+            window.titleContent     = new GUIContent("UniGpt");
             window.minSize          = new Vector2(100, 100);
         }
 
