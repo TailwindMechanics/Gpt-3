@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -9,6 +10,8 @@ namespace Modules.OpenAI.External.DataObjects
 	[CreateAssetMenu(fileName = "new _chatConversation", menuName = "Tailwind/Chat/Conversation")]
 	public class ConversationSo : ScriptableObject
 	{
+		public HistorySo GetHistory ()
+			=> history;
 		public void AppendMessage (int index, string appendage)
 			=> history.Data[index - 1].AppendMessage(appendage);
 

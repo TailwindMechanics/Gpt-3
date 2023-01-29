@@ -2,19 +2,20 @@ using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEngine;
+using OpenAI_API;
 using System;
 
 using Modules.OpenAI.External.DataObjects;
-using OpenAI_API;
 
 
 namespace Modules.OpenAI.Editor
 {
     public class ChatUI : EditorWindow
     {
+        const string aiName                 = "Uni";
         const string openAiCredsPath        = "Assets/_Gpt-3/GitIgnored/Credentials/OpenAI/TM_openApiCredentials.asset";
         const string conversationPath       = "Assets/_Gpt-3/Modules/OpenAI/Data/Chat/Main_conversation.asset";
-        const string uxmlPath               = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_visualTree.uxml";
+        const string uxmlPath               = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uxml.uxml";
         const string ussPath                = "Assets/_Gpt-3/Modules/OpenAI/UI/OpenAI_uss.uss";
         const string inputBoxTextFieldName  = "inputBox_textField";
         const string chatBoxScrollViewName  = "chatBox_scrollView";
@@ -24,6 +25,7 @@ namespace Modules.OpenAI.Editor
         ScrollView chatBoxScrollView;
         TextField inputBoxTextField;
         ConversationSo conversation;
+        bool aiIsTyping;
 
 
         // todo
@@ -36,12 +38,14 @@ namespace Modules.OpenAI.Editor
         // Maybe add a scroll to latest button
         // Maybe add some kind of "AI is thinking" indicator (window title?)
         // Name the AI
+        // Would be cool to have /commands
+        // Right click and send anything in Unity to the AI to analyse
 
-        [MenuItem("AI/UniGpt")]
+        [MenuItem("Tools/" + aiName)]
         public static void ShowWindow ()
         {
             var window              = GetWindow<ChatUI>();
-            window.titleContent     = new GUIContent("UniGpt");
+            window.titleContent     = new GUIContent(aiName);
             window.minSize          = new Vector2(100, 100);
         }
 
@@ -76,8 +80,13 @@ namespace Modules.OpenAI.Editor
             {
                 if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
                 if (string.IsNullOrWhiteSpace(inputBoxTextField.text)) return;
+                if (aiIsTyping)
+                {
+                    inputBoxTextField.Focus();
+                    return;
+                }
 
-                OnSendButtonPressed();
+                OnSendMessage();
             });
         }
 
@@ -89,7 +98,7 @@ namespace Modules.OpenAI.Editor
             }
         }
 
-        void OnSendButtonPressed ()
+        void OnSendMessage ()
         {
             var message = inputBoxTextField.text.Trim();
             AddMessage(conversation.CurrentUser, message, DateTime.Now, conversation.LatestIndex, false);
@@ -103,14 +112,7 @@ namespace Modules.OpenAI.Editor
             }
 
             Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
-            inputBoxTextField.SetEnabled(false);
-
-            RequestAiReply(message, aiReply =>
-            {
-                // AddMessage("AI", aiReply, DateTime.Now, conversation.LatestIndex, false);
-                inputBoxTextField.SetEnabled(true);
-                inputBoxTextField.Focus();
-            });
+            RequestAiReply(message);
         }
 
         void AddMessage (string sender, string messageText, DateTime timestamp, int index, bool reloading)
@@ -152,9 +154,9 @@ namespace Modules.OpenAI.Editor
             conversation.AppendMessage(index, $"{messageText}");
         }
 
-        async Task RequestAiReply (string messageText, Action<string> callback)
+        async Task RequestAiReply (string messageText)
         {
-            var api = new OpenAIAPI(openApiCredentialsSo.ApiKey);
+            var api = new OpenAIAPI(new APIAuthentication(openApiCredentialsSo.ApiKey));
             var request = new CompletionRequest
             (
                 prompt:             messageText,
@@ -165,11 +167,13 @@ namespace Modules.OpenAI.Editor
                 frequencyPenalty:   conversation.OpenAISettings.FrequencyPenalty
             );
 
+            aiIsTyping = true;
             var message = "";
-            AddMessage("AI", message, DateTime.Now, conversation.LatestIndex, false);
+            AddMessage(aiName, message, DateTime.Now, conversation.LatestIndex, false);
 
             await foreach (var token in api.Completions.StreamCompletionEnumerableAsync(request))
             {
+                aiIsTyping = true;
                 var tokenString = token.ToString();
                 message += tokenString;
                 if (string.IsNullOrWhiteSpace(message)) continue;
@@ -177,12 +181,15 @@ namespace Modules.OpenAI.Editor
                 AppendExistingMessage(tokenString, conversation.LatestIndex);
             }
 
-            callback.Invoke(message.Trim());
             SaveChatHistory();
+            aiIsTyping = false;
+            inputBoxTextField.Focus();
         }
 
         void SaveChatHistory ()
         {
+            EditorUtility.SetDirty(conversation.GetHistory());
+            AssetDatabase.SaveAssetIfDirty(conversation.GetHistory());
             EditorUtility.SetDirty(conversation);
             AssetDatabase.SaveAssetIfDirty(conversation);
             AssetDatabase.Refresh();

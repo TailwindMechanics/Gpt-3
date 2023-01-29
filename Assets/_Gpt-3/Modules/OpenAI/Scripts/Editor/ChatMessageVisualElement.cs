@@ -6,12 +6,12 @@ namespace Modules.OpenAI.Editor
 {
     public class ChatMessageVisualElement : VisualElement
     {
-        const string uxmlPath = "Assets/_Gpt-3/Modules/OpenAI/UI/ChatMessage.uxml";
+        const string uxmlPath = "Assets/_Gpt-3/Modules/OpenAI/UI/ChatMessage_uxml.uxml";
 
         const string rootContainerName      = "rootContainer_visualElement";
-        const string senderLabelName        = "sender_label";
-        const string messageLabelName       = "message_label";
         const string timestampLabelName     = "timestamp_label";
+        const string messageLabelName       = "message_label";
+        const string senderLabelName        = "sender_label";
 
         readonly VisualElement root;
         readonly Label sender;
