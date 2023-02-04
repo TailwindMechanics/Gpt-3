@@ -608,3 +608,9 @@ MonoBehaviour:
       Machine Learning Library: A machine learning library such as scikit-learn or
       TensorFlow could be used to train the AI on the knowledge base and improve
       its memory recall accuracy.'
+  - senderName: You
+    timestamp: 04/02/2023 21:22
+    message: hi
+  - senderName: Uni
+    timestamp: 04/02/2023 21:22
+    message: I am fine, thank you. How are you?
