@@ -19,5 +19,5 @@ MonoBehaviour:
     frequencyPenalty: 0.1
     presencePenalty: 0.1
     temperature: 0.5
-    maxTokens: 200
+    maxTokens: 500
   history: {fileID: 11400000, guid: f91bf771bb0e89243a2606cf83dc869d, type: 2}

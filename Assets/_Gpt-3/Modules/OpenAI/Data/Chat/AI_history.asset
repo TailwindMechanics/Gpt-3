@@ -498,3 +498,113 @@ MonoBehaviour:
   - senderName: Uni
     timestamp: 29/01/2023 11:53
     message: Yes, you can ask me.
+  - senderName: You
+    timestamp: 04/02/2023 08:25
+    message: Good morning
+  - senderName: Uni
+    timestamp: 04/02/2023 08:25
+    message: Good morning! How can I help you?
+  - senderName: You
+    timestamp: 04/02/2023 18:01
+    message: Will you have any memory of this message when I send you the next one?
+  - senderName: Uni
+    timestamp: 04/02/2023 18:01
+    message: No, I will not remember this message when you send me the next one.
+  - senderName: You
+    timestamp: 04/02/2023 18:01
+    message: Why does chat gpt in the web browser have a memory but you do not?
+  - senderName: Uni
+    timestamp: 04/02/2023 18:01
+    message: Chat in the web browser typically stores messages in a database, which
+      allows it to remember messages even after the page is closed or refreshed.
+      This allows users to go back and review previous messages. By contrast, the
+      memory of a web browser does not store messages, but rather stores information
+      about the current state of the browser (such as what tabs are open and what
+      websites have been visited).
+  - senderName: You
+    timestamp: 04/02/2023 18:02
+    message: Using the dotnet open ai api how/when should I send you the chat log
+      history of our conversation? And how is this done? And is this typical?
+  - senderName: Uni
+    timestamp: 04/02/2023 18:02
+    message: The dotnet open ai API does not provide a feature to send chat log history
+      of conversations. This type of functionality would need to be implemented by
+      the developer of the application. It is not typical to send chat log history
+      of conversations, but it can be done if the application requires it.
+  - senderName: You
+    timestamp: 04/02/2023 18:04
+    message: How typically would a developer implement memory recall for you? Can
+      I simply automatically send the entire chat log history to you and the start
+      of each session, and is there something I can add to that to ask you not to
+      reply so the user is unaware its happening?
+  - senderName: Uni
+    timestamp: 04/02/2023 18:04
+    message: 'A developer can implement memory recall in a variety of ways. Generally,
+      they will store the chat log history in a database and then use some type of
+      algorithm to retrieve the relevant information for the user. This could be
+      done in a number of ways, such as using natural language processing to understand
+      the context of the conversation and retrieve related information from the database.
+      Additionally, developers can also use machine learning models to detect patterns
+      in the user''s interactions with the chatbot and suggest relevant information
+      from previous conversations.
+
+
+      In terms of sending the entire chat log
+      history, developers can use an API call or webhook to send the data to you.
+      Depending on your requirements, developers can also add a prompt or message
+      to the user to indicate that their conversation is being recorded and stored.'
+  - senderName: You
+    timestamp: 04/02/2023 18:06
+    message: What is the Lucense engine and is it typically used for memory recall
+      for gpt AIs?
+  - senderName: Uni
+    timestamp: 04/02/2023 18:06
+    message: The Lucense engine is an open source search engine developed by LinkedIn,
+      which is used to power their search and recommendation systems. It is typically
+      used for providing search, recommendation, and personalization capabilities
+      to applications. It is not typically used for memory recall for GPT AIs.
+  - senderName: You
+    timestamp: 04/02/2023 18:09
+    message: What would be an example of the architecture and tools used for a memory
+      recall system for a gpt ai, where the intention is for the ai to retain technical
+      knowledge about proprietry code
+  - senderName: Uni
+    timestamp: 04/02/2023 18:09
+    message: ' and systems
+
+
+      Architecture:
+
+
+      1. Knowledge Base: This
+      would be a database containing the technical knowledge about the proprietry
+      code and systems. It could be structured in a way that makes it easy for the
+      AI to access and recall information.
+
+
+      2. Natural Language Processing
+      (NLP): This would be used to process user input and extract relevant keywords
+      and phrases to search the knowledge base.
+
+
+      3. Machine Learning (ML):
+      ML algorithms would be used to learn associations between different pieces
+      of knowledge and to improve the accuracy of the AI''s memory recall.
+
+
+      Tools:
+
+
+      1.
+      Database: A database such as MongoDB or PostgreSQL could be used to store the
+      knowledge base.
+
+
+      2. NLP Library: An NLP library such as spaCy or NLTK
+      could be used to process user input and extract keywords and phrases.
+
+
+      3.
+      Machine Learning Library: A machine learning library such as scikit-learn or
+      TensorFlow could be used to train the AI on the knowledge base and improve
+      its memory recall accuracy.'
