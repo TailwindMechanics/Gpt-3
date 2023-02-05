@@ -944,3 +944,56 @@ MonoBehaviour:
       -Debate
 
       -Discuss'
+  - senderName: You
+    timestamp: 04/02/2023 23:50
+    message: Can you show me a few examples of markup and richtext and a few other
+      text formatting things just so I can see if any of it works in this UI
+  - senderName: UniChat
+    timestamp: 04/02/2023 23:50
+    message: '?
+
+
+      Markup:
+
+      <b>This text is bold.</b>
+
+      <i>This text
+      is italicized.</i>
+
+      <u>This text is underlined.</u>
+
+
+      Richtext:
+
+      <span
+      style="font-size:20px; font-weight:bold;">This text is larger and bold.</span>
+
+      <span
+      style="color:red;">This text is red.</span>
+
+      <span style="text-decoration:line-through;">This
+      text is crossed out.</span>
+
+
+      Other Text Formatting:
+
+      <sub>This
+      text is subscript.</sub>
+
+      <sup>This text is superscript.</sup>
+
+      <pre>This
+      text is preformatted.</pre>'
+  - senderName: You
+    timestamp: 04/02/2023 23:51
+    message: Can you strikethru text?
+  - senderName: UniChat
+    timestamp: 04/02/2023 23:51
+    message: Yes, you can strikethru text using HTML tags <strike> like this</strike>.
+  - senderName: You
+    timestamp: 04/02/2023 23:51
+    message: Can you strikethrough with markup?
+  - senderName: UniChat
+    timestamp: 04/02/2023 23:51
+    message: 'Yes, you can strikethrough with markup using the <strike> tag. For
+      example: <strike>This text is strikethrough</strike>.'

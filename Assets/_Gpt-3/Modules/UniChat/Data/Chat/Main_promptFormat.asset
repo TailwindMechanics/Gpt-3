@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d801cd1b67e476c8325bb0c8b9b5b66, type: 3}
+  m_Name: Main_promptFormat
+  m_EditorClassIdentifier: 
+  template:
+    memory: 'Working Memory:
+
+      - People: ChatGPT, User
+
+      - Overarching
+      Narrative: Learning about memory recall systems for AI in Unity
+
+      - Current
+      Narrative: Discussing the structure and content of working memory
+
+      -
+      Explicit Remembers: "make a point of remembering that please"
+
+      - Recurring
+      Themes: technical details about Unity Dots, ReactiveX, and other related topics
+
+      -
+      User Details: Interested in learning and acquiring technical expertise
+
+      
+
+      Example
+      500-1000 Token Working Memory:
+
+      User: Excellent, make a point of remembering
+      that please.
+
+      ChatGPT: Sure, I''ll make a point to remember that you''re
+      interested in learning and acquiring technical expertise related to memory
+      recall systems for AI in Unity, specifically focusing on Unity Dots and ReactiveX.
+
+'
+    direction: 
