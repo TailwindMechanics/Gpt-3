@@ -105,7 +105,10 @@ namespace Modules.UniChat.Editor
             }
 
             Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
-            await RequestAiReply(message);
+
+            var prompt = conversation.FormatPrompt(message);
+            Debug.Log(prompt);
+            await RequestAiReply(prompt);
         }
 
         void AddMessage (string sender, string messageText, DateTime timestamp, int index, bool reloading)
@@ -141,18 +144,12 @@ namespace Modules.UniChat.Editor
         void AddNewMessageHistory(string senderText, string messageText)
             => conversation.Add(new MessageVo(senderText, messageText));
 
-        void AppendExistingMessage (string messageText, int index)
-        {
-            activeElement.AppendMessage($"{messageText}");
-            conversation.AppendMessage(index, $"{messageText}");
-        }
-
         async Task RequestAiReply (string messageText)
         {
             var api = new OpenAIClient();
             var request = new CompletionRequest
             (
-                prompt:             messageText,
+                prompt:             messageText + "\n",
                 maxTokens:          conversation.OpenAISettings.MaxTokens,
                 temperature:        conversation.OpenAISettings.Temperature,
                 presencePenalty:    conversation.OpenAISettings.PresencePenalty,
@@ -171,18 +168,29 @@ namespace Modules.UniChat.Editor
                 message += tokenString;
                 if (string.IsNullOrWhiteSpace(message)) continue;
 
-                AppendExistingMessage(tokenString, conversation.LatestIndex);
+                AppendExistingMessage(tokenString, conversation.LatestIndex, message.Contains("___"));
             }
 
+            conversation.SetMemories();
             SaveChatHistory();
             aiIsTyping = false;
             inputBoxTextField.Focus();
         }
 
+        void AppendExistingMessage (string messageText, int index, bool dontDisplay = false)
+        {
+            if (!dontDisplay) activeElement.AppendMessage($"{messageText}");
+            conversation.AppendMessage(index, $"{messageText}");
+        }
+
         void SaveChatHistory ()
         {
-            EditorUtility.SetDirty(conversation.GetHistory());
-            AssetDatabase.SaveAssetIfDirty(conversation.GetHistory());
+            foreach (var scriptableObject in conversation.GetScriptableObjects())
+            {
+                EditorUtility.SetDirty(scriptableObject);
+                AssetDatabase.SaveAssetIfDirty(scriptableObject);
+            }
+
             EditorUtility.SetDirty(conversation);
             AssetDatabase.SaveAssetIfDirty(conversation);
             AssetDatabase.Refresh();

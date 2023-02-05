@@ -1,7 +1,8 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using System;
+
 
 namespace Modules.UniChat.External.DataObjects
 {
@@ -15,6 +16,13 @@ namespace Modules.UniChat.External.DataObjects
 			SetTimestamp();
 		}
 
+		public void SetMemories ()
+		{
+			var split	= message.Split("===Context and Memory===");
+			message		= split[0].TrimEnd();
+			memories	= split[1].TrimStart();
+		}
+
 		public void SetTimestamp ()
 			=> timestamp = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 		public void AppendMessage (string appendage)
@@ -23,6 +31,7 @@ namespace Modules.UniChat.External.DataObjects
 			? senderName
 			: "Unassigned";
 
+		public string Memories => memories;
 		public DateTime TimestampDateTime => DateTime.Parse(Timestamp);
 		public string Timestamp => !string.IsNullOrWhiteSpace(timestamp)
 			? timestamp
@@ -36,8 +45,10 @@ namespace Modules.UniChat.External.DataObjects
 		string senderName;
 		[FoldoutGroup("$groupName"), SerializeField]
 		string timestamp;
-		[FoldoutGroup("$groupName"), TextArea, SerializeField]
+		[FoldoutGroup("$groupName"), TextArea(6,6), SerializeField]
 		string message;
+		[FoldoutGroup("$groupName"), TextArea(6,6), SerializeField]
+		string memories;
 
 		[UsedImplicitly]
 		string groupName => $"{Timestamp.Substring(0, 5)} "
