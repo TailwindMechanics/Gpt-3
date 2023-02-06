@@ -38,6 +38,9 @@ namespace Modules.UniChat.Editor
         }
 
         public void AppendMessage(string appendage)
-            => message.text += appendage;
+        {
+            message.text += appendage;
+            message.text = message.text.Replace("#Response", "").TrimStart();
+        }
     }
 }

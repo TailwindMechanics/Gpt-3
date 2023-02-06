@@ -13,74 +13,94 @@ MonoBehaviour:
   m_Name: AI_history
   m_EditorClassIdentifier: 
   data:
-  - senderName: You
-    timestamp: 05/02/2023 23:21
-    message: Hello Uni, I'm in the process of building a gpt ai into the Unity editor,
-      specifically I'm working on its memory recall system. Do you understand your
-      direction?
-    memories: 
-  - senderName: UniChat
-    timestamp: 05/02/2023 23:21
-    message: 'Direction: Hello there! It''s great to hear that you are working on
-      a GPT AI for the Unity editor. I understand that you are focusing on the memory
-      recall system. Could you tell me more about what you are trying to achieve
-      with this project?'
-    memories: 
-  - senderName: You
-    timestamp: 05/02/2023 23:23
-    message: I am attempting to build an AI that can learn alongside of me while
-      I learn DOTS
-    memories: 
-  - senderName: UniChat
-    timestamp: 05/02/2023 23:23
-    message: "Memory:\nContext: The user is attempting to build an AI that can learn
-      alongside them while they learn DOTS. \nAdvice: Building an AI that can learn
-      with you can be a difficult and time consuming task. It is important to have
-      a clear understanding of the technology you are using and the goals you are
-      trying to achieve. You should also have a good understanding of the data you
-      will be using to train your AI. Additionally, it is important to have a plan
-      for how you will evaluate the AI's performance and how you will adjust it if
-      necessary. It is also important to have a good understanding of the algorithms
-      and techniques you will use to develop your AI. Finally, it is important to
-      be patient and persistent when dealing with any challenges that may arise during
-      the process."
-    memories: 
-  - senderName: You
-    timestamp: 05/02/2023 23:24
-    message: Yeah I agree
-    memories: 
-  - senderName: UniChat
-    timestamp: 05/02/2023 23:24
-    message: Hi there! It sounds like you agree with something. Could you tell me
-      a bit more about what you agree with and why? That way, I can provide the best
-      advice possible.
-    memories: 
-  - senderName: You
-    timestamp: 05/02/2023 23:28
-    message: I am attempting to build an AI that can learn alongside of me while
-      I learn DOTS
-    memories: 
-  - senderName: UniChat
-    timestamp: 05/02/2023 23:28
-    message: I understand that you are attempting to build an AI that can learn alongside
-      of you as you learn DOTS. That is an ambitious goal! ===Context and Memory===
-      Attempting to build an AI, Learning DOTS.
-    memories: 
-  - senderName: You
-    timestamp: 05/02/2023 23:31
-    message: ok cool
-    memories: 
-  - senderName: UniChat
-    timestamp: 05/02/2023 23:31
-    message: Hi there, it's great to hear that you're interested in learning more
-      about our product. I can provide you with some additional information. Please
-      let me know if you have any questions or would like to discuss further.
-    memories: 'Previous conversation: ok cool'
-  - senderName: You
-    timestamp: 05/02/2023 23:31
-    message: thank i appreciate the unrx help
-    memories: 
-  - senderName: UniChat
-    timestamp: 05/02/2023 23:31
-    message: Thank you for your kind words! It's always a pleasure to help.
-    memories: Conversation regarding help provided.
+  - senderName: Tailwind
+    timestamp: 06/02/2023 18:57
+    message: Hi Uni
+  - senderName: Uni
+    timestamp: 06/02/2023 18:57
+    message: 'Hi Tailwind! It''s great to hear that you''re looking to use me to
+      accelerate your learning of DOTS, UniRx, and potentially combining them. I''m
+      here to help you with that! Can you tell me a bit more about what you want
+      to learn and how I can help?
+
+
+'
+  - senderName: Tailwind
+    timestamp: 06/02/2023 18:58
+    message: I'm not sure yet
+  - senderName: Uni
+    timestamp: 06/02/2023 18:58
+    message: 'Hi Tailwind! That sounds like a really interesting plan. I''m sure
+      I can help you with your learning of DOTS, UniRx, and combining them. Can you
+      tell me a bit more about what you want to achieve?
+
+
+'
+  - senderName: Tailwind
+    timestamp: 06/02/2023 19:28
+    message: Ok so how do I use ReactiveX to write a wrapper for DOTS
+  - senderName: Uni
+    timestamp: 06/02/2023 19:28
+    message: "Hi Tailwind, sure I can help you with that. ReactiveX is a library
+      that allows you to write asynchronous and event-based code. It's great for
+      writing wrappers for DOTS because it allows you to observe, transform, and
+      react to data streams in a non-blocking way. You can also use it to chain and
+      compose asynchronous operations in a declarative way. \n\n"
+  - senderName: Tailwind
+    timestamp: 06/02/2023 19:28
+    message: Oh howsypoo
+  - senderName: Uni
+    timestamp: 06/02/2023 19:28
+    message: "Hi Tailwind, great to hear you're taking a look into DOTS, UniRx, and
+      combining them. I can certainly help you with the basics - what would you like
+      to know? \n\n"
+  - senderName: Tailwind
+    timestamp: 06/02/2023 19:29
+    message: Finishing this song foo foo foo foop fapapa faaa foofoop foo
+  - senderName: Uni
+    timestamp: 06/02/2023 19:29
+    message: 'Hey Tailwind, I''m Uni! It''s cool that you''re using me to accelerate
+      your learning of DOTS, UniRx, and maybe even combine them. What were you saying
+      about finishing a song?
+
+
+'
+  - senderName: Tailwind
+    timestamp: 06/02/2023 19:30
+    message: I said finish the song, Uni
+  - senderName: Uni
+    timestamp: 06/02/2023 19:30
+    message: 'Hey Tailwind, sorry about that, I got distracted by the song! Anyway,
+      as you know, DOTS stands for the Data-Oriented Tech Stack, which is a collection
+      of tools and libraries that allow you to create highly performant and scalable
+      games and applications in Unity. It includes the Entity Component System (ECS),
+      the C# Job System, the Burst Compiler, and the NET Core runtime. UniRx is a
+      reactive programming library for Unity, which allows you to write code that
+      responds to events in a more efficient and concise way. Combining DOTS and
+      UniRx can result in some powerful applications.
+
+
+'
+  - senderName: Tailwind
+    timestamp: 06/02/2023 19:30
+    message: K byyyyyyeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  - senderName: Uni
+    timestamp: 06/02/2023 19:30
+    message: 'Hi Tailwind, I understand that you want to use me, a GPT AI written
+      in Unity using UITool, to help with your project. I am an expert in Unity 3D,
+      UniRx, and DOTS.
+
+
+      To help you get started, here is a quick overview
+      of DOTS. DOTS stands for Data Oriented Technology Stack. It is a collection
+      of libraries and tools built on top of the Unity engine. It is designed to
+      help developers create high-performance, data-oriented applications with ease.
+      DOTS includes a range of features such as Entity Component System (ECS), Job
+      System, Burst Compiler, and more.
+
+
+      I hope this helps you get started
+      with your project. If you have any further questions, please let me know.
+
+
+'

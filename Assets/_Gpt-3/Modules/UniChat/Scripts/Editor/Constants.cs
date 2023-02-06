@@ -2,7 +2,6 @@
 {
 	public static class Constants
 	{
-		public const string AiName					= "UniChat";
 		public const string ModuleRootPath			= "Assets/_Gpt-3/Modules/UniChat";
 
 		public const string ConversationPath		= ModuleRootPath + "/Data/Chat/Main_conversation.asset";

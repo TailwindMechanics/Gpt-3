@@ -16,22 +16,18 @@ namespace Modules.UniChat.External.DataObjects
 			SetTimestamp();
 		}
 
-		public void SetMemories ()
-		{
-			var split	= message.Split("===Context and Memory===");
-			message		= split[0].TrimEnd();
-			memories	= split[1].TrimStart();
-		}
-
 		public void SetTimestamp ()
 			=> timestamp = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 		public void AppendMessage (string appendage)
-			=> message += appendage;
+		{
+			message += appendage;
+			message = message.Replace("#Response", "").TrimStart();
+		}
+
 		public string SenderName => !string.IsNullOrWhiteSpace(senderName)
 			? senderName
 			: "Unassigned";
 
-		public string Memories => memories;
 		public DateTime TimestampDateTime => DateTime.Parse(Timestamp);
 		public string Timestamp => !string.IsNullOrWhiteSpace(timestamp)
 			? timestamp
@@ -47,8 +43,6 @@ namespace Modules.UniChat.External.DataObjects
 		string timestamp;
 		[FoldoutGroup("$groupName"), TextArea(6,6), SerializeField]
 		string message;
-		[FoldoutGroup("$groupName"), TextArea(6,6), SerializeField]
-		string memories;
 
 		[UsedImplicitly]
 		string groupName => $"{Timestamp.Substring(0, 5)} "

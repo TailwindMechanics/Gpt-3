@@ -7,14 +7,17 @@ namespace Modules.UniChat.External.DataObjects
 	{
 		public string Direction;
 		public string Memory;
-		public string NewUserMessage;
+		public string UserMessage;
+		public string UserName;
 
 		public PromptTemplateVo AddDirection (string newDirection)
 		{ Direction = newDirection; return this; }
 		public PromptTemplateVo AddMessage (string newMessage)
-		{ NewUserMessage = newMessage; return this; }
+		{ UserMessage = newMessage; return this; }
 		public PromptTemplateVo AddMemory (string newMemory)
 		{ Memory = newMemory; return this; }
+		public PromptTemplateVo AddUsername (string newUsername)
+		{ UserName = newUsername; return this; }
 		public string Json () => JsonUtility.ToJson(this);
 	}
 }

@@ -35,11 +35,11 @@ namespace Modules.UniChat.Editor
         // Would be cool to have /commands
         // Right click and send anything in Unity to the AI to analyse
 
-        [MenuItem("Tools/" + Constants.AiName)]
+        [MenuItem("Tools/UniChat")]
         public static void ShowWindow ()
         {
             var window              = GetWindow<ChatUI>();
-            window.titleContent     = new GUIContent(Constants.AiName);
+            window.titleContent     = new GUIContent("UniChat");
             window.minSize          = new Vector2(100, 100);
         }
 
@@ -159,7 +159,7 @@ namespace Modules.UniChat.Editor
 
             aiIsTyping = true;
             var message = "";
-            AddMessage(Constants.AiName, message, DateTime.Now, conversation.LatestIndex, false);
+            AddMessage(conversation.AiName, message, DateTime.Now, conversation.LatestIndex, false);
 
             await foreach (var token in api.CompletionsEndpoint.StreamCompletionEnumerableAsync(request))
             {
@@ -167,19 +167,20 @@ namespace Modules.UniChat.Editor
                 var tokenString = token.ToString();
                 message += tokenString;
                 if (string.IsNullOrWhiteSpace(message)) continue;
+                if (message.Contains("===")) continue;
 
-                AppendExistingMessage(tokenString, conversation.LatestIndex, message.Contains("___"));
+                AppendExistingMessage(tokenString, conversation.LatestIndex);
             }
 
-            conversation.SetMemories();
+            conversation.SetMemories(message);
             SaveChatHistory();
             aiIsTyping = false;
             inputBoxTextField.Focus();
         }
 
-        void AppendExistingMessage (string messageText, int index, bool dontDisplay = false)
+        void AppendExistingMessage (string messageText, int index)
         {
-            if (!dontDisplay) activeElement.AppendMessage($"{messageText}");
+            activeElement.AppendMessage($"{messageText}");
             conversation.AppendMessage(index, $"{messageText}");
         }
 

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
   apiCallsEnabled: 1
-  currentUser: You
+  aiName: Uni
+  currentUser: Tailwind
+  direction: {fileID: 4900000, guid: 4426c9ebd515db34b968ed12f5a30ad6, type: 3}
+  workingMemory: {fileID: 4900000, guid: daa7589b6afdff042a8db6d57cd2dc7b, type: 3}
   openAISettings:
     model: 3
     frequencyPenalty: 0.1
