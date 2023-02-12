@@ -1,1 +1,1 @@
-UserMessage: Tell me the basics of dots | UserName: Tailwind | Memory: "for easier parsing later. | UserMessage:
+UserMessage: Tell me the basics of dots | UserName: Tailwind | Memory: \\\"for easier parsing later. | UserMessage: Ohh wow | UserMessage: Do you know if the chatgpt model is available on the openai api yet? | UserName: Tailwind | UserMessage: Cool, are you chat gpt? | UserName: Tailwind | UserMessage: Are you artifical? | UserName: Tailwind | UserMessage: Are you gpt 3? | UserName:

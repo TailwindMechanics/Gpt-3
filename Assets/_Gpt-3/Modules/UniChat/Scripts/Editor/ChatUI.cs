@@ -104,10 +104,7 @@ namespace Modules.UniChat.Editor
                 return;
             }
 
-            Debug.Log("<color=cyan><b>>>> API Enabled</b></color>");
-
             var prompt = conversation.FormatPrompt(message);
-            Debug.Log(prompt);
             await RequestAiReply(prompt);
         }
 
@@ -146,6 +143,12 @@ namespace Modules.UniChat.Editor
 
         async Task RequestAiReply (string messageText)
         {
+            if (string.IsNullOrEmpty(conversation.OpenAISettings.Model.ToString()))
+            {
+                Debug.Log("<color=orange><b>>>> No model selected</b></color>");
+                return;
+            }
+
             var api = new OpenAIClient();
             var request = new CompletionRequest
             (
@@ -154,7 +157,7 @@ namespace Modules.UniChat.Editor
                 temperature:        conversation.OpenAISettings.Temperature,
                 presencePenalty:    conversation.OpenAISettings.PresencePenalty,
                 frequencyPenalty:   conversation.OpenAISettings.FrequencyPenalty,
-                model:              MapModelToEnum(conversation.OpenAISettings.Model)
+                model:              conversation.OpenAISettings.Model
             );
 
             aiIsTyping = true;
@@ -195,18 +198,6 @@ namespace Modules.UniChat.Editor
             EditorUtility.SetDirty(conversation);
             AssetDatabase.SaveAssetIfDirty(conversation);
             AssetDatabase.Refresh();
-        }
-
-        Model MapModelToEnum (OpenAiModel enumModel)
-        {
-            return enumModel switch
-            {
-                OpenAiModel.Ada             => Model.Ada,
-                OpenAiModel.Babbage         => Model.Babbage,
-                OpenAiModel.Curie           => Model.Curie,
-                OpenAiModel.Davinci         => Model.Davinci,
-                _ => Model.Default
-            };
         }
     }
 }

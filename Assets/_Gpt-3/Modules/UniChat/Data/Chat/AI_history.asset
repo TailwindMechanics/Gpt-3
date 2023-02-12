@@ -104,3 +104,84 @@ MonoBehaviour:
 
 
 '
+  - senderName: Tailwind
+    timestamp: 12/02/2023 13:39
+    message: Hello
+  - senderName: Uni
+    timestamp: 12/02/2023 13:39
+    message: "Hi Tailwind, \n\nI'm Uni, an AI expert in Unity 3d, UniRx, and DOTS.
+      DOTS stands for the Data Oriented Technology Stack and is a collection of tools
+      that allow developers to create high performance games and applications"
+  - senderName: Tailwind
+    timestamp: 12/02/2023 13:40
+    message: Ohh wow
+  - senderName: Uni
+    timestamp: 12/02/2023 13:40
+    message: Hi Tailwind, DOTS stands for the Data Oriented Technology Stack. It
+      is a collection of tools and components designed to make it easier to create
+      high performance, data-oriented applications in Unity. It enables developers
+      to create applications that are more data-driven and scalable. The main components
+      of DOTS are the Entity Component System (ECS), the C# Job System, and the Burst
+      Compiler. The ECS is a way of organizing data and logic into entities, components,
+      and systems. The C# Job System allows developers to write code that can be
+      executed in parallel on multiple threads. Finally, the Burst Compiler compiles
+      C# code into highly optimized native code for faster execution.
+  - senderName: Tailwind
+    timestamp: 12/02/2023 14:07
+    message: Do you know if the chatgpt model is available on the openai api yet?
+  - senderName: Uni
+    timestamp: 12/02/2023 14:07
+    message: 
+  - senderName: Tailwind
+    timestamp: 12/02/2023 14:10
+    message: 'Hello
+
+      Do you know if the chatgpt model is available on the openai
+      api yet?'
+  - senderName: 
+    timestamp: 12/02/2023 14:12
+    message: '
+
+      Do you know if the chatgpt model is available on the openai
+      api yet?'
+  - senderName: Uni
+    timestamp: 12/02/2023 14:12
+    message: "Hi Tailwind, I'm not sure if the chatgpt model is available on the
+      openai api yet. However, I can tell you that Unity 3D, UniRx and DOTS are powerful
+      tools for game development. They provide efficient ways to create games with
+      realistic graphics, animations, sound and physics. \n\n"
+  - senderName: Tailwind
+    timestamp: 12/02/2023 14:13
+    message: Cool, are you chat gpt?
+  - senderName: Uni
+    timestamp: 12/02/2023 14:13
+    message: "Hi Tailwind, no I'm not Chat GPT. I'm an AI expert in Unity 3d, UniRx,
+      and DOTS. Do you have any questions about those topics? \n\n"
+  - senderName: Tailwind
+    timestamp: 12/02/2023 14:13
+    message: Are you artifical?
+  - senderName: Uni
+    timestamp: 12/02/2023 14:13
+    message: Hi Tailwind, I'm Uni, an AI expert in Unity 3d, UniRx, and DOTS. To
+      answer your question, the chat GPT model is not currently available on the
+      OpenAI API. Currently, the OpenAI API only provides access to GPT-3 and its
+      associated models.
+  - senderName: Tailwind
+    timestamp: 12/02/2023 14:13
+    message: Are you gpt 3?
+  - senderName: Uni
+    timestamp: 12/02/2023 14:13
+    message: Hi Tailwind, I'm Uni, an AI expert in Unity 3d, UniRx, and DOTS. I'm
+      not GPT-3, but I can tell you that the chat GPT model is not currently available
+      on the OpenAI API. I'm an artificial intelligence, so I can answer questions
+      related to the topics I'm an expert in.
+  - senderName: Tailwind
+    timestamp: 12/02/2023 14:14
+    message: Hi
+  - senderName: Uni
+    timestamp: 12/02/2023 14:14
+    message: "Hi Tailwind! I'm Uni, an AI expert in Unity 3d, UniRx, and DOTS. DOTS
+      stands for the Data-Oriented Technology Stack, which is a collection of libraries,
+      tools and best practices for developing high-performance, data-oriented applications.
+      It is designed to help you create applications that are more efficient, easier
+      to maintain and more scalable. \n\n"

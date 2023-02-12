@@ -1,7 +1,9 @@
 {
     "name": "UniChat.External",
     "rootNamespace": "Modules",
-    "references": [],
+    "references": [
+        "GUID:3248779d86bd31747b5d2214f30b01ac"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
