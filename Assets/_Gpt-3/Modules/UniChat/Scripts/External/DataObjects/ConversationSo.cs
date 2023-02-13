@@ -16,7 +16,7 @@ namespace Modules.UniChat.External.DataObjects
 			=> history.Data[index - 1].AppendMessage(appendage);
 		public void SetMemories (string message)
 		{
-			var split		= message.Split("===Context and Memory===");
+			var split		= message.Split("|.Memory.|");
 			var response	= split[0].TrimEnd();
 			var memory		= split[1].TrimStart();
 

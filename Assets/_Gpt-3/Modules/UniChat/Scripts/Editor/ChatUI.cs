@@ -170,7 +170,7 @@ namespace Modules.UniChat.Editor
                 var tokenString = token.ToString();
                 message += tokenString;
                 if (string.IsNullOrWhiteSpace(message)) continue;
-                if (message.Contains("===")) continue;
+                // if (message.Contains("|.")) continue;
 
                 AppendExistingMessage(tokenString, conversation.LatestIndex);
             }

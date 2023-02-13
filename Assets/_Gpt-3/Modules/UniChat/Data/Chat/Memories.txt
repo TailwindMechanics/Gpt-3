@@ -1,1 +1,17 @@
-UserMessage: Tell me the basics of dots | UserName: Tailwind | Memory: \\\"for easier parsing later. | UserMessage: Ohh wow | UserMessage: Do you know if the chatgpt model is available on the openai api yet? | UserName: Tailwind | UserMessage: Cool, are you chat gpt? | UserName: Tailwind | UserMessage: Are you artifical? | UserName: Tailwind | UserMessage: Are you gpt 3? | UserName:
+|.Memory.|
+
+The user is Shea Dunne, a 36-year-old man with two sons and a partner.
+Shea has 14 years of professional experience with Unity and has a background in 3D art and technical art.
+Shea is currently a lead software engineer at StoryToys and earns 67,000 euro per year.
+Shea is self-taught and has a talent for learning.
+Shea's career has largely been focused on Unity and he has worked as a creative technologist for a design studio and at Fjord/Accenture.
+Shea's dream is to own a small indie game studio, partnered with a publisher.
+Shea has a personal project in progress for fun but is looking for a full-time, remote role at a large Unity-based corporation.
+Shea does not have a LinkedIn or Glassdoor account and is not interested in setting one up.
+Shea values privacy and prefers to focus on honing his craft rather than networking.
+Shea is open to creating a Glassdoor account but does not think LinkedIn is necessary.
+Shea is considering looking for a new job due to feeling underpaid and facing a toxic work culture.
+Shea is not sure if his current salary is below the industry average.
+Shea is not interested in using LinkedIn to connect with other professionals.
+Shea is open to being contacted by recruiters but does not want to flag to his current employer that he is looking for a new job.
+Shea wants to ensure that this AI does not forget the information shared in this conversation.
