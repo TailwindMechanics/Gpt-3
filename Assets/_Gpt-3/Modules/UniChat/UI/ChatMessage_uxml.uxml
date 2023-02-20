@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/_Gpt-3/Modules/OpenAI/UI/ChatMessage.uss?fileID=7433441132597879392&amp;guid=f9477993f18cc554a8e156a11e7fd357&amp;type=3#ChatMessage" />
-    <ui:VisualElement name="rootContainer_visualElement" class="root">
-        <ui:Label tabindex="-1" text="Timestamp" display-tooltip-when-elided="true" name="timestamp_label" class="timestamp" />
-        <ui:Label tabindex="-1" text="Sender" display-tooltip-when-elided="true" name="sender_label" class="sender" />
-        <ui:Label tabindex="-1" text="Message message message message message message message message" display-tooltip-when-elided="true" name="message_label" class="message" />
-    </ui:VisualElement>
-</ui:UXML>
