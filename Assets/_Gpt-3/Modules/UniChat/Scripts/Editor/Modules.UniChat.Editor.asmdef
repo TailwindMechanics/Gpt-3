@@ -1,0 +1,17 @@
+{
+    "name": "UniChat.Editor",
+    "rootNamespace": "Modules",
+    "references": [
+        "GUID:ac74810195be3f24fac2ebaa732e3431",
+        "GUID:3248779d86bd31747b5d2214f30b01ac"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

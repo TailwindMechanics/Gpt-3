@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
+  m_Name: Main_conversation
+  m_EditorClassIdentifier: 
+  apiCallsEnabled: 1
+  aiName: Uni
+  currentUser: Tailwind
+  direction: {fileID: 0}
+  workingMemory: {fileID: 0}
+  openAISettings:
+    model: text-davinci-003
+    frequencyPenalty: 0.1
+    presencePenalty: 0.1
+    temperature: 0.5
+    maxTokens: 200
+    allModels:
+    - babbage
+    - code-davinci-002
+    - davinci
+    - text-embedding-ada-002
+    - babbage-code-search-code
+    - text-similarity-babbage-001
+    - text-davinci-001
+    - ada
+    - curie-instruct-beta
+    - text-davinci-003
+    - babbage-code-search-text
+    - babbage-similarity
+    - curie-search-query
+    - code-search-babbage-text-001
+    - text-davinci-002
+    - code-cushman-001
+    - code-search-babbage-code-001
+    - audio-transcribe-deprecated
+    - text-ada-001
+    - text-similarity-ada-001
+    - text-davinci-insert-002
+    - ada-code-search-code
+    - ada-similarity
+    - code-search-ada-text-001
+    - text-search-ada-query-001
+    - text-curie-001
+    - text-davinci-edit-001
+    - davinci-search-document
+    - ada-code-search-text
+    - text-search-ada-doc-001
+    - code-davinci-edit-001
+    - davinci-instruct-beta
+    - text-similarity-curie-001
+    - code-search-ada-code-001
+    - ada-search-query
+    - text-search-davinci-query-001
+    - davinci-search-query
+    - text-davinci-insert-001
+    - babbage-search-document
+    - ada-search-document
+    - text-search-babbage-doc-001
+    - text-search-curie-doc-001
+    - text-search-curie-query-001
+    - babbage-search-query
+    - text-babbage-001
+    - text-search-davinci-doc-001
+    - text-search-babbage-query-001
+    - curie-similarity
+    - curie-search-document
+    - curie
+    - text-similarity-davinci-001
+    - davinci-similarity
+    - cushman:2020-05-03
+    - ada:2020-05-03
+    - babbage:2020-05-03
+    - curie:2020-05-03
+    - davinci:2020-05-03
+    - if-davinci-v2
+    - if-curie-v2
+    - if-davinci:3.0.0
+    - davinci-if:3.0.0
+    - davinci-instruct-beta:2.0.0
+    - text-ada:001
+    - text-davinci:001
+    - text-curie:001
+    - text-babbage:001
+  history: {fileID: 11400000, guid: f91bf771bb0e89243a2606cf83dc869d, type: 2}
