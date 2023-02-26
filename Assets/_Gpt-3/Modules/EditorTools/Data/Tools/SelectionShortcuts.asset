@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945e2496b9938e94b979bcc4c8654950, type: 3}
   m_Name: SelectionShortcuts
   m_EditorClassIdentifier: EditorShortcuts.Editor:Tailwind.Modules.EditorShortcuts.Editor:SelectionShortcuts
-  GameObjectNames:
-  - Main_conversation
-  - OpenAI
+  showLogs: 0
+  shortcut1: AssetDependencyDuplicator
+  shortcut2: Main Camera
+  shortcut3: 
+  shortcut4: 
+  shortcut5: 
+  shortcut6: 
+  shortcut7: 
+  shortcut8: 
+  shortcut9: 
