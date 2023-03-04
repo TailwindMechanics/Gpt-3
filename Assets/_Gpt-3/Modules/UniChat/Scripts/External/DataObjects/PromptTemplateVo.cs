@@ -1,23 +1,21 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json;
+using UnityEngine;
 
 
 namespace Modules.UniChat.External.DataObjects
 {
 	public class PromptTemplateVo
 	{
-		public string Direction;
-		public string Memory;
-		public string UserMessage;
-		public string UserName;
+		[JsonProperty] public string System;
+		[JsonProperty] public string UserMessage;
+		[JsonProperty] public string UserName;
 
-		public PromptTemplateVo AddDirection (string newDirection)
-		{ Direction = newDirection; return this; }
-		public PromptTemplateVo AddMessage (string newMessage)
-		{ UserMessage = newMessage; return this; }
-		public PromptTemplateVo AddMemory (string newMemory)
-		{ Memory = newMemory; return this; }
-		public PromptTemplateVo AddUsername (string newUsername)
-		{ UserName = newUsername; return this; }
+		public PromptTemplateVo AddSystem (string system)
+		{ System = system; return this; }
+		public PromptTemplateVo AddMessage (string userMessage)
+		{ UserMessage = userMessage; return this; }
+		public PromptTemplateVo AddUsername (string username)
+		{ UserName = username; return this; }
 		public string Json () => JsonUtility.ToJson(this);
 	}
 }

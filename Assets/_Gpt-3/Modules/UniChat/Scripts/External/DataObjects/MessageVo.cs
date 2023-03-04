@@ -9,11 +9,12 @@ namespace Modules.UniChat.External.DataObjects
 	[Serializable]
 	public class MessageVo
 	{
-		public MessageVo (string newSender, string newMessage)
+		public MessageVo (string newSender, string newMessage, bool bot)
 		{
 			senderName = newSender;
 			message = newMessage;
 			SetTimestamp();
+			isBot = bot;
 		}
 
 		public void SetTimestamp ()
@@ -24,6 +25,7 @@ namespace Modules.UniChat.External.DataObjects
 			message = message.Replace("#Response", "").TrimStart();
 		}
 
+		public bool IsBot => isBot;
 		public string SenderName => !string.IsNullOrWhiteSpace(senderName)
 			? senderName
 			: "Unassigned";
@@ -37,6 +39,8 @@ namespace Modules.UniChat.External.DataObjects
 			? message
 			: "Unassigned";
 
+		[FoldoutGroup("$groupName"), SerializeField]
+		bool isBot;
 		[FoldoutGroup("$groupName"), SerializeField]
 		string senderName;
 		[FoldoutGroup("$groupName"), SerializeField]

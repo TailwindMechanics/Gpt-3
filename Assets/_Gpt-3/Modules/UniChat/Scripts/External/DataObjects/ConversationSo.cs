@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
-using System.IO;
 
 
 namespace Modules.UniChat.External.DataObjects
@@ -10,78 +9,38 @@ namespace Modules.UniChat.External.DataObjects
 	[CreateAssetMenu(fileName = "new _chatConversation", menuName = "Tailwind/Chat/Conversation")]
 	public class ConversationSo : ScriptableObject
 	{
-		public List<ScriptableObject> GetScriptableObjects()
-			=> new() {history};
-		public void AppendMessage (int index, string appendage)
-			=> history.Data[index - 1].AppendMessage(appendage);
-		public void SetMemories (string message)
+		[FoldoutGroup("Settings"), SerializeField] string username = "Guest";
+		[FoldoutGroup("Settings"), SerializeField] string botName = "Bot";
+		[FoldoutGroup("Settings"), TextArea(6, 6), SerializeField] string topic = "Unity 3d, Dots, UniRx";
+		[FoldoutGroup("Bot Settings"), HideLabel, SerializeField] ChatBotSettingsVo botSettings;
+		[HideLabel, SerializeField] HistoryVo history;
+
+		string BotDirection => $"Your name is {botName}. You are an expert adviser on {topic}, you are currently advising a user by the name '{username}'.";
+		public void Add (MessageVo newMessage)		=> history.Data.Add(newMessage);
+		public List<MessageVo> History				=> history.Data;
+		public string Username						=> username;
+		public string BotName						=> botName;
+		IChatBotApi api;
+
+
+		void OnEnable()
+			=> api = new ChatBotApi();
+
+		public async Task<string> GetAiReply(string messageText)
 		{
-			var key = "|.Memory.|";
-			if (workingMemory == null) return;
-			if (message.Contains(key) == false) return;
-
-			var split		= message.Split(key);
-			var response	= split[0].TrimEnd();
-			var memory		= split[1].TrimStart();
-
-			File.WriteAllText(AssetDatabase.GetAssetPath(workingMemory), memory);
-			EditorUtility.SetDirty(workingMemory);
-		}
-
-		public MessageVo GetMostRecentReceived ()
-		{
-			for (var i = history.Data.Count - 1; i >= 0; i--)
+			if (botSettings.UseChatCompletion)
 			{
-				if (history.Data[i].SenderName == CurrentUser) continue;
-
-				return history.Data[i];
+				return await api.GetChatReply(BotDirection, history);
 			}
 
-			return null;
+			return await api.GetTextReply(messageText, botSettings);
 		}
 
-		public string AiName						=> aiName;
-		public OpenAISettingsVo OpenAISettings		=> openAISettings;
-		public bool ApiCallsEnabled					=> apiCallsEnabled;
-		public int LatestIndex						=> history.Data.Count;
-		public string CurrentUser					=> currentUser;
-		public List<MessageVo> History				=> history.Data;
-		public void Add (MessageVo newMessage)		=> history.Data.Add(newMessage);
-
-		[FoldoutGroup("Settings"), SerializeField]
-		bool apiCallsEnabled;
-		[FoldoutGroup("Settings"), SerializeField]
-		string aiName = "Uni";
-		[FoldoutGroup("Settings"), SerializeField]
-		string currentUser = "Guest";
-		[FoldoutGroup("Settings"), SerializeField]
-		TextAsset direction;
-		[FoldoutGroup("Settings"), SerializeField]
-		TextAsset workingMemory;
-
-		[FoldoutGroup("OpenAI Settings"), HideLabel, SerializeField]
-		OpenAISettingsVo openAISettings;
-
-		[InlineEditor, SerializeField]
-		HistorySo history;
-
-
-		public string FormatPrompt(string newUserMessage)
-		{
-			return new PromptTemplateVo()
-				.AddUsername(CurrentUser)
-				.AddMessage(newUserMessage)
-				.AddDirection(DirectionText)
-				.AddMemory(MemoriesText)
+		public string GetPromptJson(string sender, string message)
+			=> new PromptTemplateVo()
+				.AddSystem(BotDirection)
+				.AddUsername(sender)
+				.AddMessage(message)
 				.Json();
-		}
-
-		string DirectionText => direction != null
-			? direction.text
-			: "Generate a prompt template for yourself with clear character direction, with some agenda";
-
-		string MemoriesText => workingMemory != null
-			? workingMemory.text
-			: "|.Memory.|";
 	}
 }
