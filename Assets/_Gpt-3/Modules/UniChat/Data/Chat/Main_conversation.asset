@@ -18,7 +18,7 @@ MonoBehaviour:
   direction: {fileID: 0}
   workingMemory: {fileID: 0}
   openAISettings:
-    model: text-davinci-003
+    model: gpt-3.5-turbo
     frequencyPenalty: 0.1
     presencePenalty: 0.1
     temperature: 0.5
@@ -90,4 +90,7 @@ MonoBehaviour:
     - text-davinci:001
     - text-curie:001
     - text-babbage:001
+    - gpt-3.5-turbo-0301
+    - gpt-3.5-turbo
+    - whisper-1
   history: {fileID: 11400000, guid: f91bf771bb0e89243a2606cf83dc869d, type: 2}

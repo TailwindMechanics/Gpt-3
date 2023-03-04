@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ab0ef6dd18b41788641c65e55f622fa, type: 3}
-  m_Name: AI_history
+  m_Script: {fileID: 11500000, guid: 626f94b5d1f0478a9cb8fa8a74569ca0, type: 3}
+  m_Name: New Chat Bot
   m_EditorClassIdentifier: 
-  data: []
