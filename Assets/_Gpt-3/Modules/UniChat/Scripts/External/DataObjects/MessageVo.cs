@@ -52,5 +52,7 @@ namespace Modules.UniChat.External.DataObjects
 		string groupName => $"{Timestamp.Substring(0, 5)} "
 		                    + $"{SenderName.Substring(0, Math.Min(SenderName.Length, 10)).TrimEnd()}... "
 		                    + $"{Message.Substring(0, Math.Min(Message.Length, 10)).Split("\n")[0]}...";
+
+		public string Json => $"{JsonUtility.ToJson(this)}\n";
 	}
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: EditorShortcuts.Editor:Tailwind.Modules.EditorShortcuts.Editor:SelectionShortcuts
   showLogs: 0
   shortcut1: Main_conversation
-  shortcut2: 
+  shortcut2: ProjectMonitor
   shortcut3: 
   shortcut4: 
   shortcut5: 
