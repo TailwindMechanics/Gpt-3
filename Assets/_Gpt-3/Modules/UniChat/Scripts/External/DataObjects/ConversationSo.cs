@@ -12,8 +12,10 @@ namespace Modules.UniChat.External.DataObjects
 	{
 		[FoldoutGroup("Settings"), SerializeField] string username = "Guest";
 		[FoldoutGroup("Settings"), SerializeField] string botName = "Bot";
-		[FoldoutGroup("Settings"), TextArea(6, 6), SerializeField] string direction = "Unity 3d, Dots, UniRx";
-		[FoldoutGroup("Bot Settings"), HideLabel, SerializeField] ChatBotSettingsVo botSettings;
+		[FoldoutGroup("Settings"), InlineEditor, SerializeField] PineConeSettingsSo pineConeSettings;
+		[FoldoutGroup("Settings/Direction"), TextArea(6, 6), SerializeField] string direction = "Unity 3d, Dots, UniRx";
+		[FoldoutGroup("Chat Bot Settings"), HideLabel, SerializeField] ChatBotSettingsVo botSettings;
+		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModel embeddingModel;
 		[HideLabel, SerializeField] HistoryVo history;
 
 		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.\n{direction}";
@@ -21,27 +23,23 @@ namespace Modules.UniChat.External.DataObjects
 		public List<MessageVo> History				=> history.Data;
 		public string Username						=> username;
 		public string BotName						=> botName;
-		IChatBotApi api;
 
-		[FoldoutGroup("Output Logs"), Button(ButtonSizes.Medium)]
-		void OutputLogs ()
-		{
-			output = history.Data.Aggregate("", (current, item) => current + item.Json);
-		}
-		[FoldoutGroup("Output Logs"), TextArea(6, 6), SerializeField]
-		string output = "";
+        IConversationHistoryManager historyManager;
+		IChatBotApi chatBotApi;
+
+		// text-embedding-ada-002 has 1536 dimensions.
 
 		void OnEnable()
-			=> api = new ChatBotApi();
+        {
+			chatBotApi = new ChatBotApi();
+            historyManager = new ConversationHistoryManager(embeddingModel.Model, chatBotApi, pineConeSettings.Vo);
+        }
 
-		public async Task<string> GetAiReply(string messageText)
+		public async Task<(string response, List<float> embedding)> GetAiReply(string messageText)
 		{
-			if (botSettings.UseChatCompletion)
-			{
-				return await api.GetChatReply(BotDirection, history);
-			}
-
-			return await api.GetTextReply(messageText, botSettings);
+			var conversationHistory = await historyManager.RetrieveConversationHistoryAsync(messageText, history);
+			var directionWithHistory = $"{BotDirection}\nHistory: {string.Join(", ", conversationHistory.Select(x => $"({string.Join(", ", x)})"))}";
+			return await chatBotApi.GetChatReply(directionWithHistory, history, embeddingModel.Model);
 		}
 
 		public string GetPromptJson(string sender, string message)

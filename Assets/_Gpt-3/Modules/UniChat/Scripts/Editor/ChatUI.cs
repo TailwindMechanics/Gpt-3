@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEngine;
 using System;
-
+using System.Collections.Generic;
 using Modules.UniChat.External.DataObjects;
 
 
@@ -76,7 +76,7 @@ namespace Modules.UniChat.Editor
             inputBoxTextField.Focus();
         }
 
-        void AddMessage (string senderName, string messageText, bool isBot, bool reloading)
+        void AddMessage (string senderName, string messageText, bool isBot, bool reloading, List<float> embedding = null)
         {
             var newMessageVe = new ChatMessageVisualElement(senderName, messageText, DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             newMessageVe.ToggleAlignment(senderName == conversation.Username);
@@ -84,13 +84,15 @@ namespace Modules.UniChat.Editor
 
             if (reloading) return;
 
-            conversation.Add(new MessageVo(senderName, messageText, isBot));
+            var newMessage = new MessageVo(senderName, messageText, isBot);
+            if (embedding != null) newMessage.SetEmbedding(embedding);
+            conversation.Add(newMessage);
         }
 
         async Task RequestAiReply(string messageText)
         {
             var result = await conversation.GetAiReply(messageText);
-            AddMessage(conversation.BotName, result.Trim(), true, false);
+            AddMessage(conversation.BotName, result.response, true, false, result.embedding);
             SetEditorDirty();
         }
 

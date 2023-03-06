@@ -22,6 +22,9 @@ namespace Modules.UniChat.Internal.Behaviours
         string buttonLabel => Application.isPlaying
             ? "Take Runtime snapshot" : "Take Editor snapshot";
 
+        [Button("$buttonLabel", ButtonSizes.Medium), DisableIf("$processing")]
+        void TakeSnapshotButton() => TakeSnapshot();
+
         int framesCaptured;
         bool processing;
         float elapsed;
@@ -40,7 +43,13 @@ namespace Modules.UniChat.Internal.Behaviours
             processing = false;
         }
 
-        [Button("$buttonLabel", ButtonSizes.Medium), DisableIf("$processing")]
+        void Reset ()
+        {
+            output = "...";
+            framesCaptured = 0;
+            elapsed = 0f;
+        }
+
         void TakeSnapshot()
         {
             Reset();
@@ -48,14 +57,6 @@ namespace Modules.UniChat.Internal.Behaviours
             Debug.Log(Application.isPlaying
                 ? "<color=yellow><b>>>> Taking Runtime snapshot...</b></color>"
                 : "<color=yellow><b>>>> Taking Editor snapshot...</b></color>");
-        }
-
-
-        void Reset ()
-        {
-            output = "...";
-            framesCaptured = 0;
-            elapsed = 0f;
         }
 
         void PackJson ()
