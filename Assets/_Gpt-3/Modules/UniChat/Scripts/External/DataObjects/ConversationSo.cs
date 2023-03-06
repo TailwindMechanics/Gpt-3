@@ -10,7 +10,7 @@ namespace Modules.UniChat.External.DataObjects
 	[CreateAssetMenu(fileName = "new _chatConversation", menuName = "Tailwind/Chat/Conversation")]
 	public class ConversationSo : ScriptableObject
 	{
-		[Button(ButtonSizes.Medium), PropertyOrder(-1)]
+		[Button(ButtonSizes.Gigantic), PropertyOrder(-1)]
 		void Reset ()
 		{
 			history.Clear();

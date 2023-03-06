@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sampleSeconds: 3
-  output: 'Editor: {"FrameRate":"111.00fps","Timestamp":"05/03/2023 12:40","TimeSinceStartup":"2874.28s","FramesCaptured":"333","FramesSampleSeconds":"3.00s"}'
+  output: 'Editor: {"FrameRate":"116.33fps","Timestamp":"06/03/2023 19:51","TimeSinceStartup":"475.04s","FramesCaptured":"349","FramesSampleSeconds":"3.00s"}'
 --- !u!4 &1485243621
 Transform:
   m_ObjectHideFlags: 0

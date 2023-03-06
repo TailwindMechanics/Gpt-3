@@ -47,14 +47,13 @@ namespace Modules.UniChat.Editor
 
         void CreateGUI()
         {
-            chatBot = AssetDatabase.FindAssets($"t:{typeof(ScriptableObject)}")
-                .Select(guid => AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid)))
-                .OfType<IChat>()
-                .FirstOrDefault();
+            rootVisualElement.Add(AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Constants.WindowUxmlPath).Instantiate());
+            rootVisualElement.styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(Constants.WindowUssPath));
+            conversation            = AssetDatabase.LoadAssetAtPath<ConversationSo>(Constants.ConversationPath);
+            inputBoxTextField       = rootVisualElement.Q<TextField>(Constants.InputBoxTextFieldName);
+            chatBoxScrollView       = rootVisualElement.Q<ScrollView>(Constants.ChatBoxScrollViewName);
 
-            var uxmlAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/_Gpt-3/Modules/UniChat/UI/ChatWindow.uxml");
-            var ussAsset = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/_Gpt-3/Modules/UniChat/UI/ChatWindow.uss");
-            var root = rootVisualElement;
+            ResetInputField();
 
             foreach (var log in conversation.History)
             {
@@ -79,7 +78,7 @@ namespace Modules.UniChat.Editor
             });
         }
 
-        async void OnInputFieldKeyDown(KeyDownEvent evt)
+        async void OnSendMessage ()
         {
             var message = inputBoxTextField.text.Trim();
             AddMessage(conversation.Username, message, false, false);
@@ -90,10 +89,11 @@ namespace Modules.UniChat.Editor
             await RequestAiReply(prompt);
         }
 
-        void AddChatMessage(string sender, string message)
+        void ResetInputField ()
         {
-            var messageContainer = new VisualElement();
-            messageContainer.AddToClassList("message-container");
+            inputBoxTextField.SetValueWithoutNotify("");
+            inputBoxTextField.Focus();
+        }
 
         void AddMessage (string senderName, string messageText, bool isBot, bool reloading, List<float> embedding = null)
         {
@@ -123,5 +123,3 @@ namespace Modules.UniChat.Editor
         }
     }
 }
-
-#endif
