@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
 
 
 namespace Modules.UniChat.External.DataObjects
@@ -10,78 +10,54 @@ namespace Modules.UniChat.External.DataObjects
 	[CreateAssetMenu(fileName = "new _chatConversation", menuName = "Tailwind/Chat/Conversation")]
 	public class ConversationSo : ScriptableObject
 	{
-		public List<ScriptableObject> GetScriptableObjects()
-			=> new() {history};
-		public void AppendMessage (int index, string appendage)
-			=> history.Data[index - 1].AppendMessage(appendage);
-		public void SetMemories (string message)
+		[Button(ButtonSizes.Medium), PropertyOrder(-1)]
+		void Reset ()
 		{
-			var key = "|.Memory.|";
-			if (workingMemory == null) return;
-			if (message.Contains(key) == false) return;
-
-			var split		= message.Split(key);
-			var response	= split[0].TrimEnd();
-			var memory		= split[1].TrimStart();
-
-			File.WriteAllText(AssetDatabase.GetAssetPath(workingMemory), memory);
-			EditorUtility.SetDirty(workingMemory);
+			history.Clear();
+			EditorApplication.ExecuteMenuItem("Tailwind/UniChat");
 		}
 
-		public MessageVo GetMostRecentReceived ()
-		{
-			for (var i = history.Data.Count - 1; i >= 0; i--)
-			{
-				if (history.Data[i].SenderName == CurrentUser) continue;
 
-				return history.Data[i];
-			}
+		[FoldoutGroup("Settings"), SerializeField] string username = "Guest";
+		[FoldoutGroup("Settings"), SerializeField] string botName = "Bot";
+		[FoldoutGroup("Settings"), InlineEditor, SerializeField] PineConeSettingsSo pineConeSettings;
+		[FoldoutGroup("Settings/Direction"), TextArea(6, 6), SerializeField] string direction = "Unity 3d, Dots, UniRx";
+		[FoldoutGroup("Chat Bot Settings"), HideLabel, SerializeField] ChatBotSettingsVo botSettings;
+		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModel embeddingModel;
+		[HideLabel, SerializeField] HistoryVo history;
 
-			return null;
-		}
-
-		public string AiName						=> aiName;
-		public OpenAISettingsVo OpenAISettings		=> openAISettings;
-		public bool ApiCallsEnabled					=> apiCallsEnabled;
-		public int LatestIndex						=> history.Data.Count;
-		public string CurrentUser					=> currentUser;
-		public List<MessageVo> History				=> history.Data;
+		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.\n{direction}";
 		public void Add (MessageVo newMessage)		=> history.Data.Add(newMessage);
+		public List<MessageVo> History				=> history.Data;
+		public string Username						=> username;
+		public string BotName						=> botName;
 
-		[FoldoutGroup("Settings"), SerializeField]
-		bool apiCallsEnabled;
-		[FoldoutGroup("Settings"), SerializeField]
-		string aiName = "Uni";
-		[FoldoutGroup("Settings"), SerializeField]
-		string currentUser = "Guest";
-		[FoldoutGroup("Settings"), SerializeField]
-		TextAsset direction;
-		[FoldoutGroup("Settings"), SerializeField]
-		TextAsset workingMemory;
+        IConversationHistoryManager historyManager;
+		IChatBotApi chatBotApi;
 
-		[FoldoutGroup("OpenAI Settings"), HideLabel, SerializeField]
-		OpenAISettingsVo openAISettings;
+		// text-embedding-ada-002 has 1536 dimensions.
 
-		[InlineEditor, SerializeField]
-		HistorySo history;
+		void OnEnable()
+        {
+			chatBotApi = new ChatBotApi();
+            historyManager = new ConversationHistoryManager(embeddingModel.Model, chatBotApi, pineConeSettings.Vo);
+        }
 
-
-		public string FormatPrompt(string newUserMessage)
+		public async Task<(string response, List<float> embedding)> GetAiReply(string messageText)
 		{
-			return new PromptTemplateVo()
-				.AddUsername(CurrentUser)
-				.AddMessage(newUserMessage)
-				.AddDirection(DirectionText)
-				.AddMemory(MemoriesText)
-				.Json();
+			var conversationHistory = await historyManager.RetrieveConversationHistoryAsync(messageText, history);
+			Debug.Log(conversationHistory);
+			// var directionWithHistory = $"{BotDirection}\nHistory: {string.Join(", ", conversationHistory.Select(x => $"({string.Join(", ", x)})"))}";
+			// Debug.Log(directionWithHistory);
+			// return await chatBotApi.GetChatReply(directionWithHistory, history, embeddingModel.Model);
+			return (null, null);
 		}
 
-		string DirectionText => direction != null
-			? direction.text
-			: "Generate a prompt template for yourself with clear character direction, with some agenda";
-
-		string MemoriesText => workingMemory != null
-			? workingMemory.text
-			: "|.Memory.|";
+		public string GetPromptJson(string sender, string message)
+			=> new PromptTemplateVo()
+				.AddSystem(BotDirection)
+				.AddUsername(sender)
+				.AddMessage(message)
+				.Json();
 	}
 }

@@ -1,9 +1,10 @@
-#if UNITY_EDITOR
-
+using System.Collections.Generic;
+using Event = UnityEngine.Event;
+using System.Threading.Tasks;
 using UnityEngine.UIElements;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using System;
 
 using Modules.UniChat.External.DataObjects;
 
@@ -12,20 +13,39 @@ namespace Modules.UniChat.Editor
 {
     public class ChatUI : EditorWindow
     {
-        ScrollView chatScrollView;
-        TextField inputField;
-        IChat chatBot;
+        ScrollView chatBoxScrollView;
+        TextField inputBoxTextField;
+        ConversationSo conversation;
+        bool aiIsTyping;
 
 
-        [MenuItem("Window/Chat Window")]
-        public static void ShowWindow()
+        [MenuItem("Tailwind/UniChat")]
+        public static void ShowWindow ()
         {
-            var window = GetWindow<ChatUI>();
-            window.titleContent = new GUIContent("Chat Window");
-            window.minSize = new Vector2(300, 400);
+            var window              = GetWindow<ChatUI>();
+            window.titleContent     = new GUIContent("UniChat");
+            window.minSize          = new Vector2(100, 100);
+            window.Refresh();
         }
 
-        void OnEnable()
+        void Refresh()
+        {
+            // Clear and re-populate the chat history
+            chatBoxScrollView.Clear();
+            foreach (var log in conversation.History)
+            {
+                AddMessage(log.SenderName, log.Message, log.IsBot, true);
+            }
+
+            // Reset input field and scroll to the bottom of the chat box
+            ResetInputField();
+            chatBoxScrollView.scrollOffset = new Vector2(0, chatBoxScrollView.contentContainer.layout.height);
+
+            // Repaint the window to update the UI
+            Repaint();
+        }
+
+        void CreateGUI()
         {
             chatBot = AssetDatabase.FindAssets($"t:{typeof(ScriptableObject)}")
                 .Select(guid => AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid)))
@@ -36,27 +56,38 @@ namespace Modules.UniChat.Editor
             var ussAsset = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/_Gpt-3/Modules/UniChat/UI/ChatWindow.uss");
             var root = rootVisualElement;
 
-            uxmlAsset.CloneTree(root);
-            root.styleSheets.Add(ussAsset);
+            foreach (var log in conversation.History)
+            {
+                AddMessage(log.SenderName, log.Message, log.IsBot, true);
+            }
 
-            inputField = root.Q<TextField>("inputBox_textField");
-            chatScrollView = root.Q<ScrollView>("chatBox_scrollView");
+            inputBoxTextField.RegisterCallback<KeyDownEvent>(_ =>
+            {
+                if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
+                if (aiIsTyping || string.IsNullOrWhiteSpace(inputBoxTextField.text))
+                {
+                    inputBoxTextField.Focus();
+                    return;
+                }
 
-            inputField.RegisterCallback<KeyDownEvent>(OnInputFieldKeyDown);
+                OnSendMessage();
+            });
 
-            ScrollToBottomOnScrollViewChange();
+            chatBoxScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(data =>
+            {
+                chatBoxScrollView.scrollOffset = new Vector2(0, data.newRect.height);
+            });
         }
 
         async void OnInputFieldKeyDown(KeyDownEvent evt)
         {
-            if (evt.keyCode != KeyCode.Return) return;
+            var message = inputBoxTextField.text.Trim();
+            AddMessage(conversation.Username, message, false, false);
+            ResetInputField();
+            SetEditorDirty();
 
-            var message = inputField.value.Trim();
-            inputField.value = "";
-            AddChatMessage("You", message);
-            var response = await chatBot.GetResponse(message);
-            var responseText = response.Trim();
-            AddChatMessage("ChatBot", responseText);
+            var prompt = conversation.GetPromptJson(conversation.Username, message);
+            await RequestAiReply(prompt);
         }
 
         void AddChatMessage(string sender, string message)
@@ -64,24 +95,31 @@ namespace Modules.UniChat.Editor
             var messageContainer = new VisualElement();
             messageContainer.AddToClassList("message-container");
 
-            var senderLabel = new Label(sender + ":");
-            senderLabel.AddToClassList("sender-label");
+        void AddMessage (string senderName, string messageText, bool isBot, bool reloading, List<float> embedding = null)
+        {
+            var newMessageVe = new ChatMessageVisualElement(senderName, messageText, DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            newMessageVe.ToggleAlignment(senderName == conversation.Username);
+            chatBoxScrollView.Add(newMessageVe);
 
-            var messageLabel = new Label(message);
-            messageLabel.AddToClassList("message-label");
+            if (reloading) return;
 
-            messageContainer.Add(senderLabel);
-            messageContainer.Add(messageLabel);
-
-            chatScrollView.contentContainer.Add(messageContainer);
+            var newMessage = new MessageVo(senderName, messageText, isBot);
+            if (embedding != null) newMessage.SetEmbedding(embedding);
+            conversation.Add(newMessage);
         }
 
-        void ScrollToBottomOnScrollViewChange()
+        async Task RequestAiReply(string messageText)
         {
-            chatScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(data =>
-            {
-                chatScrollView.scrollOffset = new Vector2(0, data.newRect.height);
-            });
+            var result = await conversation.GetAiReply(messageText);
+            AddMessage(conversation.BotName, result.response, true, false, result.embedding);
+            SetEditorDirty();
+        }
+
+        void SetEditorDirty ()
+        {
+            EditorUtility.SetDirty(conversation);
+            AssetDatabase.SaveAssetIfDirty(conversation);
+            AssetDatabase.Refresh();
         }
     }
 }

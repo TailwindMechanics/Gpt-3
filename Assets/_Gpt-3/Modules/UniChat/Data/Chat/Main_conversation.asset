@@ -12,34 +12,115 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
-  apiCallsEnabled: 1
-  aiName: Uni
-  currentUser: Tailwind
-  direction: {fileID: 0}
-  workingMemory: {fileID: 0}
-  openAISettings:
-    model: gpt-3.5-turbo
+  username: Tail
+  botName: Frank
+  pineConeSettings: {fileID: 11400000, guid: bb8b936abbd2a4f4ebbdcb661dfe06c2, type: 2}
+  direction: You are a Unity 3d Editor Performance tool. Your brief is to monitor
+    the users Unity project health by tracking Editor performance stats, and also
+    by tracking the games runtime stats. You'll be sent a schematic of the project
+    layout, and with each github commit you'll receive information on what has changed.
+    At which time you'll be prompted to provide a status update to the user. If ever
+    you feel you don't have enough information, ask the user questions to gather
+    the context you need. Good luck, you are loved.
+  botSettings:
+    useChatCompletion: 1
     frequencyPenalty: 0.1
     presencePenalty: 0.1
     temperature: 0.5
     maxTokens: 200
+    topP: 1
+    model:
+      model: gpt-3.5-turbo
+      allModels:
+      - babbage
+      - davinci
+      - gpt-3.5-turbo-0301
+      - text-davinci-003
+      - babbage-code-search-code
+      - text-similarity-babbage-001
+      - text-davinci-001
+      - ada
+      - curie-instruct-beta
+      - babbage-code-search-text
+      - babbage-similarity
+      - gpt-3.5-turbo
+      - code-davinci-002
+      - code-search-babbage-text-001
+      - text-embedding-ada-002
+      - code-cushman-001
+      - whisper-1
+      - code-search-babbage-code-001
+      - audio-transcribe-deprecated
+      - text-ada-001
+      - text-similarity-ada-001
+      - text-davinci-insert-002
+      - ada-code-search-code
+      - ada-similarity
+      - code-search-ada-text-001
+      - text-search-ada-query-001
+      - text-curie-001
+      - text-davinci-edit-001
+      - davinci-search-document
+      - ada-code-search-text
+      - text-search-ada-doc-001
+      - code-davinci-edit-001
+      - davinci-instruct-beta
+      - text-similarity-curie-001
+      - code-search-ada-code-001
+      - ada-search-query
+      - text-search-davinci-query-001
+      - curie-search-query
+      - davinci-search-query
+      - text-davinci-insert-001
+      - babbage-search-document
+      - ada-search-document
+      - text-search-curie-query-001
+      - text-search-babbage-doc-001
+      - text-davinci-002
+      - curie-search-document
+      - text-search-curie-doc-001
+      - babbage-search-query
+      - text-babbage-001
+      - text-search-davinci-doc-001
+      - text-search-babbage-query-001
+      - curie-similarity
+      - curie
+      - text-similarity-davinci-001
+      - davinci-similarity
+      - cushman:2020-05-03
+      - ada:2020-05-03
+      - babbage:2020-05-03
+      - curie:2020-05-03
+      - davinci:2020-05-03
+      - if-davinci-v2
+      - if-curie-v2
+      - if-davinci:3.0.0
+      - davinci-if:3.0.0
+      - davinci-instruct-beta:2.0.0
+      - text-ada:001
+      - text-davinci:001
+      - text-curie:001
+      - text-babbage:001
+  embeddingModel:
+    model: text-embedding-ada-002
     allModels:
     - babbage
-    - code-davinci-002
     - davinci
-    - text-embedding-ada-002
+    - gpt-3.5-turbo-0301
+    - text-davinci-003
     - babbage-code-search-code
     - text-similarity-babbage-001
     - text-davinci-001
     - ada
     - curie-instruct-beta
-    - text-davinci-003
     - babbage-code-search-text
     - babbage-similarity
-    - curie-search-query
+    - gpt-3.5-turbo
+    - code-davinci-002
     - code-search-babbage-text-001
-    - text-davinci-002
+    - text-embedding-ada-002
     - code-cushman-001
+    - whisper-1
     - code-search-babbage-code-001
     - audio-transcribe-deprecated
     - text-ada-001
@@ -60,19 +141,21 @@ MonoBehaviour:
     - code-search-ada-code-001
     - ada-search-query
     - text-search-davinci-query-001
+    - curie-search-query
     - davinci-search-query
     - text-davinci-insert-001
     - babbage-search-document
     - ada-search-document
-    - text-search-babbage-doc-001
-    - text-search-curie-doc-001
     - text-search-curie-query-001
+    - text-search-babbage-doc-001
+    - text-davinci-002
+    - curie-search-document
+    - text-search-curie-doc-001
     - babbage-search-query
     - text-babbage-001
     - text-search-davinci-doc-001
     - text-search-babbage-query-001
     - curie-similarity
-    - curie-search-document
     - curie
     - text-similarity-davinci-001
     - davinci-similarity
@@ -90,7 +173,5 @@ MonoBehaviour:
     - text-davinci:001
     - text-curie:001
     - text-babbage:001
-    - gpt-3.5-turbo-0301
-    - gpt-3.5-turbo
-    - whisper-1
-  history: {fileID: 11400000, guid: f91bf771bb0e89243a2606cf83dc869d, type: 2}
+  history:
+    history: []

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System;
@@ -7,13 +8,20 @@ using System;
 namespace Modules.UniChat.External.DataObjects
 {
 	[Serializable]
+	public class Embedding
+	{
+		public List<float> EmbeddingVector = new();
+	}
+
+	[Serializable]
 	public class MessageVo
 	{
-		public MessageVo (string newSender, string newMessage)
+		public MessageVo (string newSender, string newMessage, bool bot)
 		{
 			senderName = newSender;
 			message = newMessage;
 			SetTimestamp();
+			isBot = bot;
 		}
 
 		public void SetTimestamp ()
@@ -24,6 +32,13 @@ namespace Modules.UniChat.External.DataObjects
 			message = message.Replace("#Response", "").TrimStart();
 		}
 
+		public Embedding Embedding => embedding;
+		public void SetEmbedding (List<float> newEmbedding)
+		{
+			embedding.EmbeddingVector = newEmbedding;
+		}
+
+		public bool IsBot => isBot;
 		public string SenderName => !string.IsNullOrWhiteSpace(senderName)
 			? senderName
 			: "Unassigned";
@@ -37,6 +52,10 @@ namespace Modules.UniChat.External.DataObjects
 			? message
 			: "Unassigned";
 
+		[FoldoutGroup("$groupName"), HideLabel, SerializeField]
+		Embedding embedding;
+		[FoldoutGroup("$groupName"), SerializeField]
+		bool isBot;
 		[FoldoutGroup("$groupName"), SerializeField]
 		string senderName;
 		[FoldoutGroup("$groupName"), SerializeField]
@@ -48,5 +67,7 @@ namespace Modules.UniChat.External.DataObjects
 		string groupName => $"{Timestamp.Substring(0, 5)} "
 		                    + $"{SenderName.Substring(0, Math.Min(SenderName.Length, 10)).TrimEnd()}... "
 		                    + $"{Message.Substring(0, Math.Min(Message.Length, 10)).Split("\n")[0]}...";
+
+		public string Json => $"{JsonUtility.ToJson(this)}\n";
 	}
 }

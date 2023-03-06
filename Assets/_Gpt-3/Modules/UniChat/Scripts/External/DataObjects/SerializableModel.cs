@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenAI;
-using OpenAI.Models;
+﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using OpenAI.Models;
 using UnityEngine;
+using System;
+using OpenAI;
 
 
 namespace Modules.UniChat.External.DataObjects
 {
 	[Serializable]
-	public class OpenAISettingsVo
+	public class SerializableModel
 	{
-		public Model Model				=> new(model);
-		public float FrequencyPenalty	=> frequencyPenalty;
-		public float PresencePenalty	=> presencePenalty;
-		public float Temperature		=> temperature;
-		public int MaxTokens			=> maxTokens;
+		public Model Model => new(model);
 
-		[ValueDropdown("$allModels"), SerializeField] string model = "text-davinci-003";
-		[Range(0f, 1f), SerializeField] float frequencyPenalty	= .1f;
-		[Range(0f, 1f), SerializeField] float presencePenalty	= .1f;
-		[Range(0f, 1f), SerializeField] float temperature		= .5f;
-		[Range(10, 500), SerializeField] int maxTokens			= 200;
-		[PropertyOrder(2), SerializeField] List<string> allModels = new();
+		[ValueDropdown("$allModels"), SerializeField] string model	= "text-davinci-003";
+		[PropertyOrder(2), SerializeField] List<string> allModels	= new();
 
 		[Button(ButtonSizes.Medium)]
 		async void RefreshModels ()
 		{
+			Debug.Log("<color=orange><b>>>> Fetching models...</b></color>");
+
 			var api		= new OpenAIClient();
 			var models	= await api.ModelsEndpoint.GetModelsAsync();
 
