@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using Event = UnityEngine.Event;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEngine;
 using System;
-using System.Collections.Generic;
+
 using Modules.UniChat.External.DataObjects;
 
 
@@ -18,12 +19,30 @@ namespace Modules.UniChat.Editor
         bool aiIsTyping;
 
 
-        [MenuItem("Tools/UniChat")]
+        [MenuItem("Tailwind/UniChat")]
         public static void ShowWindow ()
         {
             var window              = GetWindow<ChatUI>();
             window.titleContent     = new GUIContent("UniChat");
             window.minSize          = new Vector2(100, 100);
+            window.Refresh();
+        }
+
+        void Refresh()
+        {
+            // Clear and re-populate the chat history
+            chatBoxScrollView.Clear();
+            foreach (var log in conversation.History)
+            {
+                AddMessage(log.SenderName, log.Message, log.IsBot, true);
+            }
+
+            // Reset input field and scroll to the bottom of the chat box
+            ResetInputField();
+            chatBoxScrollView.scrollOffset = new Vector2(0, chatBoxScrollView.contentContainer.layout.height);
+
+            // Repaint the window to update the UI
+            Repaint();
         }
 
         void CreateGUI()

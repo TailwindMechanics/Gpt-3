@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
-using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -10,6 +10,14 @@ namespace Modules.UniChat.External.DataObjects
 	[CreateAssetMenu(fileName = "new _chatConversation", menuName = "Tailwind/Chat/Conversation")]
 	public class ConversationSo : ScriptableObject
 	{
+		[Button(ButtonSizes.Medium), PropertyOrder(-1)]
+		void Reset ()
+		{
+			history.Clear();
+			EditorApplication.ExecuteMenuItem("Tailwind/UniChat");
+		}
+
+
 		[FoldoutGroup("Settings"), SerializeField] string username = "Guest";
 		[FoldoutGroup("Settings"), SerializeField] string botName = "Bot";
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField] PineConeSettingsSo pineConeSettings;
@@ -38,8 +46,11 @@ namespace Modules.UniChat.External.DataObjects
 		public async Task<(string response, List<float> embedding)> GetAiReply(string messageText)
 		{
 			var conversationHistory = await historyManager.RetrieveConversationHistoryAsync(messageText, history);
-			var directionWithHistory = $"{BotDirection}\nHistory: {string.Join(", ", conversationHistory.Select(x => $"({string.Join(", ", x)})"))}";
-			return await chatBotApi.GetChatReply(directionWithHistory, history, embeddingModel.Model);
+			Debug.Log(conversationHistory);
+			// var directionWithHistory = $"{BotDirection}\nHistory: {string.Join(", ", conversationHistory.Select(x => $"({string.Join(", ", x)})"))}";
+			// Debug.Log(directionWithHistory);
+			// return await chatBotApi.GetChatReply(directionWithHistory, history, embeddingModel.Model);
+			return (null, null);
 		}
 
 		public string GetPromptJson(string sender, string message)

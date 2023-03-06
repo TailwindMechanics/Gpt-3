@@ -67,7 +67,6 @@ namespace Modules.UniChat.External.DataObjects
 
 		public async Task<string> AddItemsAsync(List<Dictionary<string, object>> items)
 		{
-			Debug.Log($"<color=yellow><b>>>> .: {items.Count}</b></color>");
 			var vectors = items.Select(item =>
 				new PineConeVector
 				{
@@ -89,8 +88,11 @@ namespace Modules.UniChat.External.DataObjects
 			request.Content = content;
 			request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			request.Headers.Add("Api-Key", $"{settings.ApiKey}");
-			var response = await httpClient.SendAsync(request);
 
+			Debug.Log(request);
+			return null;
+
+			var response = await httpClient.SendAsync(request);
 			try
 			{
 				response.EnsureSuccessStatusCode();
@@ -139,23 +141,16 @@ namespace Modules.UniChat.External.DataObjects
 			};
 
 			var json = JsonConvert.SerializeObject(pineConeQuery);
-			Debug.Log(json);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
-			Debug.Log(content);
-
 			var request = new HttpRequestMessage(HttpMethod.Post, settings.QueryEndpointPath)
 			{
 				Content = content
 			};
+
 			request.Headers.Add("Api-Key", $"{settings.ApiKey}");
-
-			Debug.Log(request);
-
 			var response = await httpClient.SendAsync(request);
 			response.EnsureSuccessStatusCode();
 			var responseContent = await response.Content.ReadAsStringAsync();
-
-			Debug.Log(responseContent);
 
 			return responseContent;
 		}

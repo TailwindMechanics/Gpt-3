@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using OpenAI.Models;
-using UnityEngine;
 using System.Linq;
 using System;
 
@@ -27,11 +26,8 @@ namespace Modules.UniChat.External.DataObjects
             // Get the embeddings for the current user message and the previous two AI messages
             var json = await chatBotApi.GetEmbedding(userMessage, embeddingModel);
             var jsonObject = JObject.Parse(json);
-            Debug.Log(jsonObject);
             var dataArray = JArray.FromObject(jsonObject["data"]);
-            Debug.Log(dataArray);
             var embeds = dataArray.First["embedding"];
-            Debug.Log(embeds);
             var currentMessageEmbedding = embeds.ToObject<List<float>>();
             chatHistory.Data[^1].SetEmbedding(currentMessageEmbedding);
             var previousMessagesEmbeddings = new List<List<float>>();
@@ -43,8 +39,6 @@ namespace Modules.UniChat.External.DataObjects
             }
 
             // Concatenate the embeddings
-            Debug.Log($"<color=yellow><b>>>> previousMessagesEmbeddings: {previousMessagesEmbeddings}</b></color>");
-
             var conversationHistoryEmbedding = currentMessageEmbedding;
             if (previousMessagesEmbeddings.Count > 1)
             {
