@@ -14,6 +14,7 @@ namespace Modules.UniChat.External.DataObjects
 		void Reset ()
 		{
 			history.Clear();
+			EditorApplication.ExecuteMenuItem("Tailwind/Tools/Clear Console");
 			EditorApplication.ExecuteMenuItem("Tailwind/UniChat");
 		}
 
@@ -32,10 +33,10 @@ namespace Modules.UniChat.External.DataObjects
 		public string Username						=> username;
 		public string BotName						=> botName;
 
+		// text-embedding-ada-002 has 1536 dimensions.
         IConversationHistoryManager historyManager;
 		IChatBotApi chatBotApi;
 
-		// text-embedding-ada-002 has 1536 dimensions.
 
 		void OnEnable()
         {
@@ -46,7 +47,6 @@ namespace Modules.UniChat.External.DataObjects
 		public async Task<(string response, List<float> embedding)> GetAiReply(string messageText)
 		{
 			var conversationHistory = await historyManager.RetrieveConversationHistoryAsync(messageText, history);
-			Debug.Log(conversationHistory);
 			// var directionWithHistory = $"{BotDirection}\nHistory: {string.Join(", ", conversationHistory.Select(x => $"({string.Join(", ", x)})"))}";
 			// Debug.Log(directionWithHistory);
 			// return await chatBotApi.GetChatReply(directionWithHistory, history, embeddingModel.Model);

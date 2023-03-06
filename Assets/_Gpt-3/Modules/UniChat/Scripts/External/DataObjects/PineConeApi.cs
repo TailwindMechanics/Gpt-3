@@ -27,7 +27,7 @@ namespace Modules.UniChat.External.DataObjects
 			public Dictionary<string, object> Metadata { get; set; }
 
 			[JsonProperty("values")]
-			public List<double> Values { get; set; }
+			public List<float> Values { get; set; }
 		}
 
 		[Serializable]
@@ -72,7 +72,7 @@ namespace Modules.UniChat.External.DataObjects
 				{
 					Id = item["id"].ToString(),
 					Metadata = item,
-					Values = item["embedding"] as List<double>
+					Values = item["embedding"] as List<float>
 				}).ToList();
 
 			var payload = new PineConeUpsertPayload
@@ -81,16 +81,17 @@ namespace Modules.UniChat.External.DataObjects
 				Namespace = ""
 			};
 
-			var json = JsonConvert.SerializeObject(payload);
+			var json = JsonConvert.SerializeObject(payload, new JsonSerializerSettings
+			{
+				NullValueHandling = NullValueHandling.Ignore
+			});
+
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			var request = new HttpRequestMessage(HttpMethod.Post, settings.UpsertEndpoint);
 			request.Content = content;
 			request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			request.Headers.Add("Api-Key", $"{settings.ApiKey}");
-
-			Debug.Log(request);
-			return null;
 
 			var response = await httpClient.SendAsync(request);
 			try
@@ -126,6 +127,7 @@ namespace Modules.UniChat.External.DataObjects
 					}
 				}
 			}
+
 			return neighbors;
 		}
 
@@ -157,20 +159,36 @@ namespace Modules.UniChat.External.DataObjects
 	}
 }
 
-/*
+/* PineCone Query
 
-curl - X POST\
-https: //uni-chat-long-term-memory-3e09ea9.svc.us-west1-gcp.pinecone.io/query \
-	-H 'Content-Type: application/json'\ -
-	H 'Api-Key: 8dff4d4a-72ee-457e-b397-e33c70357e53'\ -
-	d '{
-"vector": [0,0,0,0], // This has been redacted, it is 1536 dimensions
-"topK": 5,
-"includeMetadata": true,
-"includeValues": true,
-"namespace": ""
-}
+		curl - X POST\
+		https: //uni-chat-long-term-memory-3e09ea9.svc.us-west1-gcp.pinecone.io/query \
+			-H 'Content-Type: application/json'\ -
+			H 'Api-Key: 8dff4d4a-72ee-457e-b397-e33c70357e53'\ -
+			d '{
+		"vector": [0,0,0,0... // This has been redacted, it is 1536 dimensions
+		"topK": 5,
+		"includeMetadata": true,
+		"includeValues": true,
+		"namespace": ""
+		}
 '
+PineCone Query*/
 
 
-*/
+/* PineCone Upsert
+		curl -X POST \
+		    https://uni-chat-long-term-memory-3e09ea9.svc.us-west1-gcp.pinecone.io/vectors/upsert \
+		    -H 'Content-Type: application/json' \
+		    -H 'Api-Key: 8dff4d4a-72ee-457e-b397-e33c70357e53' \
+		    -d'{
+		  "vectors": [
+		    {
+		      "id": "id",
+		      "metadata": {},
+			  "values": [0,0,0,0... // This has been redacted, it is 1536 dimensions
+		    }
+		  ],
+		  "namespace": ""
+		}'
+PineCone Upsert*/

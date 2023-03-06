@@ -174,4 +174,10 @@ MonoBehaviour:
     - text-curie:001
     - text-babbage:001
   history:
-    history: []
+    history:
+    - embedding:
+        EmbeddingVector: []
+      isBot: 0
+      senderName: Tail
+      timestamp: 06/03/2023 21:08
+      message: Hello
