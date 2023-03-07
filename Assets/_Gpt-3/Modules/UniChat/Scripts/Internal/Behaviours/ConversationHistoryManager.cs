@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenAI.Models;
 using System.Linq;
-using System;
 using UnityEngine;
+using System;
+
+using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.Vo;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.Internal.Behaviours
 {
     public class ConversationHistoryManager : IConversationHistoryManager
     {

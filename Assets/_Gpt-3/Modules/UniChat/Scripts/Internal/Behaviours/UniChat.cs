@@ -1,6 +1,6 @@
 ﻿
+using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.ModulesSystem.External.DataObjects;
-using Modules.UniChat.External.DataObjects;
 
 
 namespace Modules.UniChat.Internal.Behaviours

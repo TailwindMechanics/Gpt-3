@@ -1,15 +1,16 @@
-﻿using OpenAI.Models;
+﻿using UnityEngine.Serialization;
+using Sirenix.OdinInspector;
+using OpenAI.Models;
 using UnityEngine;
 using System;
-using Sirenix.OdinInspector;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
 	public class ChatBotSettingsVo
 	{
-		public Model Model					=> model.Model;
+		public Model Model					=> modelVo.Model;
 		public float FrequencyPenalty		=> frequencyPenalty;
 		public float PresencePenalty		=> presencePenalty;
 		public float Temperature			=> temperature;
@@ -23,6 +24,6 @@ namespace Modules.UniChat.External.DataObjects
 		[Range(0f, 1f), SerializeField] float temperature			= .5f;
 		[Range(10, 500), SerializeField] int maxTokens				= 200;
 		[Range(0f, 1f), SerializeField] float topP					= 1f;
-		[HideLabel, SerializeField] SerializableModel model;
+		[FormerlySerializedAs("model")] [HideLabel, SerializeField] SerializableModelVo modelVo;
 	}
 }

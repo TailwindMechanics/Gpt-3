@@ -1,15 +1,15 @@
 ﻿#if UNITY_EDITOR
 
 using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
 using System;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
-	public class RuntimeSnapshot
+	public class RuntimeSnapshotVo
 	{
 		[JsonProperty] public string FrameRate;
 		[JsonProperty] public string Timestamp;
@@ -21,7 +21,7 @@ namespace Modules.UniChat.External.DataObjects
 		// [JsonProperty] public string MemoryUsage;
 		// [JsonProperty] public string SceneLoadTime;
 
-		public RuntimeSnapshot (float sampleSeconds, int framesCaptured)
+		public RuntimeSnapshotVo (float sampleSeconds, int framesCaptured)
 		{
 			FrameRate               = (framesCaptured / sampleSeconds).ToString("F2") + "fps";
 			TimeSinceStartup        = EditorApplication.timeSinceStartup.ToString("F2") + "s";

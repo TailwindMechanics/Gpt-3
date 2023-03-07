@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using OpenAI.Completions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OpenAI.Models;
 using OpenAI.Chat;
 using OpenAI;
 
+using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.Vo;
 
-namespace Modules.UniChat.External.DataObjects
+
+namespace Modules.UniChat.Internal.Behaviours
 {
     public class ChatBotApi : IChatBotApi
     {
@@ -35,9 +38,7 @@ namespace Modules.UniChat.External.DataObjects
             var json = await GetEmbedding(responseText, embeddingModel);
 
             var jsonObject = JObject.Parse(json);
-            var embedding = JArray.FromObject(jsonObject["data"])
-                .First["embedding"]
-                .ToObject<List<float>>();
+            var embedding = JArray.FromObject(jsonObject["data"]).First["embedding"].ToObject<List<float>>();
 
             return (responseText, embedding);
         }

@@ -1,7 +1,10 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Modules.UniChat.External.DataObjects
+using Modules.UniChat.External.DataObjects.Vo;
+
+
+namespace Modules.UniChat.External.DataObjects.So
 {
 	[CreateAssetMenu(fileName = "new _pineConeSettings", menuName = "Tailwind/PineCone/Settings")]
 	public class PineConeSettingsSo : ScriptableObject

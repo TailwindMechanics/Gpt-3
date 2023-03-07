@@ -3,13 +3,16 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Text;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using System;
 
+using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.Vo;
 
-namespace Modules.UniChat.External.DataObjects
+
+namespace Modules.UniChat.Internal.Behaviours
 {
 	public class PineConeApi : IPineConeApi
 	{

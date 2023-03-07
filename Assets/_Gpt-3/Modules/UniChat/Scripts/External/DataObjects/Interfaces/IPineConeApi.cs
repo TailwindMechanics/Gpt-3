@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Interfaces
 {
 	public interface IPineConeApi
 	{

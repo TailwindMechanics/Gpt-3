@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	public class PromptTemplateVo
 	{

@@ -1,11 +1,19 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+
+using System.Collections.Generic;
+using UnityEngine.Serialization;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
+using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.So;
+using Modules.UniChat.External.DataObjects.Vo;
+using Modules.UniChat.Internal.Behaviours;
 
-namespace Modules.UniChat.External.DataObjects
+
+namespace Modules.UniChat.Internal.DataObjects
 {
 	[CreateAssetMenu(fileName = "new _chatConversation", menuName = "Tailwind/Chat/Conversation")]
 	public class ConversationSo : ScriptableObject
@@ -24,7 +32,7 @@ namespace Modules.UniChat.External.DataObjects
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField] PineConeSettingsSo pineConeSettings;
 		[FoldoutGroup("Settings/Direction"), TextArea(6, 6), SerializeField] string direction = "Unity 3d, Dots, UniRx";
 		[FoldoutGroup("Chat Bot Settings"), HideLabel, SerializeField] ChatBotSettingsVo botSettings;
-		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModel embeddingModel;
+		[FormerlySerializedAs("embeddingModel")] [FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModelVo embeddingModelVo;
 		[HideLabel, SerializeField] HistoryVo history;
 
 		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.\n{direction}";
@@ -41,7 +49,7 @@ namespace Modules.UniChat.External.DataObjects
 		void OnEnable()
         {
 			chatBotApi = new ChatBotApi();
-            historyManager = new ConversationHistoryManager(embeddingModel.Model, chatBotApi, pineConeSettings.Vo);
+            historyManager = new ConversationHistoryManager(embeddingModelVo.Model, chatBotApi, pineConeSettings.Vo);
         }
 
 		public async Task<(string response, List<float> embedding)> GetAiReply(string messageText)
@@ -61,3 +69,5 @@ namespace Modules.UniChat.External.DataObjects
 				.Json();
 	}
 }
+
+#endif

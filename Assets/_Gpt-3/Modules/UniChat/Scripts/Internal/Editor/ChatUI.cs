@@ -1,15 +1,18 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using Event = UnityEngine.Event;
-using System.Threading.Tasks;
 using UnityEngine.UIElements;
-using UnityEditor;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEditor;
 using System;
 
-using Modules.UniChat.External.DataObjects;
+using Modules.UniChat.External.DataObjects.Vo;
+using Modules.UniChat.Internal.DataObjects;
 
 
-namespace Modules.UniChat.Editor
+namespace Modules.UniChat.Internal.Editor
 {
     public class ChatUI : EditorWindow
     {
@@ -123,3 +126,5 @@ namespace Modules.UniChat.Editor
         }
     }
 }
+
+#endif

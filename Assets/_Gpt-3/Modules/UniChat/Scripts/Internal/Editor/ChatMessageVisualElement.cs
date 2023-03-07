@@ -1,8 +1,10 @@
+#if UNITY_EDITOR
+
 using UnityEngine.UIElements;
 using UnityEditor;
 
 
-namespace Modules.UniChat.Editor
+namespace Modules.UniChat.Internal.Editor
 {
     public class ChatMessageVisualElement : VisualElement
     {
@@ -44,3 +46,5 @@ namespace Modules.UniChat.Editor
         }
     }
 }
+
+#endif

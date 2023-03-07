@@ -29,7 +29,7 @@ MonoBehaviour:
     temperature: 0.5
     maxTokens: 200
     topP: 1
-    model:
+    modelVo:
       model: gpt-3.5-turbo
       allModels:
       - babbage
@@ -101,7 +101,7 @@ MonoBehaviour:
       - text-davinci:001
       - text-curie:001
       - text-babbage:001
-  embeddingModel:
+  embeddingModelVo:
     model: text-embedding-ada-002
     allModels:
     - babbage
@@ -174,10 +174,4 @@ MonoBehaviour:
     - text-curie:001
     - text-babbage:001
   history:
-    history:
-    - embedding:
-        EmbeddingVector: []
-      isBot: 0
-      senderName: Tail
-      timestamp: 06/03/2023 21:08
-      message: Hello
+    history: []

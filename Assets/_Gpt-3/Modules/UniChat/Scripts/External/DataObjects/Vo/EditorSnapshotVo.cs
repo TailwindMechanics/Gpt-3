@@ -6,10 +6,10 @@ using UnityEngine;
 using System;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
-	public class EditorSnapshot
+	public class EditorSnapshotVo
 	{
 		[JsonProperty] public string FrameRate;
 		[JsonProperty] public string Timestamp;
@@ -21,7 +21,7 @@ namespace Modules.UniChat.External.DataObjects
 		// [JsonProperty] public string MemoryUsage;
 		// [JsonProperty] public string SceneLoadTime;
 
-		public EditorSnapshot (float sampleSeconds, int framesCaptured)
+		public EditorSnapshotVo (float sampleSeconds, int framesCaptured)
 		{
 			FrameRate               = (framesCaptured / sampleSeconds).ToString("F2") + "fps";
 			TimeSinceStartup        = EditorApplication.timeSinceStartup.ToString("F2") + "s";

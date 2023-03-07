@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
 	public class HistoryVo

@@ -4,8 +4,10 @@ using OpenAI.Models;
 using UnityEngine;
 using OpenAI;
 
+using Modules.UniChat.External.DataObjects.Interfaces;
 
-namespace Modules.UniChat.External.DataObjects
+
+namespace Modules.UniChat.External.DataObjects.So
 {
 	[CreateAssetMenu(fileName = "New Chat Bot", menuName = "Chat Bot")]
 	public class ChatBot : ScriptableObject, IChat

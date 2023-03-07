@@ -1,10 +1,8 @@
-#if UNITY_EDITOR
-
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-using Modules.UniChat.External.DataObjects;
+using Modules.UniChat.External.DataObjects.Vo;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -62,8 +60,8 @@ namespace Modules.UniChat.Internal.Behaviours
         void PackJson ()
         {
             processing = true;
-            var json = Application.isPlaying ? new RuntimeSnapshot(sampleSeconds, framesCaptured).Json
-                : new EditorSnapshot(sampleSeconds, framesCaptured).Json;
+            var json = Application.isPlaying ? new RuntimeSnapshotVo(sampleSeconds, framesCaptured).Json
+                : new EditorSnapshotVo(sampleSeconds, framesCaptured).Json;
 
             var snapshotType = Application.isPlaying ? "Runtime" : "Editor";
             var log = $"{snapshotType}: {json}";
@@ -72,5 +70,3 @@ namespace Modules.UniChat.Internal.Behaviours
         }
     }
 }
-
-#endif

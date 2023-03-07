@@ -6,10 +6,10 @@ using System;
 using OpenAI;
 
 
-namespace Modules.UniChat.External.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
-	public class SerializableModel
+	public class SerializableModelVo
 	{
 		public Model Model => new(model);
 
