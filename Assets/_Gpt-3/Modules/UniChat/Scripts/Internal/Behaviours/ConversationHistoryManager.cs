@@ -14,7 +14,7 @@ namespace Modules.UniChat.Internal.Behaviours
 {
     public class ConversationHistoryManager : IConversationHistoryManager
     {
-        readonly IPineConeApi pineConeApi;
+        readonly PineConeApi pineConeApi;
         readonly IChatBotApi chatBotApi;
         readonly Model embeddingModel;
 

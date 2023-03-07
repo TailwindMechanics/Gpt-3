@@ -101,7 +101,7 @@ MonoBehaviour:
       - text-davinci:001
       - text-curie:001
       - text-babbage:001
-  embeddingModelVo:
+  embeddingModel:
     model: text-embedding-ada-002
     allModels:
     - babbage

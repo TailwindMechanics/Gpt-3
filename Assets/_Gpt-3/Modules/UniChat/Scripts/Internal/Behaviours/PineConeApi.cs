@@ -44,7 +44,7 @@ namespace Modules.UniChat.Internal.Behaviours
 		}
 
 		[Serializable]
-		public class PineConeQuery
+		class PineConeQueryOLD
 		{
 			[JsonProperty("vector")]
 			public List<float> Vector { get; set; }
@@ -136,7 +136,7 @@ namespace Modules.UniChat.Internal.Behaviours
 
 		async Task<string> SearchAsync(List<float> query, int numNeighbors)
 		{
-			var pineConeQuery = new PineConeQuery
+			var pineConeQuery = new PineConeQueryOLD
 			{
 				Vector = query,
 				TopK = numNeighbors,
