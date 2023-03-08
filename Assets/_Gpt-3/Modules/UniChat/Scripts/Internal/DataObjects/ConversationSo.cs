@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.Interfaces.New;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
@@ -36,13 +35,15 @@ namespace Modules.UniChat.Internal.DataObjects
 		[FormerlySerializedAs("embeddingModel")] [FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModelVo embeddingModel;
 		[HideLabel, SerializeField] HistoryVo history;
 
-		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.\n{direction}";
+		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.{direction}";
 		public void Add (MessageVo newMessage)		=> history.Data.Add(newMessage);
 		public List<MessageVo> History				=> history.Data;
 		public string Username						=> username;
 		public string BotName						=> botName;
 
 		// text-embedding-ada-002 has 1536 dimensions.
+		// pinkish: ffb6c1
+		// brownish: c49c6b
   //       IConversationHistoryManager historyManager;
 		// IChatBotApi chatBotApi;
 
@@ -55,37 +56,34 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
+			// todo IEmbeddingsApi: convert the senderMessage to a senderVector
 			var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
-
-			// todo Convert the senderMessage to a senderVector
 			var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
 
-			// todo Query the senderVector, receive relevant contextual message indexes
+			// todo IVectorDatabaseApi: query the senderVector, receive relevant contextual message IDs
 			var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
-			var contextMessages = vectorDatabaseApi.Query(senderVector, true);
-				// Retrieve the indexes of contextual messages
+			var contextMessageIds = await vectorDatabaseApi.Query(senderVector, true);
 
-			// todo IChatApi
-				// Construct botPayload from direction, context, senderMessage
-				// Send botPayload, receive botMessage
+			// todo HistoryVo: retrieve context messages with IDs, and most recent messages
+			var contextMessages = history.GetManyByIdList(contextMessageIds, true);
+			var recentMessages = history.GetMostRecent(4, true);
 
-			// todo IEmbeddingsApi
-				// Convert the botMessage to a botVector
+			// todo IChatBotApi: send chatBot direction, context, senderMessage, get botReply
+			var chatBotApi = new ChatBotApi() as IChatBotApi;
+			var botReply = await chatBotApi.GetReply(message, BotDirection, contextMessages, recentMessages, true);
+
+			// todo IEmbeddingsApi: convert the botReply to a botVector
+			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);
 
 			// todo IVectorDatabaseApi
-				// Upsert the senderVector, receive the index
-				// Store the senderMessage locally with its index
+				// todo Upsert the senderVector, receive the index
+				// todo Store the senderMessage locally with its index
 
 			// todo IVectorDatabaseApi
-				// Upsert the botVector, receive the index
-				// Store the botMessage locally with its index
+				// todo Upsert the botVector, receive the index
+				// todo Store the botReply locally with its index
 
 			// todo Return bots reply for display in UI
-
-			// var conversationHistory = await historyManager.RetrieveConversationHistoryAsync(messageText, history);
-			// var directionWithHistory = $"{BotDirection}\nHistory: {string.Join(", ", conversationHistory.Select(x => $"({string.Join(", ", x)})"))}";
-			// Debug.Log(directionWithHistory);
-			// return await chatBotApi.GetChatReply(directionWithHistory, history, embeddingModel.Model);
 			return null;
 		}
 

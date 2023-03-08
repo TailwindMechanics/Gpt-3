@@ -16,8 +16,13 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	[Serializable]
 	public class MessageVo
 	{
+		[SerializeField] string id;
+		public Guid Id => Guid.Parse(id);
+
+
 		public MessageVo (string newSender, string newMessage, bool bot)
 		{
+			id = new Guid().ToString();
 			senderName = newSender;
 			message = newMessage;
 			SetTimestamp();

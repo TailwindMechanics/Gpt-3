@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using OpenAI.Completions;
-using Newtonsoft.Json;
-using OpenAI.Models;
+using System.Net.Http;
 using OpenAI.Chat;
+using UnityEngine;
 using OpenAI;
 
-using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.Interfaces.New;
 using Modules.UniChat.External.DataObjects.Vo;
 
 
@@ -17,58 +15,64 @@ namespace Modules.UniChat.Internal.Behaviours
     {
         readonly OpenAIClient openAiApi;
 
-
         public ChatBotApi()
-            => openAiApi = new OpenAIClient();
-
-        public async Task<(string response, List<float> embedding)> GetChatReply(string system, HistoryVo chatHistory, Model embeddingModel)
         {
-            var chatPrompts = new List<ChatPrompt> { new("system", system) };
-
-            chatHistory.Data.ForEach(item =>
+            try
             {
-                var key = item.IsBot ? "assistant" : "user";
-                chatPrompts.Add(new ChatPrompt(key, item.Message));
-            });
-
-            var chatRequest = new ChatRequest(chatPrompts);
-            var result = await openAiApi.ChatEndpoint.GetCompletionAsync(chatRequest);
-
-            var responseText = result.FirstChoice.ToString();
-            var json = await GetEmbedding(responseText, embeddingModel);
-
-            var jsonObject = JObject.Parse(json);
-            var embedding = JArray.FromObject(jsonObject["data"]).First["embedding"].ToObject<List<float>>();
-
-            return (responseText, embedding);
-        }
-
-        public async Task<string> GetTextReply(string messageText, ChatBotSettingsVo settings)
-        {
-            var request = new CompletionRequest
-            (
-                prompt: messageText + "\n",
-                maxTokens: settings.MaxTokens,
-                temperature: settings.Temperature,
-                presencePenalty: settings.PresencePenalty,
-                frequencyPenalty: settings.FrequencyPenalty,
-                model: settings.Model
-            );
-
-            var message = "";
-            await foreach (var token in openAiApi.CompletionsEndpoint.StreamCompletionEnumerableAsync(request))
-            {
-                var tokenString = token.ToString();
-                message += tokenString;
+                openAiApi = new OpenAIClient();
             }
-
-            return message;
+            catch (HttpRequestException ex)
+            {
+                Debug.LogError($"OpenAI error: {ex.Message}");
+                throw;
+            }
         }
 
-        public async Task<string> GetEmbedding(string message, Model model)
+        public async Task<string> GetReply(string senderMessage, string direction, List<MessageVo> context, List<MessageVo> history, bool logging = false)
         {
-            var embeddingsResponse = await openAiApi.EmbeddingsEndpoint.CreateEmbeddingAsync(message, model);
-            return JsonConvert.SerializeObject(embeddingsResponse);
+            try
+            {
+                var contextJson = JsonUtility.ToJson(context);
+                var historyJson = JsonUtility.ToJson(history);
+                var chatPrompts = new List<ChatPrompt>
+                {
+                    new("system", direction),
+                    new("system", contextJson),
+                };
+
+                if (logging)
+                {
+                    Log($"Sending senderMessage: {senderMessage}");
+                    Log($"Sending direction: {direction}");
+                    Log($"Sending context: {contextJson}");
+                    Log($"Sending history {historyJson}");
+                }
+
+                history.ForEach(item =>
+                {
+                    var key = item.IsBot ? "assistant" : "user";
+                    chatPrompts.Add(new ChatPrompt(key, item.Message));
+                });
+                chatPrompts.Add(new ChatPrompt("user", senderMessage));
+
+                var chatRequest = new ChatRequest(chatPrompts);
+                var result = await openAiApi.ChatEndpoint.GetCompletionAsync(chatRequest);
+
+                if (logging)
+                {
+                    Log($"Received chat response: {result.FirstChoice}");
+                }
+
+                return result.FirstChoice.ToString();
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.LogError($"OpenAI error: {ex.Message}");
+                throw;
+            }
         }
+
+        void Log(string message)
+            =>Debug.Log($"<color=#b7d8d8><b>>>> ChatBotApi: {message}</b></color>");
     }
 }

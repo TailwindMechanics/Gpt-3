@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using System;
 
 using Modules.UniChat.External.DataObjects.Interfaces.New;
 using Modules.UniChat.External.DataObjects.Vo;
@@ -25,24 +26,34 @@ namespace Modules.UniChat.Internal.Apis
 			httpClient = new HttpClient();
 		}
 
-		public async Task<string> Query(IReadOnlyList<double> vector, bool logging = false)
+		public async Task<List<Guid>> Query(IReadOnlyList<double> vector, bool logging = false)
 		{
 			var responseContent = await SearchAsync(vector, settings.NumberOfNeighbours, logging);
-			var json = JsonUtility.ToJson(responseContent);
-			// Debug.Log(json);
-			return json;
+			var result = new List<Guid>();
+
+			foreach (var match in responseContent.Matches)
+			{
+				if (Guid.TryParse(match.Id, out var item))
+				{
+					result.Add(item);
+				}
+				else if (logging)
+				{
+					Log($"Failed to parse PineCone id: '{match.Id}'");
+				}
+			}
+
+			return result;
 		}
 
 		public Task<string> Upsert(string message)
-		{
-			throw new System.NotImplementedException();
-		}
+			=> throw new NotImplementedException();
 
 		async Task<PineConeResponseVo> SearchAsync(IEnumerable<double> vector, int numNeighbors, bool logging)
 		{
 			if (logging)
 			{
-				Log("Sending Pinecone search request...");
+				Log("Sending PineCone search request...");
 			}
 
 			try
@@ -73,7 +84,7 @@ namespace Modules.UniChat.Internal.Apis
 
 				if (logging)
 				{
-					Log($"Received Pinecone search response with {data.Matches.Length} matches");
+					Log($"Received PineCone search response with {data.Matches.Length} matches");
 				}
 
 				return data;
@@ -90,7 +101,7 @@ namespace Modules.UniChat.Internal.Apis
 			}
 		}
 
-		void Log (string message) => Debug.Log($"<color=#B4FFFF><b>>>> VectorDatabaseApi: {message}</b></color>");
+		void Log (string message) => Debug.Log($"<color=#b4fff><b>>>> VectorDatabaseApi: {message}</b></color>");
 	}
 }
 /*
@@ -106,14 +117,9 @@ namespace Modules.UniChat.Internal.Apis
 }
 */
 
-
-
-
-
-
 /* PineCone Query
 		curl - X POST\
-		https: //uni-chat-long-term-memory-3e09ea9.svc.us-west1-gcp.pinecone.io/query \
+		https: //uni-chat-long-term-memory-3e09ea9.svc.us-west1-gcp.PineCone.io/query \
 			-H 'Content-Type: application/json'\ -
 			H 'Api-Key: 8dff4d4a-72ee-457e-b397-e33c70357e53'\ -
 			d '{
