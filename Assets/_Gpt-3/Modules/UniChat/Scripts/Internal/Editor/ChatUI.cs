@@ -78,6 +78,7 @@ namespace Modules.UniChat.Internal.Editor
         {
             var message = inputBoxTextField.text.Trim();
             DisplayMessage(conversation.Username, message);
+            ResetInputField();
             await RequestChatBotReply(conversation.Username, message);
         }
 

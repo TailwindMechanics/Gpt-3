@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System;
@@ -8,21 +7,15 @@ using System;
 namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
-	public class Embedding
-	{
-		public List<float> EmbeddingVector = new();
-	}
-
-	[Serializable]
 	public class MessageVo
 	{
 		[SerializeField] string id;
 		public Guid Id => Guid.Parse(id);
 
 
-		public MessageVo (string newSender, string newMessage, bool bot)
+		public MessageVo (Guid newId, string newSender, string newMessage, bool bot)
 		{
-			id = new Guid().ToString();
+			id = newId.ToString();
 			senderName = newSender;
 			message = newMessage;
 			SetTimestamp();
@@ -35,12 +28,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		{
 			message += appendage;
 			message = message.Replace("#Response", "").TrimStart();
-		}
-
-		public Embedding Embedding => embedding;
-		public void SetEmbedding (List<float> newEmbedding)
-		{
-			embedding.EmbeddingVector = newEmbedding;
 		}
 
 		public bool IsBot => isBot;
@@ -57,8 +44,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 			? message
 			: "Unassigned";
 
-		[FoldoutGroup("$groupName"), HideLabel, SerializeField]
-		Embedding embedding;
 		[FoldoutGroup("$groupName"), SerializeField]
 		bool isBot;
 		[FoldoutGroup("$groupName"), SerializeField]

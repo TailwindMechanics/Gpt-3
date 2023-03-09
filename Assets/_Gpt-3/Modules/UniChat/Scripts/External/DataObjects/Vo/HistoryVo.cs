@@ -31,17 +31,30 @@ namespace Modules.UniChat.External.DataObjects.Vo
 			var result = queries.Select(GetById)
 				.Where(item => item != null)
 				.ToList();
+			if (!logging) return result;
 
-			if (logging)
+			foreach (var vo in result)
 			{
-				Log($"Found {result.Count} matches of {queries.Count} queries.");
+				Log($"Match: {vo.SenderName}, {vo.Message}");
 			}
+
+			Log($"Found {result.Count} matches of {queries.Count} queries.");
 
 			return result;
 		}
 
 		public MessageVo GetById (Guid query)
 			=> Data.FirstOrDefault(item => item.Id == query);
+		public void Add (MessageVo newMessage, bool logging = false)
+		{
+			history.Add(newMessage);
+
+			if (logging)
+			{
+				Log($"Added new entry: {JsonUtility.ToJson(newMessage)}");
+			}
+		}
+
 		public void Clear ()
 			=> history.Clear();
 		public List<MessageVo> Data

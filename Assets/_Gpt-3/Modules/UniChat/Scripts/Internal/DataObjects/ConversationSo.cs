@@ -1,17 +1,15 @@
 ﻿#if UNITY_EDITOR
 
 using System.Collections.Generic;
-using UnityEngine.Serialization;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-using Modules.UniChat.External.DataObjects.Interfaces.New;
+using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Apis;
-using Modules.UniChat.Internal.Behaviours;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -31,37 +29,27 @@ namespace Modules.UniChat.Internal.DataObjects
 		[FoldoutGroup("Settings"), SerializeField] string botName = "Bot";
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField] PineConeSettingsSo pineConeSettings;
 		[FoldoutGroup("Settings/Direction"), TextArea(6, 6), SerializeField] string direction = "Unity 3d, Dots, UniRx";
-		[FoldoutGroup("Chat Bot Settings"), HideLabel, SerializeField] ChatBotSettingsVo botSettings;
-		[FormerlySerializedAs("embeddingModel")] [FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModelVo embeddingModel;
+		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModelVo embeddingModel;
 		[HideLabel, SerializeField] HistoryVo history;
 
 		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.{direction}";
-		public void Add (MessageVo newMessage)		=> history.Data.Add(newMessage);
 		public List<MessageVo> History				=> history.Data;
 		public string Username						=> username;
 		public string BotName						=> botName;
 
-		// text-embedding-ada-002 has 1536 dimensions.
-		// pinkish: ffb6c1
-		// brownish: c49c6b
-  //       IConversationHistoryManager historyManager;
-		// IChatBotApi chatBotApi;
-
-
-		void OnEnable()
-        {
-			// chatBotApi = new ChatBotApi();
-   //          historyManager = new ConversationHistoryManager(embeddingModelVo.Model, chatBotApi, pineConeSettings.Vo);
-        }
 
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
+			Log($"Requesting bot reply for user message: '{message}'");
+
+			var embeddingsApi		= new EmbeddingsApi() as IEmbeddingsApi;
+			var vectorDatabaseApi	= new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
+			var chatBotApi			= new ChatBotApi() as IChatBotApi;
+
 			// todo IEmbeddingsApi: convert the senderMessage to a senderVector
-			var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
 			var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
 
 			// todo IVectorDatabaseApi: query the senderVector, receive relevant contextual message IDs
-			var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 			var contextMessageIds = await vectorDatabaseApi.Query(senderVector, true);
 
 			// todo HistoryVo: retrieve context messages with IDs, and most recent messages
@@ -69,30 +57,30 @@ namespace Modules.UniChat.Internal.DataObjects
 			var recentMessages = history.GetMostRecent(4, true);
 
 			// todo IChatBotApi: send chatBot direction, context, senderMessage, get botReply
-			var chatBotApi = new ChatBotApi() as IChatBotApi;
 			var botReply = await chatBotApi.GetReply(message, BotDirection, contextMessages, recentMessages, true);
 
 			// todo IEmbeddingsApi: convert the botReply to a botVector
 			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);
 
-			// todo IVectorDatabaseApi
-				// todo Upsert the senderVector, receive the index
-				// todo Store the senderMessage locally with its index
+			// todo IVectorDatabaseApi: Upsert the senderVector, receive the index
+			var senderMessageId = await vectorDatabaseApi.Upsert(senderVector, true);
 
-			// todo IVectorDatabaseApi
-				// todo Upsert the botVector, receive the index
-				// todo Store the botReply locally with its index
+			// todo HistoryVo: Store the senderMessage locally with its index
+			history.Add(new MessageVo(senderMessageId, sender, message, false), true);
+
+			// todo IVectorDatabaseApi: Upsert the botVector, receive the index
+			var botMessageId = await vectorDatabaseApi.Upsert(botVector, true);
+
+			// todo HistoryVo: Store the botReply locally with its index
+			history.Add(new MessageVo(botMessageId, botName, botReply, true), true);
 
 			// todo Return bots reply for display in UI
-			return null;
+			Log($"Returning chat bot reply: '{botReply}'");
+			return botReply;
 		}
 
-		public string GetPromptJson(string sender, string message)
-			=> new PromptTemplateVo()
-				.AddSystem(BotDirection)
-				.AddUsername(sender)
-				.AddMessage(message)
-				.Json();
+		void Log (string message)
+			=> Debug.Log($"<color=#c49c6b><b>>>> ConversationSo: {message}</b></color>");
 	}
 }
 

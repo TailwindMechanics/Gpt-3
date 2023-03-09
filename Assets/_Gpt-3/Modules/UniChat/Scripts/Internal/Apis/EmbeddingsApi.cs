@@ -5,7 +5,7 @@ using OpenAI.Models;
 using UnityEngine;
 using OpenAI;
 
-using Modules.UniChat.External.DataObjects.Interfaces.New;
+using Modules.UniChat.External.DataObjects.Interfaces;
 
 
 namespace Modules.UniChat.Internal.Apis
@@ -44,6 +44,7 @@ namespace Modules.UniChat.Internal.Apis
 			}
 		}
 
-		void Log (string message) => Debug.Log($"<color=#FDFD96><b>>>> EmbeddingsApi: {message}</b></color>");
+		void Log (string message)
+			=> Debug.Log($"<color=#FDFD96><b>>>> EmbeddingsApi: {message}</b></color>");
 	}
 }

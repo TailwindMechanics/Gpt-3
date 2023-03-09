@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using OpenAI.Models;
 
 
-namespace Modules.UniChat.External.DataObjects.Interfaces.New
+namespace Modules.UniChat.External.DataObjects.Interfaces
 {
 	public interface IEmbeddingsApi
 	{

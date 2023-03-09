@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System.Net.Http;
 using OpenAI.Chat;
 using UnityEngine;
 using OpenAI;
 
-using Modules.UniChat.External.DataObjects.Interfaces.New;
+using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.Vo;
 
 
-namespace Modules.UniChat.Internal.Behaviours
+namespace Modules.UniChat.Internal.Apis
 {
     public class ChatBotApi : IChatBotApi
     {
@@ -32,22 +33,13 @@ namespace Modules.UniChat.Internal.Behaviours
         {
             try
             {
-                var contextJson = JsonUtility.ToJson(context);
-                var historyJson = JsonUtility.ToJson(history);
-                var chatPrompts = new List<ChatPrompt>
-                {
-                    new("system", direction),
-                    new("system", contextJson),
-                };
+                var chatPrompts = new List<ChatPrompt> {new("system", direction)};
 
-                if (logging)
+                context.ForEach(item =>
                 {
-                    Log($"Sending senderMessage: {senderMessage}");
-                    Log($"Sending direction: {direction}");
-                    Log($"Sending context: {contextJson}");
-                    Log($"Sending history {historyJson}");
-                }
-
+                    var key = item.IsBot ? "assistant" : "user";
+                    chatPrompts.Add(new ChatPrompt(key, item.Message));
+                });
                 history.ForEach(item =>
                 {
                     var key = item.IsBot ? "assistant" : "user";
@@ -56,6 +48,12 @@ namespace Modules.UniChat.Internal.Behaviours
                 chatPrompts.Add(new ChatPrompt("user", senderMessage));
 
                 var chatRequest = new ChatRequest(chatPrompts);
+
+                if (logging)
+                {
+                    Log($"Sending chatRequest: {JsonConvert.SerializeObject(chatRequest)}");
+                }
+
                 var result = await openAiApi.ChatEndpoint.GetCompletionAsync(chatRequest);
 
                 if (logging)
