@@ -38,6 +38,9 @@ namespace Modules.UniChat.Internal.DataObjects
 		public string BotName						=> botName;
 
 
+		// todo Next thing to do is Temporal memories:
+			// todo when a match is found retrieve the message prev and next, or some combination
+			// or perhaps retrieve chunks to be send to a cheaper ai to summarise
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
 			Log($"Requesting bot reply for user message: '{message}'");
