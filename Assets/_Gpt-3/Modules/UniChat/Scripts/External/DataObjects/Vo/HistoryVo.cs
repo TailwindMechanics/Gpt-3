@@ -28,9 +28,19 @@ namespace Modules.UniChat.External.DataObjects.Vo
 
 		public List<MessageVo> GetManyByIdList (List<Guid> queries, bool logging = false)
 		{
-			var result = queries.Select(GetById)
-				.Where(item => item != null)
-				.ToList();
+			var result = new List<MessageVo>();
+			foreach (var log in Data)
+			{
+				if (log.Id == Guid.Empty) continue;
+
+				foreach (var query in queries)
+				{
+					if (query != log.Id) continue;
+
+					result.Add(log);
+				}
+			}
+
 			if (!logging) return result;
 
 			foreach (var vo in result)
@@ -63,6 +73,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		[SerializeField] List<MessageVo> history;
 
 		void Log (string message)
-			=> Debug.Log($"<color=#ffb6c1><b>>>> HistoryVo: {message}</b></color>");
+			=> Debug.Log($"<color=#ffb6c1><b>>>> HistoryVo: {message.Replace("\n", "")}</b></color>");
 	}
 }

@@ -16,8 +16,16 @@ namespace Modules.UniChat.Internal.Apis
 {
 	public class VectorDatabaseApi : IVectorDatabaseApi
 	{
+		const string indexStats		= "/describe_index_stats";
+		const string upsert			= "/vectors/upsert";
+		const string deleteVectors	= "/vectors/delete";
+		const string query			= "/query";
+		const int numNeighbours		= 5;
+
 		readonly PineConeSettingsVo settings;
 		readonly HttpClient httpClient;
+
+		string Url (string endPoint) => $"{settings.IndexUrl}{endPoint}";
 
 
 		public VectorDatabaseApi (PineConeSettingsVo settingsVo)
@@ -35,7 +43,7 @@ namespace Modules.UniChat.Internal.Apis
 					Log("Sending PineCone DescribeIndexStats request...");
 				}
 
-				var request = new HttpRequestMessage(HttpMethod.Get, $"{settings.IndexEndpoint}");
+				var request = new HttpRequestMessage(HttpMethod.Get, Url(indexStats));
 				request.Headers.Add("Api-Key", settings.ApiKey);
 
 				var response = await httpClient.SendAsync(request);
@@ -58,15 +66,18 @@ namespace Modules.UniChat.Internal.Apis
 			}
 		}
 
-		public async Task<List<Guid>> Query(IEnumerable<double> vector, bool logging = false)
+		public async Task<List<Guid>> Query(string nameSpace, IEnumerable<double> vector, float minScore, bool logging = false)
 		{
-			var responseContent = await SearchAsync(vector, settings.NumberOfNeighbours, logging);
+			var responseContent = await SearchAsync(nameSpace, vector, numNeighbours, logging);
 			var result = new List<Guid>();
 
 			foreach (var match in responseContent.Matches)
 			{
+				if (match.Score < minScore) continue;
+
 				if (Guid.TryParse(match.Id, out var item))
 				{
+					Log($"Score: {match.Score}");
 					result.Add(item);
 				}
 				else if (logging)
@@ -78,7 +89,7 @@ namespace Modules.UniChat.Internal.Apis
 			return result;
 		}
 
-		public async Task<Guid> Upsert(IEnumerable<double> vector, bool logging = false)
+		public async Task<Guid> Upsert(string nameSpace, IEnumerable<double> vector, bool logging = false)
 		{
 			try
 			{
@@ -90,12 +101,13 @@ namespace Modules.UniChat.Internal.Apis
 				};
 				var upsertRequest = new VectorDatabaseUpsertRequest
 				{
-					Vectors = new List<VectorDatabaseUpsertItem> { item }
+					Vectors = new List<VectorDatabaseUpsertItem> { item },
+					Namespace = nameSpace
 				};
 
 				var json = JsonConvert.SerializeObject(upsertRequest);
 				var content = new StringContent(json, Encoding.UTF8, "application/json");
-				var request = new HttpRequestMessage(HttpMethod.Post, settings.UpsertEndpoint)
+				var request = new HttpRequestMessage(HttpMethod.Post, Url(upsert))
 				{
 					Content = content
 				};
@@ -104,29 +116,28 @@ namespace Modules.UniChat.Internal.Apis
 				var response = await httpClient.SendAsync(request);
 
 				response.EnsureSuccessStatusCode();
-				var responseContent = await response.Content.ReadAsStringAsync();
 
 				if (logging)
 				{
-					Log($"Upserted {upsertRequest.Vectors.Count} vectors to VectorDatabase");
+					Log($"Upserted {upsertRequest.Vectors.Count} vectors to VectorDatabase in namespace: {nameSpace}");
 				}
 
 				return id;
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Error upserting data to VectorDatabase: {ex.Message}");
+				Debug.LogError($"Error upserting data to VectorDatabase: {ex.Message} in namespace: {nameSpace}");
 				throw;
 			}
 		}
 
-		public async Task DeleteAll(string nameSpace = null, bool logging = false)
+		public async Task DeleteAllVectorsInNamespace(string nameSpace, bool logging = false)
 		{
 			try
 			{
 				if (logging)
 				{
-					Log($"Sending PineCone Delete All request{InNameSpace(nameSpace)}...");
+					Log($"Sending PineCone Delete All in namespace request, namespace: {nameSpace}...");
 				}
 
 				var deleteAllRequest = new PineConeDeleteRequestVo
@@ -137,7 +148,7 @@ namespace Modules.UniChat.Internal.Apis
 
 				var json = JsonConvert.SerializeObject(deleteAllRequest);
 				var content = new StringContent(json, Encoding.UTF8, "application/json");
-				var request = new HttpRequestMessage(HttpMethod.Post, settings.DeleteEndpoint)
+				var request = new HttpRequestMessage(HttpMethod.Post, Url(deleteVectors))
 				{
 					Content = content
 				};
@@ -146,26 +157,25 @@ namespace Modules.UniChat.Internal.Apis
 				var response = await httpClient.SendAsync(request);
 
 				response.EnsureSuccessStatusCode();
-				var responseContent = await response.Content.ReadAsStringAsync();
 
 				if (logging)
 				{
-					Log($"Delete all response{InNameSpace(nameSpace)}, response: {response.StatusCode}");
+					Log($"Delete All in namespace response, namespace: {nameSpace}, response: {response.StatusCode}");
 				}
 			}
 
 			catch (Exception ex)
 			{
-				Debug.LogError($"Error deleting data from VectorDatabase: {ex.Message}");
+				Debug.LogError($"Error deleting data from VectorDatabase: {ex.Message}, namespace: {nameSpace}");
 				throw;
 			}
 		}
 
-		async Task<PineConeResponseVo> SearchAsync(IEnumerable<double> vector, int numNeighbors, bool logging)
+		async Task<PineConeResponseVo> SearchAsync(string nameSpace, IEnumerable<double> vector, int numNeighbors, bool logging)
 		{
 			if (logging)
 			{
-				Log("Sending PineCone search request...");
+				Log($"Sending PineCone search request in namespace: {nameSpace}...");
 			}
 
 			try
@@ -176,12 +186,12 @@ namespace Modules.UniChat.Internal.Apis
 					TopK = numNeighbors,
 					IncludeMetadata = true,
 					IncludeValues = true,
-					Namespace = ""
+					Namespace = nameSpace
 				};
 
 				var json = JsonConvert.SerializeObject(pineConeQuery);
 				var content = new StringContent(json, Encoding.UTF8, "application/json");
-				var request = new HttpRequestMessage(HttpMethod.Post, settings.QueryEndpointPath)
+				var request = new HttpRequestMessage(HttpMethod.Post, Url(query))
 				{
 					Content = content
 				};
@@ -196,25 +206,22 @@ namespace Modules.UniChat.Internal.Apis
 
 				if (logging)
 				{
-					Log($"Received PineCone search response with {data.Matches.Length} matches");
+					Log($"Received PineCone search response with {data.Matches.Length} matches  in namespace: {nameSpace}");
 				}
 
 				return data;
 			}
 			catch (HttpRequestException ex)
 			{
-				Debug.LogError($"HTTP request error: {ex.Message}");
+				Debug.LogError($"HTTP request error: {ex.Message} in namespace: {nameSpace}");
 				throw;
 			}
 			catch (JsonException ex)
 			{
-				Debug.LogError($"JSON deserialization error: {ex.Message}");
+				Debug.LogError($"JSON deserialization error: {ex.Message} in namespace: {nameSpace}");
 				throw;
 			}
 		}
-
-		string InNameSpace(string nameSpace)
-			=> !string.IsNullOrWhiteSpace(nameSpace) ? $" in namespace: {nameSpace}" : "";
 
 		void Log (string message)
 			=> Debug.Log($"<color=#B7D8BA><b>>>> VectorDatabaseApi: {message.Replace("\n", "")}</b></color>");
