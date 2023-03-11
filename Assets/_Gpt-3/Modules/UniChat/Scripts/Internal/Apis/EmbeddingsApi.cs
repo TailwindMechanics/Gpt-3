@@ -45,6 +45,6 @@ namespace Modules.UniChat.Internal.Apis
 		}
 
 		void Log (string message)
-			=> Debug.Log($"<color=#FDFD96><b>>>> EmbeddingsApi: {message}</b></color>");
+			=> Debug.Log($"<color=#E0E08D><b>>>> EmbeddingsApi: {message.Replace("\n", "")}</b></color>");
 	}
 }

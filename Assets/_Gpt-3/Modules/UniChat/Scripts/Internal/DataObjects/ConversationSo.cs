@@ -25,14 +25,30 @@ namespace Modules.UniChat.Internal.DataObjects
 			EditorApplication.ExecuteMenuItem("Tailwind/UniChat");
 		}
 
-		[FoldoutGroup("Settings"), SerializeField] string username = "Guest";
-		[FoldoutGroup("Settings"), SerializeField] string botName = "Bot";
-		[FoldoutGroup("Settings"), InlineEditor, SerializeField] PineConeSettingsSo pineConeSettings;
-		[FoldoutGroup("Settings/Direction"), TextArea(6, 6), SerializeField] string direction = "Unity 3d, Dots, UniRx";
-		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField] SerializableModelVo embeddingModel;
+		[FoldoutGroup("Settings"), SerializeField]
+		string username = "Guest";
+		[FoldoutGroup("Settings"), SerializeField]
+		string botName = "Bot";
+		[FoldoutGroup("Settings"), SerializeField]
+		TextAsset direction;
+		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
+		PineConeSettingsSo pineConeSettings;
+
+		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField]
+		SerializableModelVo embeddingModel;
+
+		[FoldoutGroup("Vdb Tools"), SerializeField]
+		Color color;
+		[FoldoutGroup("Vdb Tools"), Button(ButtonSizes.Medium)]
+		async void DescribeIndexStats ()
+			=> await new VectorDatabaseApi(pineConeSettings.Vo).DescribeIndexStats(true);
+		[FoldoutGroup("Vdb Tools"), Button(ButtonSizes.Medium)]
+		async void DeleteAllVectorsInDatabase ()
+			=> await new VectorDatabaseApi(pineConeSettings.Vo).DeleteAll("", true);
+
 		[HideLabel, SerializeField] HistoryVo history;
 
-		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.{direction}";
+		string BotDirection => $"Your name: '{botName}', the users name: '{username}'.{direction.text}";
 		public List<MessageVo> History				=> history.Data;
 		public string Username						=> username;
 		public string BotName						=> botName;
@@ -41,6 +57,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		// todo Next thing to do is Temporal memories:
 			// todo when a match is found retrieve the message prev and next, or some combination
 			// or perhaps retrieve chunks to be send to a cheaper ai to summarise
+			// internal monologue
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
 			Log($"Requesting bot reply for user message: '{message}'");
@@ -83,7 +100,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		}
 
 		void Log (string message)
-			=> Debug.Log($"<color=#c49c6b><b>>>> ConversationSo: {message}</b></color>");
+			=> Debug.Log($"<color=#ECC492><b>>>> ConversationSo: {message.Replace("\n", "")}</b></color>");
 	}
 }
 

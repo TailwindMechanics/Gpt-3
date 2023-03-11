@@ -71,6 +71,6 @@ namespace Modules.UniChat.Internal.Apis
         }
 
         void Log(string message)
-            =>Debug.Log($"<color=#b7d8d8><b>>>> ChatBotApi: {message}</b></color>");
+            =>Debug.Log($"<color=#ADD9D9><b>>>> ChatBotApi: {message.Replace("\n", "")}</b></color>");
     }
 }
