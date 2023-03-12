@@ -29,11 +29,11 @@ namespace Modules.UniChat.Internal.Apis
             }
         }
 
-        public async Task<string> GetReply(string senderMessage, string direction, List<MessageVo> context, List<MessageVo> history, bool logging = false)
+        public async Task<string> GetReply(string senderMessage, string direction, ModelSettingsVo settings, List<MessageVo> context, List<MessageVo> history, bool logging = false)
         {
             try
             {
-                var chatPrompts = new List<ChatPrompt> {new("system", direction)};
+                var chatPrompts = new List<ChatPrompt>();
 
                 context.ForEach(item =>
                 {
@@ -45,9 +45,20 @@ namespace Modules.UniChat.Internal.Apis
                     var key = item.IsBot ? "assistant" : "user";
                     chatPrompts.Add(new ChatPrompt(key, item.Message));
                 });
-                chatPrompts.Add(new ChatPrompt("user", senderMessage));
 
-                var chatRequest = new ChatRequest(chatPrompts);
+                chatPrompts.Add(new ChatPrompt("user", senderMessage));
+                chatPrompts.Add(new ChatPrompt("system", direction));
+
+                var chatRequest = new ChatRequest
+                (
+                    messages: chatPrompts,
+                    model: settings.Model,
+                    temperature: settings.Temperature,
+                    topP: settings.TopP,
+                    maxTokens: settings.MaxTokens,
+                    presencePenalty: settings.PresencePenalty,
+                    frequencyPenalty: settings.FrequencyPenalty
+                );
 
                 if (logging)
                 {

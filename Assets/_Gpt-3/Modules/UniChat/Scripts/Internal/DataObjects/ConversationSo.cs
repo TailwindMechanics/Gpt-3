@@ -29,8 +29,6 @@ namespace Modules.UniChat.Internal.DataObjects
 			DescribeIndexStats();
 		}
 
-		[FoldoutGroup("Settings"), Range(0f, 1f), SerializeField]
-		float memoryAccuracy = 0.8f;
 		[FoldoutGroup("Settings"), SerializeField]
 		bool upsertUserLog;
 		[FoldoutGroup("Settings"), SerializeField]
@@ -39,11 +37,14 @@ namespace Modules.UniChat.Internal.DataObjects
 		string botName = "Bot";
 		[FoldoutGroup("Settings"), SerializeField]
 		TextAsset direction;
+
+		[FoldoutGroup("Settings/Chat Bot"), HideLabel, SerializeField]
+		ModelSettingsVo modelSettings;
+		[FoldoutGroup("Settings/Embeddings Bot"), HideLabel, SerializeField]
+		SerializableModelVo embeddingModel;
+
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
 		PineConeSettingsSo pineConeSettings;
-
-		[FoldoutGroup("Embedding Model"), HideLabel, SerializeField]
-		SerializableModelVo embeddingModel;
 
 		[FoldoutGroup("Tools"), SerializeField]
 		Color color;
@@ -101,14 +102,14 @@ namespace Modules.UniChat.Internal.DataObjects
 			var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
 
 			// IVectorDatabaseApi: query the senderVector, receive relevant contextual message IDs
-			var contextMessageIds = await vectorDatabaseApi.Query(botName, senderVector, memoryAccuracy, true);
+			var contextMessageIds = await vectorDatabaseApi.Query(botName, senderVector, modelSettings.MemoryAccuracy, modelSettings.SendSimilarChatCount, true);
 
 			// HistoryVo: retrieve context messages with IDs, and most recent messages
 			var contextMessages = history.GetManyByIdList(contextMessageIds, true);
-			var recentMessages = history.GetMostRecent(4, true);
+			var recentMessages = history.GetMostRecent(modelSettings.SendChatHistoryCount, true);
 
 			// IChatBotApi: send chatBot direction, context, senderMessage, get botReply
-			var botReply = await chatBotApi.GetReply(message, BotDirection, contextMessages, recentMessages, true);
+			var botReply = await chatBotApi.GetReply(message, BotDirection, modelSettings, contextMessages, recentMessages, true);
 
 			// IEmbeddingsApi: convert the botReply to a botVector
 			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);

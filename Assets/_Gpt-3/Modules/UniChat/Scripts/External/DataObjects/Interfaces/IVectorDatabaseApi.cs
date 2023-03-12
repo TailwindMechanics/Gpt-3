@@ -9,7 +9,7 @@ namespace Modules.UniChat.External.DataObjects.Interfaces
 	{
 		Task DeleteAllVectorsInNamespace(string nameSpace, bool logging = false);
 		Task<string> DescribeIndexStats(bool logging = false);
-		Task<List<Guid>> Query(string nameSpace, IEnumerable<double> vector, float minScore, bool logging = false);
+		Task<List<Guid>> Query(string nameSpace, IEnumerable<double> vector, float minScore, int numNeighbours, bool logging = false);
 		Task<Guid> Upsert(string botName, IEnumerable<double> vector, bool logging = false);
 	}
 }

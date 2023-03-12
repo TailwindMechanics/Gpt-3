@@ -20,7 +20,6 @@ namespace Modules.UniChat.Internal.Apis
 		const string upsert			= "/vectors/upsert";
 		const string deleteVectors	= "/vectors/delete";
 		const string query			= "/query";
-		const int numNeighbours		= 5;
 
 		readonly PineConeSettingsVo settings;
 		readonly HttpClient httpClient;
@@ -66,7 +65,7 @@ namespace Modules.UniChat.Internal.Apis
 			}
 		}
 
-		public async Task<List<Guid>> Query(string nameSpace, IEnumerable<double> vector, float minScore, bool logging = false)
+		public async Task<List<Guid>> Query(string nameSpace, IEnumerable<double> vector, float minScore, int numNeighbours, bool logging = false)
 		{
 			var responseContent = await SearchAsync(nameSpace, vector, numNeighbours, logging);
 			var result = new List<Guid>();

@@ -19,6 +19,8 @@ namespace Modules.UniChat.Internal.Editor
         ConversationSo conversation;
         bool aiIsTyping;
 
+        int messageHistoryIndex;
+
 
         [MenuItem("Tailwind/UniChat")]
         public static void ShowWindow ()
@@ -58,14 +60,20 @@ namespace Modules.UniChat.Internal.Editor
 
             inputBoxTextField.RegisterCallback<KeyDownEvent>(_ =>
             {
-                if (!Event.current.Equals(Event.KeyboardEvent("Return"))) return;
-                if (aiIsTyping || string.IsNullOrWhiteSpace(inputBoxTextField.text))
+                if (Event.current.keyCode == KeyCode.Return && !aiIsTyping && !string.IsNullOrWhiteSpace(inputBoxTextField.text))
                 {
-                    inputBoxTextField.Focus();
-                    return;
+                    OnSendMessage();
                 }
-
-                OnSendMessage();
+                else if (Event.current.keyCode is KeyCode.UpArrow)
+                {
+                    messageHistoryIndex = (messageHistoryIndex - 1 + conversation.History.Count) % conversation.History.Count;
+                    inputBoxTextField.value = conversation.History[messageHistoryIndex].Message;
+                    inputBoxTextField.SelectAll();
+                }
+                if (Event.current.keyCode is KeyCode.DownArrow)
+                {
+                    messageHistoryIndex = 0;
+                }
             });
 
             chatBoxScrollView.contentContainer.RegisterCallback<GeometryChangedEvent>(data =>
