@@ -1,44 +1,33 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sirenix.OdinInspector;
-using System.Net.Http;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text;
 using UnityEngine;
 using System.IO;
 using System;
 
+using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
+using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.DataObjects;
 
 
-namespace Modules.UniChat.Internal.Behaviours
+namespace Modules.UniChat.Internal.Apis
 {
-    public class ImageRecognition : MonoBehaviour
-    {
-        [FilePath, SerializeField]
-        string imagePath;
-
-        [PropertyOrder(2),SerializeField]
-        List<LabelAnnotation> labels;
-
-        [InlineEditor, SerializeField]
-        GoogleCloudVisionSettingsSo settings;
-
-        [Button(ButtonSizes.Medium)]
-        async void LogTest()
-            => labels = await AnalyzeScreenshotAsync(imagePath);
-
-        readonly HttpClient httpClient = new();
-
-
-        async Task<List<LabelAnnotation>> AnalyzeScreenshotAsync(string screenshotPath)
+	public class ImageRecognitionApi : IImageRecognitionApi
+	{
+        public async Task<List<LabelAnnotation>> AnalyzeImage(string imagePath, GoogleCloudVisionSettingsSo settings, bool logging = false)
         {
             try
             {
-                Log($"analysing: {screenshotPath}");
+                if (logging)
+                {
+                    Log($"analysing: {imagePath}");
+                }
 
-                var imageBytes = await File.ReadAllBytesAsync(screenshotPath);
+                var httpClient = new HttpClient();
+                var imageBytes = await File.ReadAllBytesAsync(imagePath);
                 var base64Image = Convert.ToBase64String(imageBytes);
 
                 var imageRequest = new GoogleCloudVisionRequestVo
@@ -67,10 +56,15 @@ namespace Modules.UniChat.Internal.Behaviours
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var visionResponse = JsonConvert.DeserializeObject<GoogleCloudVisionResponseVo>(responseContent);
 
-                Log($"Received Google Cloud Vision response: {responseContent}");
+                if (logging)
+                {
+                    Log($"Received Google Cloud Vision response: {responseContent}");
+                }
 
                 if (visionResponse.Responses.Count > 0 && visionResponse.Responses[0].LabelAnnotations != null)
                 {
+                    if (!logging) return visionResponse.Responses[0].LabelAnnotations;
+
                     foreach (var label in visionResponse.Responses[0].LabelAnnotations)
                     {
                         Log($"Description: {label.Description}, Score: {label.Score}");
@@ -92,5 +86,5 @@ namespace Modules.UniChat.Internal.Behaviours
 
         void Log(string message)
             => Debug.Log($"<color=#B7D8BA><b>>>> ImageRecognition: {message.Replace("\n", "")}</b></color>");
-    }
+	}
 }

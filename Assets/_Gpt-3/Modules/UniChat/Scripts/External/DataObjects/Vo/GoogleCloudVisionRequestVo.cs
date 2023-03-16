@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
-namespace Modules.UniChat.Internal.DataObjects
+
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
 	public class GoogleCloudVisionRequestVo

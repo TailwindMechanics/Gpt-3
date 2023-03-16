@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
 
 
-namespace Modules.UniChat.Internal.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
 	public class LabelAnnotation
@@ -22,6 +22,6 @@ namespace Modules.UniChat.Internal.DataObjects
 		public float Topicality;
 
 		[UsedImplicitly]
-		string label => string.IsNullOrWhiteSpace(Description) ? "Label" : Description;
+		string label => string.IsNullOrWhiteSpace(Description) ? "Label" : $"{Description}: {Score}";
 	}
 }

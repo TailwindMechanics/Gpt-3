@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 
 
-namespace Modules.UniChat.Internal.DataObjects
+namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
 	public class ImageRequest
