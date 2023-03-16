@@ -587,6 +587,93 @@ Transform:
   m_Father: {fileID: 511293085}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &745274389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 745274391}
+  - component: {fileID: 745274390}
+  m_Layer: 0
+  m_Name: ImageRecognition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &745274390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745274389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d55bf13ce7afde4186283aeeb05bb5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imagePath: Assets/_Gpt-3/Modules/UniChat/Data/Screenshot_8.png
+  labels:
+  - Mid: /m/0cgh4
+    Description: Building
+    Score: 0.8781871
+    Topicality: 0.8781871
+  - Mid: /m/0d9wj
+    Description: Urban design
+    Score: 0.78688353
+    Topicality: 0.78688353
+  - Mid: /m/0191_7
+    Description: Retail
+    Score: 0.75722075
+    Topicality: 0.75722075
+  - Mid: /m/01h1dd
+    Description: Publication
+    Score: 0.7569112
+    Topicality: 0.7569112
+  - Mid: /m/0gjbg72
+    Description: Shelf
+    Score: 0.69155747
+    Topicality: 0.69155747
+  - Mid: /m/01c34b
+    Description: Flooring
+    Score: 0.6895801
+    Topicality: 0.6895801
+  - Mid: /m/07br0
+    Description: Trade
+    Score: 0.67160046
+    Topicality: 0.67160046
+  - Mid: /m/01n32
+    Description: City
+    Score: 0.66743124
+    Topicality: 0.66743124
+  - Mid: /m/0d4vn
+    Description: Hall
+    Score: 0.60995525
+    Topicality: 0.60995525
+  - Mid: /m/05hg54
+    Description: Commercial building
+    Score: 0.601255
+    Topicality: 0.601255
+  settings: {fileID: 11400000, guid: dbd1fee1ece84af42884b03792466de2, type: 2}
+--- !u!4 &745274391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745274389}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
