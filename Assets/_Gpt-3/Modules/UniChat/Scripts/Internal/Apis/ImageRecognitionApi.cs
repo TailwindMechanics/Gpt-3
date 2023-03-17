@@ -10,7 +10,6 @@ using System;
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
-using Modules.UniChat.Internal.DataObjects;
 
 
 namespace Modules.UniChat.Internal.Apis

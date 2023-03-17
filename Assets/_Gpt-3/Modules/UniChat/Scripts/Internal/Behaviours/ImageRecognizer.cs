@@ -1,16 +1,18 @@
+using Object = UnityEngine.Object;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Sirenix.OdinInspector;
+using JetBrains.Annotations;
 using UnityEngine;
-using System.IO;
+using UnityEditor;
 using System;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
+using Modules.UniChat.External.DataObjects;
 using Modules.UniChat.Internal.Apis;
-using UnityEditor;
+using Modules.Utilities.External;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -18,65 +20,87 @@ namespace Modules.UniChat.Internal.Behaviours
     [CreateAssetMenu(fileName = "new _imageRecognizer", menuName = "Tailwind/Google Cloud Vision/Image Recognizer")]
     public class ImageRecognizer : ScriptableObject
     {
-        [FolderPath, SerializeField]
-        string savePath;
-
-        [PropertyOrder(2),SerializeField]
-        List<LabelAnnotation> labels;
-
-        [InlineEditor, SerializeField]
-        GoogleCloudVisionSettingsSo settings;
-
-        [UsedImplicitly]
-        bool inProgress;
+        [FolderPath, SerializeField] string savePath;
 
 
-        [Button(ButtonSizes.Medium), HorizontalGroup("Buttons"), DisableIf("$inProgress")]
-        async void Analyze()
+        [Button(ButtonSizes.Medium)]
+        async void Capture ()
         {
-            inProgress = true;
+            Debug.Log($"<color=cyan><b>>>> Start Capture</b></color>");
 
-            var imagePath = await Capture();
-            var api = new ImageRecognitionApi() as IImageRecognitionApi;
-            labels = await api.AnalyzeImage(imagePath, settings, true);
+            var data = CaptureSceneData();
+            Debug.Log(data.Objects.Count);
+            var fileName = $"{data.TimeStamp}_{data.CameraPosition}_{data.CameraRotation}";
+            var filePath = JsonUtilities.SaveAsJsonFile(savePath, fileName, data);
 
-            inProgress = false;
+            await ImageCapture.Capture(savePath, fileName);
+
+            DoEditorRefreshAndSelect(filePath);
+
+            Debug.Log($"<color=yellow><b>>>> End Capture</b></color>");
         }
 
-        [Button(ButtonSizes.Medium), HorizontalGroup("Buttons"), DisableIf("$inProgress")]
-        void Clear () => labels.Clear();
-
-        async Task<string> Capture()
+        CameraCapturedSceneData CaptureSceneData()
         {
-            Debug.Log("Capturing image...");
-
             var cam = SceneView.lastActiveSceneView.camera;
-            var width = cam.pixelWidth;
-            var height = cam.pixelHeight;
+            var camTransform = cam.transform;
 
-            var renderTexture = new RenderTexture(width, height, 24);
-            cam.targetTexture = renderTexture;
-            var capturedImage = new Texture2D(width, height, TextureFormat.RGB24, false);
+            var capturedData = new CameraCapturedSceneData
+            {
+                TimeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm"),
+                CameraPosition = new Vector3Serializable(camTransform.position),
+                CameraRotation = new QuaternionSerializable(camTransform.rotation)
+            };
 
-            cam.Render();
-            RenderTexture.active = renderTexture;
-            capturedImage.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-            capturedImage.Apply();
+            var planes = GeometryUtility.CalculateFrustumPlanes(cam);
 
-            var bytes = capturedImage.EncodeToPNG();
-            var filePath = Path.Combine(savePath, CameraInfo(cam.transform));
-            await File.WriteAllBytesAsync(filePath, bytes);
+            var allRenderers = FindObjectsOfType<Renderer>();
+            foreach (var renderer in allRenderers)
+            {
+                if (!GeometryUtility.TestPlanesAABB(planes, renderer.bounds)) continue;
 
-            cam.targetTexture = null;
-            RenderTexture.active = null;
-            AssetDatabase.Refresh();
+                var rendTransform = renderer.transform;
+                var sceneObjectData = new SceneObjectData
+                {
+                    ObjectName = renderer.gameObject.name,
+                    ObjectPosition = new Vector3Serializable(rendTransform.position),
+                    ObjectRotation = new QuaternionSerializable(rendTransform.rotation),
+                    ObjectScale = new Vector3Serializable(rendTransform.localScale)
+                };
 
-            Debug.Log($"Image saved to {filePath}");
+                if (PrefabUtility.IsPartOfAnyPrefab(renderer))
+                {
+                    var prefabRootName = PrefabUtility.GetNearestPrefabInstanceRoot(renderer).name;
+                    sceneObjectData.PrefabRoot = prefabRootName;
+                }
 
-            return filePath;
+                var components = renderer.gameObject.GetComponents<Component>();
+                foreach (var component in components)
+                {
+                    sceneObjectData.Components.Add(component.GetType().ToString());
+                }
+
+                capturedData.Objects.Add(sceneObjectData);
+            }
+
+            return capturedData;
         }
 
-        string CameraInfo (Transform cam)
-            => $"{cam.position}_{cam.rotation.eulerAngles}_{DateTime.Now:yyyy-MM-dd_HH-mm}.png";
+        void DoEditorRefreshAndSelect (string path)
+        {
+            AssetDatabase.Refresh();
+            var exportedAsset = AssetDatabase.LoadAssetAtPath<Object>(path);
+            EditorGUIUtility.PingObject(exportedAsset);
+            Selection.activeObject = exportedAsset;
+        }
+
+        async Task<List<LabelAnnotation>> GoogleCloudVisionAnalyse(GoogleCloudVisionSettingsSo settings)
+        {
+            var cam = SceneView.lastActiveSceneView.camera.transform;
+            var fileName = $"{cam.position}_{cam.rotation.eulerAngles}_{DateTime.Now:yyyy-MM-dd_HH-mm}";
+            var imagePath = await ImageCapture.Capture(savePath, fileName);
+            var api = new ImageRecognitionApi() as IImageRecognitionApi;
+            return await api.AnalyzeImage(imagePath, settings, true);
+        }
     }
 }

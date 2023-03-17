@@ -46,9 +46,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
 		PineConeSettingsSo pineConeSettings;
 
-		[FoldoutGroup("Tools"), SerializeField]
-		Color color;
-		[FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]
+		[FoldoutGroup("Tools"), FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]
 		async void DescribeIndexStats ()
 			=> await new VectorDatabaseApi(pineConeSettings.Vo).DescribeIndexStats(true);
 		[FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]

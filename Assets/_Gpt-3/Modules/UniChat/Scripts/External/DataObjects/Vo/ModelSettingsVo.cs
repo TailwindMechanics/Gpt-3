@@ -25,7 +25,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		int sendChatHistoryCount = 4;
 		[Range(0f, 1f), Tooltip("The minimum score threshold for vdb matches, higher number = more accurate."), SerializeField]
 		float memoryAccuracy = 0.8f;
-		[Range(1, 2048), Tooltip("Maximum number of tokens the bot can use to generate a response."), SerializeField]
+		[Range(1, 8192), Tooltip("Maximum number of tokens the bot can use to generate a response."), SerializeField]
 		int maxTokens = 2048;
 		[Range(0, 1), Tooltip("Controls the randomness of the bots response."), SerializeField]
 		double temperature = 0.7;

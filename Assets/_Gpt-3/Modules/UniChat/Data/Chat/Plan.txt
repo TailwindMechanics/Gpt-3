@@ -1,0 +1,40 @@
+1. Create a new database and collection in your MongoDB Atlas cluster. Define a partial schema to enforce the chunkPosition structure while keeping chunkData schema-less.
+    a. Go to your MongoDB Atlas cluster and click on the "Collections" tab.
+    b. Click "Create Database" and enter a name for your new database (e.g., UnityScene).
+    c. In the "Collection Name" field, enter a name for your new collection (e.g., Chunks), and click "Create".
+    d. Click the ellipsis (three dots) next to your collection name (Chunks).
+    e. Click "Validation" from the dropdown menu.
+    f. Choose "Custom JSON Schema" in the "Validation Level" dropdown.
+    g. Paste the following JSON Schema into the "JSON Schema" text box:
+        {
+          "$jsonSchema": {
+            "bsonType": "object",
+            "required": ["chunkPosition"],
+            "properties": {
+              "chunkPosition": {
+                "bsonType": "object",
+                "required": ["x", "y", "z"],
+                "properties": {
+                  "x": {
+                    "bsonType": "double"
+                  },
+                  "y": {
+                    "bsonType": "double"
+                  },
+                  "z": {
+                    "bsonType": "double"
+                  }
+                }
+              },
+              "chunkData": {
+                "bsonType": "object"
+              }
+            }
+          }
+        }
+    h. Click "Update".
+2. Build a simple REST API SDK in Unity to interact with MongoDB Atlas.
+3. Insert data into your collection using the MongoDB Atlas REST API.
+4. Query your collection for chunks within a certain range of a given 3D position using the $nearSphere operator.
+5. Parse the JSON responses returned by the MongoDB Atlas REST API in Unity to extract the data you need.
+6. Use the extracted data to feed into your chatbot AI for analysis.

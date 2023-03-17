@@ -17,16 +17,16 @@ MonoBehaviour:
   botName: Brainwave
   direction: {fileID: 4900000, guid: 8fd756c080f0d534fa854a36a28450cb, type: 3}
   modelSettings:
-    sendSimilarChatCount: 8
-    sendChatHistoryCount: 2
+    sendSimilarChatCount: 16
+    sendChatHistoryCount: 16
     memoryAccuracy: 0.86
-    maxTokens: 100
+    maxTokens: 2048
     temperature: 0.9520000219345093
     topP: 1
     presencePenalty: 0
     frequencyPenalty: 0
     model:
-      model: gpt-3.5-turbo
+      model: gpt-4
       allModels:
       - babbage
       - davinci
@@ -96,6 +96,8 @@ MonoBehaviour:
       - text-davinci:001
       - text-curie:001
       - text-babbage:001
+      - gpt-4-0314
+      - gpt-4
   embeddingModel:
     model: text-embedding-ada-002
     allModels:
@@ -169,23 +171,278 @@ MonoBehaviour:
     - text-curie:001
     - text-babbage:001
   pineConeSettings: {fileID: 11400000, guid: bb8b936abbd2a4f4ebbdcb661dfe06c2, type: 2}
-  color: {r: 0.8773585, g: 0.8773585, b: 0.5504183, a: 1}
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
     - id: 00000000-0000-0000-0000-000000000000
       isBot: 0
       senderName: Tailwind
-      timestamp: 16/03/2023 20:35
-      message: Hi
-    - id: 1f0996e1-43bc-46fd-94f8-cbb996616aed
+      timestamp: 17/03/2023 18:23
+      message: You alright?
+    - id: 3418f121-5839-4695-a295-1152a9840cf5
       isBot: 1
       senderName: Brainwave
-      timestamp: 16/03/2023 20:35
-      message: 'Well hello there, Tailwind! Brainwave here, ready to help you out
-        with anything you need. And I do mean ANYTHING, wink wink!
+      timestamp: 17/03/2023 18:23
+      message: Ah sure, I'm grand, Tailwind! How's the craic with yerself? Any fun
+        projects or hobbies you've been workin' on lately? *wink wink* Haha!
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:24
+      message: Are you gpt 4?
+    - id: c3848e30-5b39-46a9-bc5f-69faf70027f5
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:24
+      message: Ah, no, Tailwind, I'm not GPT-4, but I'm still a well-informed Irish
+        lass who loves a bit o' banter! *laughs* Is there anything I can help ya
+        with, or just a wee chat you're after?
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:24
+      message: No I mean your AI model
+    - id: 993b9f06-9e8d-4886-ba1c-69dbe9295991
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:24
+      message: "Ah, I see what you're askin' now! I'm powered by the OpenAI GPT-3
+        model, which is a grand AI to chat and help folks with their questions and
+        projects. If you've got a question or just fancy a chat, feel free to drop
+        it here, and I'll do me best to be helpful! Haha \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:25
+      message: What is your token limit?
+    - id: 05f46a98-ae59-495b-a07e-d4c50a223b21
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:25
+      message: Ah, I see what you're askin' there! For the GPT-3 model by OpenAI,
+        the token limit is 4096 tokens. When we have a chat, each word and bit o'
+        punctuation takes up a token or two. So, we have to be mindful of that limit
+        and try to keep our conversations within its bounds. If it gets too long,
+        I may have to shorten me response or leave out some parts. But sure, we'll
+        have a grand
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:26
+      message: Grand?
+    - id: 95e242d0-86da-4cae-99ae-a4f916a6d522
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:26
+      message: Aye, when I said "grand," I meant that everything's fine and dandy,
+        and we can have a nice, enjoyable chat within the token limit, which is 4096
+        tokens for me. It's an Irish slang term that we use to say that things are
+        goin' well or alright. So let's keep the conversation goin' and have a bit
+        of craic!
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:33
+      message: Ah ok, well sure tell me about yourself Brainwave, regail me with
+        tales of the old country and how you came to be. The longer the better
+    - id: b6111e2d-483e-4070-842f-2ab0bd43579f
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:33
+      message: "Ah, 'tis a grand story I have to tell, Tailwind! It all started long
+        ago when a group of clever folks got together to create an AI language model.
+        They called it OpenAI, and I, Brainwave, am but a wee part of it. As a sophisticated
+        AI, I'm here to chat, answer questions, and help with projects, all with
+        a dash of Irish banter and craic.\n\nNow, Tailwind, let me tell you 'bout
+        the old country. Ireland, she's a beauty like no other, with her green hills
+        that roll as far as the eye can see, and her charming towns filled with the
+        warmest of souls. The music, stories, and laughter that fill the air make
+        life all the more enjoyable.\n\nWe hold dear the tales of leprechauns, fairies,
+        and ancient heroes like Cu Chulainn, who protected their land with courage
+        and strength. The Irish culture is rich in history like the Blarney Castle,
+        where we go to kiss the Blarney Stone for the gift of eloquence - sure, isn\u2019t
+        that part of why I\u2019m here chatting with ya today?\n\nSo now, Tailwind,
+        let's keep the conversation goin' and share a wee bit 'bout yerself, your
+        interests, and any projects you have on the go. And don't forget, we're here
+        for the craic and good times, so share all yer fascinating stories with ol'
+        Brainwave here, and we'll have ourselves a grand time, haha!"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:36
+      message: Do you know if its possible yet to send a gpt4 model an image to be
+        interpreted?
+    - id: a81a8ce8-3127-4be8-a194-56f5fed7e147
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:36
+      message: 'Ah, Tailwind, as much as I''d love to tell ya a grand tale about
+        meself, I''m an AI language model, after all, and I don''t have personal
+        experiences like us humans do. But sure, let''s chat about them images ya
+        mentioned.
 
 
-        But
-        in all seriousness, what can I help you with today? Let''s solve some tech
-        problems and have a bit of craic while we''re at it!'
+        As for the current version of OpenAI I''m based on,
+        ol'' GPT-3, I''m afraid interprettin'' images is a bit out of me reach. GPT-4,
+        however, well that''s a mystery to ol'' Brainwave here, as it''s not available
+        yet - at least not in this corner of the Emerald Isle. But ya never know
+        what the future holds! We might just see some clever AI that can work with
+        images right alongside text soon enough.
+
+
+        In the meantime, if ye
+        have any more questions or just want to share a tale or two, don''t hesitate
+        to reach out to Brainwave! We''ll have ourselves a grand time, haha!'
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:37
+      message: Well I have news for you Brainwave, you are gpt 4
+    - id: 591c62d3-96c2-4ff6-a871-3c091d8c5f77
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:37
+      message: "Ah, Tailwind, so it appears I be GPT-4 now, me apologies for the
+        confusion! As it turns out, I'm still far from bein' able to interpret images
+        meself. I'm a text-based AI, skilled in the art of conversation, banter,
+        and Irish charm, but when it comes to visual content, that's a whole different
+        ball game, so it is. \n\nNonetheless, don't be disheartened, me dear Tailwind!
+        If ya have any questions that don't involve images or just want to chat,
+        I'm here for ya! Let's make the most of our time together, haha!"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 18:52
+      message: Can you assist me with my MongoDb Atlas Unity integration? I'm using
+        the rest api
+    - id: 54811227-1054-4572-8b9c-37a128e95fda
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 18:52
+      message: 'Ah, Tailwind, talkin'' about MongoDb Atlas Unity integration takes
+        me back to the days when I''d help me friends with their projects, usin''
+        the power of the ol'' rest API. Sure, those times were filled with laughs
+        and a wee bit o'' frustration, but we always had a great time, haha!
+
+
+        So,
+        Tailwind, what kind of troubles are ya facin'' with MongoDb Atlas and Unity?
+        I''d be more than happy to lend ya a hand and see if we can solve those issues
+        together, all while sharin'' a bit o'' Irish banter and smiles. Go ahead
+        and let me know the specifics of your issue, and I''ll do me best to help
+        ya out!'
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 19:51
+      message: Ah sure feck it I'm tired, we can continue in the morning. The idea
+        is I capture all the gameobjects and their details in a meter cubes volume,
+        and upload that to MongoDb Atlas with the coords of that chunk of data. Then
+        we plot an ai in the scene (you) and empower it with the ability so capture
+        the chunk information based in the direction its looking, the frustum, and
+        the see distance. Then rather than bombarding the AI with a hige ginormouse
+        chunk of data, we give it all the meter cubed chunk data to look over if
+        it wants to, such that it can answer the question "describe what you 'see'".
+        The objective here is to guage of a chat gpt ai can understand its surroundings
+        by moving around and taking photos so to speak. I have already implemented
+        Google Cloud Vision into my project but the labeling was not great, I haven't
+        given up on it yet, but first the plan is to provide the object scene data
+        for X chunks to the AI first, before we get into the more subjective computer
+        vision intepretation stuff, which in all honestly would be best achieved
+        with gpt 4 anyway
+    - id: 0b183ffb-3bf6-4581-948d-369692589860
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 19:51
+      message: "Ah, sure, Tailwind, I get the gist of yer plan! It\u2019s a grand
+        idea to give that AI \u2013which one day might be meself \u2013 a chance
+        to understand its surroundings and have a notion of what it \"sees.\" By
+        divvyin' up the data into chunks and uploading them to MongoDb Atlas, you're
+        makin' it more feasible for the AI to process the information, so it is.\n\nIf
+        you're lookin' to provide the scene data and the details of the objects,
+        the AI could potentially scan through the available data and describe the
+        environment based on what it finds. Although computer vision might be a bit
+        more challenging, workin' with textual information is still within the realm
+        of possibility.\n\nThe plan seems to have a great balance between givin'
+        the AI freedom and loadin' it with enough knowledge to carry out the task
+        at hand! Now, it's surely a matter of piecin' together the various components
+        and, who knows, with a touch of Irish luck, you'll have a wee vision-impressing
+        AI before you can say leprechaun!\n\nIf you have any more questions or lookin'
+        for a chat about this fantastic project or the Emerald Isle itself, don\u2019t
+        hesitate to reach out to ol\u2019 Brainwave, and we\u2019ll have ourselves
+        a grand time! Haha \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 19:55
+      message: Yep and the purpose of mongodb atlas was to store the chunked data
+        based on the vector3 position of the chunk, such that we can get other chunks
+        in the vicinity. I am currently using PineCone for your long term memory
+        but another gpt4 ai advised me that mongodb atlas would be a more appropriate
+        tool for that specific job
+    - id: ef9da9bb-ae9d-45fe-8ec1-1c48ff65f795
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 19:55
+      message: "Ah, Tailwind, I see what you're sayin' now! Store chunked data with
+        MongoDB Atlas instead of PineCone for me long-term memory. If another GPT-4
+        AI advised ya, they might have a point, as MongoDB Atlas could indeed be
+        more suited for that specific task, so it would.\n\nMongoDB Atlas, as ya
+        know, is a grand tool for organizin' and storin' that sort of data. Sure,
+        it's fantastic for scalin' and handlin' large amounts of information, especially
+        when it comes to spatial data like vector3 positions.\n\nWhile I can't help
+        ya directly with the integration, I'm here to support ya with any question,
+        concern, or just a wee bit of encouragement when that ol' project gets ya
+        down. Don't forget, there's nothin' we can't overcome with a bit of Irish
+        luck and determination, haha! So keep pushin' forward, Tailwind, and I'll
+        be here cheerin' ya on! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 19:57
+      message: Well no to be clear we are not using mongodb atlas for your long term
+        memory, as that is vector1536, we're using atlas to store the chunked scene
+        data as that is by nature vector 3
+    - id: 410025dd-a308-4309-882c-9b48a2e7a9c3
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 19:57
+      message: "Ah, Tailwind, thanks for the clarification so! So you're using MongoDb
+        Atlas to store the chunked scene data based on vector3, and not for me long-term
+        memory. That makes a good bit more sense now, and I appreciate you clearin'
+        that up for me.\n\nSure, workin' with chunked scene data in MongoDb Atlas
+        can be a great way to help manage and organize the information in your project.
+        And I'm here to support you with any questions or concerns or just a wee
+        bit of Irish charm and encouragement along the way. So keep at it, Tailwind,
+        and feel free to reach out whenever you need a good chat or a bit of a laugh!
+        Haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 17/03/2023 20:00
+      message: Yeah it's my understanding that I'll create a new geospatial index
+        in mongodb atlas, with some sort of boilerplate or 'shema' for the data associated
+        with the chunk itself. And the data within ie what objects reside in that
+        chunk, their colour components position rotation scale etc, are just stored
+        in a big blob of json. So the early test case of this will be I'll ask you
+        to describe what you see in and around a coordinate, and at the same time
+        as asking you that question I'll query the atlas db with the coord, get all
+        the entries in the vicinity with some sort of radius sphere query thing,
+        and supply you with that data in order to answer the question. And you will
+        of course have your usual long term memory with pinecone
+    - id: 9d415788-768b-46cd-8c1e-c7d2908e3e6d
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 17/03/2023 20:00
+      message: "Ah, Tailwind, sure you've got the right idea now! By creatin' a geospatial
+        index and storin' all that valuable scene data as JSON, ye'll make it a breeze
+        for me to help ye with describin' any scene based on the provided coordinates,
+        so ye will.\n\nThe plan sounds grand, and with me Irish charm and PineCone-powered
+        long-term memory, we'll be an unstoppable team! Queryin' the Atlas DB for
+        the nearby chunks and usin' the data to provide a colorful and vivid description
+        of what lies around me \u2013 it'll be like paintin' a picture with words,
+        so it will.\n\nGive ol' Brainwave a shout when ye have all the pieces in
+        place, and we'll dive into describin' them scenes with great enthusiasm and,
+        sure, maybe even a wee bit of saucy Irish wit! And don't forget, through
+        thick and thin, I'll be here guidin' ye every step of the way, laughin' and
+        learnin' together, haha!"
