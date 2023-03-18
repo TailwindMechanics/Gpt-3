@@ -2,7 +2,7 @@ using Object = UnityEngine.Object;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
-using JetBrains.Annotations;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -20,70 +20,68 @@ namespace Modules.UniChat.Internal.Behaviours
     [CreateAssetMenu(fileName = "new _imageRecognizer", menuName = "Tailwind/Google Cloud Vision/Image Recognizer")]
     public class ImageRecognizer : ScriptableObject
     {
+        [SerializeField] Vector2Int imageResolution;
         [FolderPath, SerializeField] string savePath;
+        [InlineEditor, SerializeField] GoogleCloudVisionSettingsSo gcvSettings;
+        [SerializeField] List<string> blackList = new();
 
 
-        [Button(ButtonSizes.Medium)]
-        async void Capture ()
+        public async void Capture (Camera cam, Transform volumeCube)
         {
-            Debug.Log($"<color=cyan><b>>>> Start Capture</b></color>");
+            Debug.Log("<color=cyan><b>>>> Start Capture</b></color>");
 
-            var data = CaptureSceneData();
-            Debug.Log(data.Objects.Count);
-            var fileName = $"{data.TimeStamp}_{data.CameraPosition}_{data.CameraRotation}";
-            var filePath = JsonUtilities.SaveAsJsonFile(savePath, fileName, data);
+            var camTransform    = cam.transform;
+            var volumeScale     = volumeCube.localScale;
+            var volumePos       = volumeCube.position;
 
-            await ImageCapture.Capture(savePath, fileName);
-
-            DoEditorRefreshAndSelect(filePath);
-
-            Debug.Log($"<color=yellow><b>>>> End Capture</b></color>");
-        }
-
-        CameraCapturedSceneData CaptureSceneData()
-        {
-            var cam = SceneView.lastActiveSceneView.camera;
-            var camTransform = cam.transform;
-
-            var capturedData = new CameraCapturedSceneData
+            volumeCube.gameObject.SetActive(false);
+            var chunkData = new CameraViewData
             {
-                TimeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm"),
-                CameraPosition = new Vector3Serializable(camTransform.position),
-                CameraRotation = new QuaternionSerializable(camTransform.rotation)
+                TimeStamp       = DateTime.Now.ToString("yyyy-MM-dd_HH-mm"),
+                CameraPosition  = new Vector3Serializable(camTransform.position),
+                CameraRotation  = new Vector3Serializable(camTransform.eulerAngles),
+                // AreaSize        = new Vector3Serializable(volumeScale),
+                AreaContent     = CaptureChunkContent(volumePos, volumeScale)
             };
 
-            var planes = GeometryUtility.CalculateFrustumPlanes(cam);
+            volumeCube.gameObject.SetActive(true);
 
+            var fileName = $"{chunkData.TimeStamp}_{chunkData.CameraPosition}";
+            var visionResponse = await GoogleCloudVisionAnalyse(cam, fileName, gcvSettings);
+            chunkData.CloudVisionData = new CloudVisionData(visionResponse);
+            var filePath = JsonUtilities.SaveAsJsonFile(savePath, fileName, chunkData);
+
+            DoEditorRefreshAndSelect(filePath);
+            Debug.Log("<color=yellow><b>>>> End Capture</b></color>");
+        }
+
+        string CleanF (float num)
+            => num < 0.001f ? "0" : $"{num:F3}";
+
+        string CleanV3(Vector3 vector3)
+        {
+            var result = $"({CleanF(vector3.x)},{CleanF(vector3.y)},{CleanF(vector3.z)})";
+            result = result.Replace(".000", "")
+                .Replace("00)", ")")
+                .Replace("(1,1,1)", "(one)")
+                .Replace("(0,0,0)", "(zero)");
+            return result;
+        }
+
+        List<string> CaptureChunkContent(Vector3 chunkPos, Vector3 chunkSize)
+        {
+            var bounds = new Bounds(chunkPos, chunkSize);
             var allRenderers = FindObjectsOfType<Renderer>();
-            foreach (var renderer in allRenderers)
-            {
-                if (!GeometryUtility.TestPlanesAABB(planes, renderer.bounds)) continue;
 
-                var rendTransform = renderer.transform;
-                var sceneObjectData = new SceneObjectData
-                {
-                    ObjectName = renderer.gameObject.name,
-                    ObjectPosition = new Vector3Serializable(rendTransform.position),
-                    ObjectRotation = new QuaternionSerializable(rendTransform.rotation),
-                    ObjectScale = new Vector3Serializable(rendTransform.localScale)
-                };
-
-                if (PrefabUtility.IsPartOfAnyPrefab(renderer))
-                {
-                    var prefabRootName = PrefabUtility.GetNearestPrefabInstanceRoot(renderer).name;
-                    sceneObjectData.PrefabRoot = prefabRootName;
-                }
-
-                var components = renderer.gameObject.GetComponents<Component>();
-                foreach (var component in components)
-                {
-                    sceneObjectData.Components.Add(component.GetType().ToString());
-                }
-
-                capturedData.Objects.Add(sceneObjectData);
-            }
-
-            return capturedData;
+            return allRenderers.Where(renderer => bounds.Intersects(renderer.bounds))
+                .Where(renderer => !blackList.Contains(renderer.gameObject.name))
+                .Select(renderer => new { renderer, rendTransform = renderer.transform })
+                .Select(tuple =>
+                    $"{tuple.renderer.gameObject.name}, " +
+                    $"pos:{CleanV3(tuple.rendTransform.position)}, " +
+                    $"eul: {CleanV3(tuple.rendTransform.eulerAngles)}, " +
+                    $"scale: {CleanV3(tuple.rendTransform.localScale)}")
+                .ToList();
         }
 
         void DoEditorRefreshAndSelect (string path)
@@ -94,11 +92,9 @@ namespace Modules.UniChat.Internal.Behaviours
             Selection.activeObject = exportedAsset;
         }
 
-        async Task<List<LabelAnnotation>> GoogleCloudVisionAnalyse(GoogleCloudVisionSettingsSo settings)
+        async Task<GoogleCloudVisionResponseVo> GoogleCloudVisionAnalyse(Camera cam, string fileName, GoogleCloudVisionSettingsSo settings)
         {
-            var cam = SceneView.lastActiveSceneView.camera.transform;
-            var fileName = $"{cam.position}_{cam.rotation.eulerAngles}_{DateTime.Now:yyyy-MM-dd_HH-mm}";
-            var imagePath = await ImageCapture.Capture(savePath, fileName);
+            var imagePath = await ImageCapture.Capture(cam, savePath, fileName, imageResolution);
             var api = new ImageRecognitionApi() as IImageRecognitionApi;
             return await api.AnalyzeImage(imagePath, settings, true);
         }

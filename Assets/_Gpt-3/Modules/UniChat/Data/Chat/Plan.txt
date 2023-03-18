@@ -7,30 +7,30 @@
     f. Choose "Custom JSON Schema" in the "Validation Level" dropdown.
     g. Paste the following JSON Schema into the "JSON Schema" text box:
         {
-          "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["chunkPosition"],
-            "properties": {
-              "chunkPosition": {
-                "bsonType": "object",
-                "required": ["x", "y", "z"],
-                "properties": {
-                  "x": {
-                    "bsonType": "double"
-                  },
-                  "y": {
-                    "bsonType": "double"
-                  },
-                  "z": {
-                    "bsonType": "double"
-                  }
-                }
-              },
-              "chunkData": {
-                "bsonType": "object"
-              }
-            }
-          }
+        	"$jsonSchema": {
+        		"bsonType": "object",
+        		"required": ["chunkPosition"],
+        		"properties": {
+        			"chunkPosition": {
+        				"bsonType": "object",
+        				"required": ["x", "y", "z"],
+        				"properties": {
+        					"x": {
+        						"bsonType": "double"
+        					},
+        					"y": {
+        						"bsonType": "double"
+        					},
+        					"z": {
+        						"bsonType": "double"
+        					}
+        				}
+        			},
+        			"chunkContent": {
+        				"bsonType": "object"
+        			}
+        		}
+        	}
         }
     h. Click "Update".
 2. Build a simple REST API SDK in Unity to interact with MongoDB Atlas.

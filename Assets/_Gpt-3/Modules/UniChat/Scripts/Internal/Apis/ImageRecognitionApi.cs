@@ -16,7 +16,7 @@ namespace Modules.UniChat.Internal.Apis
 {
 	public class ImageRecognitionApi : IImageRecognitionApi
 	{
-        public async Task<List<LabelAnnotation>> AnalyzeImage(string imagePath, GoogleCloudVisionSettingsSo settings, bool logging = false)
+        public async Task<GoogleCloudVisionResponseVo> AnalyzeImage(string imagePath, GoogleCloudVisionSettingsSo settings, bool logging = false)
         {
             try
             {
@@ -36,7 +36,18 @@ namespace Modules.UniChat.Internal.Apis
                         new()
                         {
                             Image = new ImageContent { Content = base64Image },
-                            Features = new List<Feature> { new() { Type = "LABEL_DETECTION" } }
+                            Features = new List<Feature>
+                            {
+                                new(){Type = "LABEL_DETECTION"},
+                                new(){Type = "TEXT_DETECTION"},
+                                new(){Type = "OBJECT_LOCALIZATION"},
+                                new(){Type = "FACE_DETECTION"},
+                                new(){Type = "LANDMARK_DETECTION"},
+                                new(){Type = "LOGO_DETECTION"},
+                                new(){Type = "IMAGE_PROPERTIES"},
+                                new(){Type = "SAFE_SEARCH_DETECTION"},
+                                new(){Type = "WEB_DETECTION"},
+                            }
                         }
                     }
                 };
@@ -62,14 +73,7 @@ namespace Modules.UniChat.Internal.Apis
 
                 if (visionResponse.Responses.Count > 0 && visionResponse.Responses[0].LabelAnnotations != null)
                 {
-                    if (!logging) return visionResponse.Responses[0].LabelAnnotations;
-
-                    foreach (var label in visionResponse.Responses[0].LabelAnnotations)
-                    {
-                        Log($"Description: {label.Description}, Score: {label.Score}");
-                    }
-
-                    return visionResponse.Responses[0].LabelAnnotations;
+                    return visionResponse;
                 }
 
                 Debug.LogError("No labels found in the response.");

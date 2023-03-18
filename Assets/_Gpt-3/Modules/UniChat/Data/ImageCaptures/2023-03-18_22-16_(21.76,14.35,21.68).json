@@ -1,0 +1,48 @@
+{
+  "timestamp": "2023-03-18_22-16",
+  "camera_position": {
+    "x": 21.76138,
+    "y": 14.354,
+    "z": 21.6774673
+  },
+  "camera_rotation": {
+    "x": 0.0,
+    "y": 274.2132,
+    "z": 0.0
+  },
+  "area_content": [
+    "SM_Prop_Billboard_Sign_04, pos:(19,12.500,22), eul: (0,90,0), scale: (one)",
+    "SM_Env_Skyline_04, pos:(13.500,0,0), eul: (zero), scale: (1,0.896,1)",
+    "SM_Env_Skyline_03, pos:(13.500,0,0), eul: (zero), scale: (one)",
+    "SM_Env_Skyline_02, pos:(13.500,0,0), eul: (zero), scale: (one)",
+    "SM_Env_Skyline_01, pos:(13.500,0,0), eul: (zero), scale: (1.107,1.107,1.107)",
+    "SM_Prop_Billboard_Roof_02, pos:(19,12.500,22), eul: (0,90,0), scale: (one)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Font, score: 0.8295956",
+      "Goggles, score: 0.8264605",
+      "Sky, score: 0.7876456",
+      "Sunglasses, score: 0.7757055",
+      "Art, score: 0.7722583",
+      "Automotive wheel system, score: 0.7203864",
+      "Fun, score: 0.7195162",
+      "Recreation, score: 0.700845",
+      "Signage, score: 0.6960024",
+      "Graphics, score: 0.6911237"
+    ],
+    "text_annotations": "DONUTS",
+    "face_annotations": null,
+    "landmark_annotations": null,
+    "logo_annotations": [
+      "Description: Target Corporation, Score: 0.5501243"
+    ],
+    "image_properties_annotation": "R:184,G:96,B:118:, Score: 0.216303, PixelFraction: 0.07087301 - R:202,G:203,B:203:, Score: 0.09638368, PixelFraction: 0.1503175 - R:63,G:119,B:180:, Score: 0.01502055, PixelFraction: 0.01753968 - R:175,G:155,B:60:, Score: 0.002317285, PixelFraction: 0.002301587 - R:199,G:90,B:118:, Score: 0.208966, PixelFraction: 0.04968254 - R:202,G:126,B:148:, Score: 0.1108081, PixelFraction: 0.05047619 - R:49,G:91,B:172:, Score: 0.001063338, PixelFraction: 0.001507937 - R:190,G:142,B:159:, Score: 0.06124091, PixelFraction: 0.06230159 - R:181,G:96,B:103:, Score: 0.0381338, PixelFraction: 0.01015873 - R:203,G:88,B:110:, Score: 0.0313605, PixelFraction: 0.01039683",
+    "safe_search_annotation": "Adult:VERY_UNLIKELY, Spoof:VERY_UNLIKELY, Medical:VERY_UNLIKELY, Violence:VERY_UNLIKELY, Racy:VERY_UNLIKELY",
+    "web_detection": "Description:Visual arts, Score:0.678168 - Description:Design, Score:0.514612 - Description:Poster, Score:0.4443625 - Description:Cartoon, Score:0.4033946 - Description:Art, Score:0.3974 - Description:Pink, Score:0.3884177 - Description:Text, Score:0.3815062 - Description:Visual perception, Score:0.3491879 - Description:Meter, Score:0.333 - Description:Science, Score:0",
+    "localized_object_annotations": [
+      "Sunglasses, score: 0.8246032",
+      "Person, score: 0.7319244"
+    ]
+  }
+}

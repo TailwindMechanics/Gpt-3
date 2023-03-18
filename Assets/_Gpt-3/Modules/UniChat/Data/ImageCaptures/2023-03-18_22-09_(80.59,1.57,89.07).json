@@ -1,0 +1,51 @@
+{
+  "timestamp": "2023-03-18_22-09",
+  "camera_position": {
+    "x": 80.58947,
+    "y": 1.574,
+    "z": 89.074585
+  },
+  "camera_rotation": {
+    "x": 0.0,
+    "y": 212.749985,
+    "z": 0.0
+  },
+  "area_content": [
+    "SM_Env_Skyline_04, pos:(13.500,0,0), eul: (zero), scale: (1,0.896,1)",
+    "SM_Env_Skyline_03, pos:(13.500,0,0), eul: (zero), scale: (one)",
+    "SM_Env_Skyline_02, pos:(13.500,0,0), eul: (zero), scale: (one)",
+    "SM_Env_Skyline_01, pos:(13.500,0,0), eul: (zero), scale: (1.107,1.107,1.107)",
+    "SM_Veh_Car_Van_Wheel_fr, pos:(78.643,0.398,85.684), eul: (0,89.899,0), scale: (one)",
+    "SM_Veh_Car_Van_Wheel_fl, pos:(78.640,0.398,87.323), eul: (0,89.899,0), scale: (one)",
+    "SM_Veh_Car_Van_SteeringW, pos:(77.893,1.253,86.933), eul: (290.689,89.899,0), scale: (one)",
+    "SM_Veh_Car_Van_Plates, pos:(76.800,0,86.5), eul: (0,89.899,0), scale: (one)",
+    "SM_Veh_Car_Van_Glass, pos:(76.800,0,86.5), eul: (0,89.899,0), scale: (one)",
+    "SM_Veh_Car_Van_10, pos:(76.800,0,86.5), eul: (0,89.899,0), scale: (one)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Tire, score: 0.9786788",
+      "Automotive parking light, score: 0.9776289",
+      "Wheel, score: 0.9698637",
+      "Vehicle, score: 0.9521662",
+      "Car, score: 0.9400349",
+      "Window, score: 0.9373375",
+      "Building, score: 0.9352894",
+      "Hood, score: 0.9163148",
+      "Automotive tire, score: 0.9082633",
+      "Motor vehicle, score: 0.9019458"
+    ],
+    "text_annotations": "___",
+    "face_annotations": null,
+    "landmark_annotations": null,
+    "logo_annotations": null,
+    "image_properties_annotation": "R:86,G:112,B:167:, Score: 0.2387965, PixelFraction: 0.05238095 - R:68,G:93,B:144:, Score: 0.1781362, PixelFraction: 0.04039682 - R:86,G:109,B:175:, Score: 0.1668263, PixelFraction: 0.01793651 - R:71,G:89,B:119:, Score: 0.0908773, PixelFraction: 0.04634921 - R:69,G:89,B:151:, Score: 0.05738805, PixelFraction: 0.0102381 - R:88,G:86,B:84:, Score: 0.04436444, PixelFraction: 0.2872222 - R:97,G:116,B:148:, Score: 0.04218215, PixelFraction: 0.04920635 - R:116,G:113,B:111:, Score: 0.03304406, PixelFraction: 0.1523016 - R:85,G:110,B:190:, Score: 0.01911735, PixelFraction: 0.0009523809 - R:37,G:53,B:77:, Score: 0.01861708, PixelFraction: 0.01738095",
+    "safe_search_annotation": "Adult:VERY_UNLIKELY, Spoof:VERY_UNLIKELY, Medical:VERY_UNLIKELY, Violence:VERY_UNLIKELY, Racy:VERY_UNLIKELY",
+    "web_detection": "Description:Car, Score:0.8326501 - Description:Van, Score:0.8280646 - Description:Commercial vehicle, Score:0.7540799 - Description:Minivan, Score:0.7494794 - Description:Luxury car, Score:0.5866293 - Description:Family car, Score:0.4112859 - Description:Building, Score:0.4042564 - Description:Family, Score:0.3888 - Description:, Score:0.3888 - Description:Parking, Score:0.3872849",
+    "localized_object_annotations": [
+      "Wheel, score: 0.9194742",
+      "Wheel, score: 0.8865905",
+      "Car, score: 0.745281"
+    ]
+  }
+}

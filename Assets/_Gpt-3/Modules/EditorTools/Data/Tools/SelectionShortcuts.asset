@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SelectionShortcuts
   m_EditorClassIdentifier: EditorShortcuts.Editor:Tailwind.Modules.EditorShortcuts.Editor:SelectionShortcuts
   showLogs: 0
-  shortcut1: Main_imageRecognizer
-  shortcut2: 
-  shortcut3: 
+  shortcut1: Main_conversation
+  shortcut2: Main_imageRecognizer
+  shortcut3: Brainwave
   shortcut4: 
   shortcut5: 
   shortcut6: 

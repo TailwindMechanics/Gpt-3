@@ -1,0 +1,50 @@
+{
+  "timestamp": "2023-03-18_21-54",
+  "camera_position": {
+    "x": 34.80896,
+    "y": 1.574,
+    "z": 32.3017731
+  },
+  "camera_rotation": {
+    "x": 0.0,
+    "y": 167.664139,
+    "z": 0.0
+  },
+  "area_content": [
+    "SM_Env_Skyline_04, pos:(13.500,0,0), eul: (zero), scale: (1,0.896,1)",
+    "SM_Env_Skyline_03, pos:(13.500,0,0), eul: (zero), scale: (one)",
+    "SM_Env_Skyline_02, pos:(13.500,0,0), eul: (zero), scale: (one)",
+    "SM_Env_Skyline_01, pos:(13.500,0,0), eul: (zero), scale: (1.107,1.107,1.107)",
+    "FX_Steam 1, pos:(37.340,0,27.660), eul: (zero), scale: (one)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Wheel, score: 0.9837509",
+      "Tire, score: 0.9802257",
+      "Automotive parking light, score: 0.9763334",
+      "Car, score: 0.97435",
+      "Land vehicle, score: 0.9699957",
+      "Vehicle, score: 0.9510071",
+      "Building, score: 0.9495506",
+      "Window, score: 0.9488062",
+      "Vehicle registration plate, score: 0.9258094",
+      "Motor vehicle, score: 0.9165025"
+    ],
+    "text_annotations": "PIZZI, PIZZA, POLYGON, WESTER",
+    "face_annotations": null,
+    "landmark_annotations": null,
+    "logo_annotations": [
+      "Description: Toms Shoes, Score: 0.5744379"
+    ],
+    "image_properties_annotation": "R:119,G:117,B:115:, Score: 0.1393428, PixelFraction: 0.09373016 - R:166,G:100,B:67:, Score: 0.1149275, PixelFraction: 0.003492063 - R:150,G:103,B:84:, Score: 0.1090667, PixelFraction: 0.008015873 - R:154,G:155,B:154:, Score: 0.06766162, PixelFraction: 0.01825397 - R:120,G:79,B:64:, Score: 0.06076972, PixelFraction: 0.007460318 - R:127,G:119,B:96:, Score: 0.05492596, PixelFraction: 0.01222222 - R:96,G:87,B:85:, Score: 0.04874108, PixelFraction: 0.5365873 - R:136,G:105,B:108:, Score: 0.04462185, PixelFraction: 0.008412698 - R:111,G:81,B:80:, Score: 0.04147592, PixelFraction: 0.01912698 - R:185,G:190,B:189:, Score: 0.0412017, PixelFraction: 0.006031746",
+    "safe_search_annotation": "Adult:VERY_UNLIKELY, Spoof:VERY_UNLIKELY, Medical:VERY_UNLIKELY, Violence:VERY_UNLIKELY, Racy:VERY_UNLIKELY",
+    "web_detection": "Description:Car, Score:0.60195 - Description:Mid-size car, Score:0.3632995 - Description:Luxury car, Score:0.3612744 - Description:Motor vehicle, Score:0.3537444 - Description:Compact car, Score:0.3410551 - Description:Transport, Score:0.3409058 - Description:Subcompact car, Score:0.3194153 - Description:A-segment, Score:0.3009625 - Description:Traffic, Score:0.2868398 - Description:Street, Score:0.2541634",
+    "localized_object_annotations": [
+      "Car, score: 0.9188085",
+      "Car, score: 0.8670744",
+      "Car, score: 0.7907432",
+      "Van, score: 0.7135339",
+      "Building, score: 0.6110163"
+    ]
+  }
+}
