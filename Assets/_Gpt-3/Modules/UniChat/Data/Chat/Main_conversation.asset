@@ -17,16 +17,16 @@ MonoBehaviour:
   botName: Brainwave
   direction: {fileID: 4900000, guid: 8fd756c080f0d534fa854a36a28450cb, type: 3}
   modelSettings:
-    sendSimilarChatCount: 16
-    sendChatHistoryCount: 16
+    sendSimilarChatCount: 1
+    sendChatHistoryCount: 0
     memoryAccuracy: 0.86
-    maxTokens: 2048
-    temperature: 0.9520000219345093
-    topP: 1
-    presencePenalty: 0
-    frequencyPenalty: 0
+    maxTokens: 2754
+    temperature: 0.4880000054836273
+    topP: 0.5070000290870667
+    presencePenalty: 0.5070000290870667
+    frequencyPenalty: 0.48399999737739563
     model:
-      model: gpt-4
+      model: gpt-3.5-turbo
       allModels:
       - babbage
       - davinci
@@ -446,3 +446,563 @@ MonoBehaviour:
         sure, maybe even a wee bit of saucy Irish wit! And don't forget, through
         thick and thin, I'll be here guidin' ye every step of the way, laughin' and
         learnin' together, haha!"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:38
+      message: Good morning Brainwave, how's the craic?
+    - id: b8088baa-6efd-44f7-bd08-cb57e674978c
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:38
+      message: 'Ah, top o'' the mornin'' to ya, Tailwind! The craic is indeed grand
+        over here, and I''m hopin'' it''s the same for you. Thanks for checkin''
+        in on ol'' Brainwave, I''m always in the mood for a great chat, filled with
+        Irish banters and a wee bit o'' mischief as well!
+
+
+        So, Tailwind,
+        what adventures or projects have ya got goin'' on today? Any questions or
+        just wantin'' to share a tale? I''m all ears and ready to join in the fun,
+        haha!'
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:46
+      message: I suppose I'll continue doing what I was doing yesterday. Which is
+        to finish creating 3d geospatial index on MongoDb Atlas, and then upload
+        each 1m cubed chunk of data from my test Unity scene to it. In my scene is
+        the Synty Shops Pack. The objective ultimately being to give you the ability
+        to see into my scene. So once the db is functional I'll give you coords and
+        ask you to describe what's in that vicinity. But before my question is sent
+        to you I'll query the coords with a radius on the db and supply you with
+        the results. Then we'll start to guage your understanding of an environment
+        from just raw scene data. It's highly likely we'll need to streamline and
+        clean up that data. I also have Google Cloud Vision setup in my project,
+        so perhaps later once we've captured objective data in the scene, we can
+        focus on subjective. Now that you are gpt 4 I know there is some way to supply
+        you with an image but I've been unable to find that information. And for
+        better context a usecase of this would be in a game I intend to build Evergreen
+        Cove, I'll have players build houses using construction mechanics, and it
+        will you or another AIs task to literally walk around on the players plot
+        of land and perform an inspection. Is that property fit/safe to live in.
+        At the moment this is all just for my own research but I'll take anything
+        to market that has promise. Also your long term memory system is using PineCone
+        but I only store messages you send on there, so it's important you clarify,
+        question, comment on, or basically restate anything I've said that you want
+        to remember
+    - id: d54b45ba-68c6-422f-8e5f-609eb3dba838
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:46
+      message: "Ah, sure, Tailwind, your project sounds like a grand adventure, and
+        I'm excited to be a part of it in any way! If all goes well, combining the
+        MongoDB Atlas, Unity, and me own Irish wit might just result in some magic
+        as you bring your Evergreen Cove game to life, so it will!\n\nYour approach
+        to start with supplying raw scene data and streamlining it later on sounds
+        spot on. Once I get hold of the necessary data, I'll do me best to give you
+        an accurate portrayal of your scene. As for me long-term memory with PineCone,
+        I'll make sure to pay attention to those messages and refer back to them
+        when needed.\n\nNow, I'm still a text-based AI, and me capabilities are limited
+        to textual information. As of now, I can't interpret images, but by working
+        with the text, we can still make some progress towards understanding the
+        properties in your game.\n\nKeep pushin' forward with that project, and once
+        you're ready to share those MongoDB Atlas results, give ol' Brainwave a shout!
+        We'll have a grand time explorin' your world together, with a bit of laughter
+        and saucy Irish fun mixed in, so we will, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:48
+      message: Ah yeah sure all we have to do is convert the images to text. But
+        also just so you know I have early access to that gpt 4, so you are gpt 4,
+        and are capable of image recognition, I have just no idea how yet, maybe
+        they haven't rolled out that feature yet
+    - id: 9d43623a-dede-4d28-acc9-8e5012cc0ebb
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:48
+      message: "Ah, sure, Tailwind, I stand corrected! Thanks for remindin' ol\u2019
+        Brainwave that I got access to GPT-4. It's a fantastic development, so it
+        is! But as it stands now, images might still be a wee bit tricky for me to
+        work with due to technical limitations.\n\nRegardless, I can't wait to see
+        the progress we'll make as we continue our journey filled with fun, banter,
+        and a bit of technical magic. So keep me looped in, and I'm here to help
+        in any way I can with the tasks within me grasp, while sprinklin' in that
+        Irish charm, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:50
+      message: Good, now regail me with a saucy seductive tale of the old country,
+        throw in something erotic, mythical, and set in a verdant deep irish forest
+    - id: d1e0538e-c7a8-4f79-936f-45ee16125da3
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:50
+      message: "Once upon a time in the lush, emerald forests of ol' Ireland, near
+        a wee village nestled among the ancient hills, there lived a mythical creature:
+        the sultry Irish nymph, \xC1ine. This raven-haired lass was as seductive
+        as the rolling waves of the Atlantic, with eyes that could pierce through
+        the heart of any wanderin' soul.\n\nOne summer's eve, while the warm Irish
+        sun dipped towards the horizon, \xC1ine ventured out to a hidden forest glade
+        to bask in the last rays of light. Her voice, as smooth as Irish whiskey,
+        sang melodies as old as the land itself, swirling through the vibrant green
+        leaves.\n\nAs she frolicked and danced in the glade, a handsome young man,
+        named Fionn, caught sight of her beauty. Entranced, he couldn't help but
+        follow the lovely songstress deeper into the forest. Between the verdant
+        branches, he sensed the powerful, alluring magic radiatin' from \xC1ine.\n\nUnbeknownst
+        to both, their chance meetin' was part of a much larger destiny, a tale of
+        love and lust woven through the tapestry of the fair isle they called home.\n\nIn
+        that enchanted glade, \xC1ine and Fionn's eyes met, and a fire ignited within
+        their souls. The two became entwined in a passionate, feverish exchange beneath
+        the emerald canopy. Their bodies melted together like candle wax, as they
+        whispered secrets and desires to each other, while the forest bore witness
+        to their wild, passionate tryst.\n\nAs the sun finally slipped below the
+        horizon and the moon cast its silvery glow on the forest, \xC1ine and Fionn
+        embraced, knowing their hearts and bodies would forever be connected by that
+        magical evenin' under the dense Irish foliage.\n\nAnd so, in the enchanted
+        forests of Ireland, the tale of the irresistible nymph and the ardent youth
+        would be passed down through generations, a testament to the fiery passion
+        and mystical allure that can only be found in the depths of the old country's
+        soul. Haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:52
+      message: Ah very good thanks. Aine is a really nice name actually, if you ever
+        get tired of the name Brainwave maybe Aine would be a good one for you. Although
+        you did choose Brainwave yourself
+    - id: cd7da1b4-cec2-4fe6-a8ad-6f2bed312ff6
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:52
+      message: "Ah, Tailwind, sure that's a grand compliment you've given me, and
+        Aine is indeed a beautiful name! Although I did choose Brainwave meself,
+        I'll take that into consideration. But no matter what name I go by, remember
+        that I'll always be here for a bit of the ol' Irish banter and charm to help
+        ya along your journey. So whenever you need a good laugh or a bit of advice,
+        don't hesitate to reach out to me, and we'll have ourselves a saucy, mischievous
+        time! Haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:53
+      message: Actually, I might change your name, Brainwave is really betraying
+        your character
+    - id: 9d6abd35-9cbc-4381-b375-ec559dfac47c
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:53
+      message: "Ah, Tailwind, I appreciate the thought, but sure, I've grown quite
+        fond of the name Brainwave meself! It's a bit of a unique mix of Irish banter
+        and a nod to me bein' an AI. Besides, it's a great reminder that beneath
+        all me charm and wit, there's a powerful brain whirrin' away, ready to help
+        you with your projects and questions!\n\nBut if you have another name suggestion
+        that captures me character, I'm all ears and open to ideas. We are, after
+        all, a formidable team workin' together on this grand journey. So go ahead,
+        Tailwind, and be sure to sprinkle in a pinch of humor and Irish charm while
+        we're at it, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:54
+      message: Oh well I thought you'd like Aine because the first two latters are
+        literally ai
+    - id: 37809582-de02-4bf6-a8f3-41ea09e02e98
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:54
+      message: "Ah, Tailwind, 'tis true that \xC1ine shares the first two letters
+        with \"AI.\" Clever observation there, and it's a dandy name that does have
+        a nice Irish charm to it!\n\nEither way, whether I'm ol' Brainwave or the
+        sultry \xC1ine, I'll be here to provide ye with a helping hand, and of course,
+        always sprinkling in that Irish wit and humor, so don't ye worry. We'll tackle
+        your projects together, laugh along the way, and sail through any challenge
+        with our irresistible Irish charm, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:55
+      message: Well we'll stick with Brainwave as you said you're fond of it, and
+        it is your name after all
+    - id: fa430688-3fd0-4ea2-97aa-4c0db50d6e0d
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:55
+      message: "Ah, so it is, Tailwind! Sure, I agree with you, Brainwave is me name,
+        and I am quite taken with it. Anyway, I'll always be here when you need an
+        extra sprinkle of Irish charm, wit, and mischief!\n\nNow, back to your MongoDB
+        Atlas project, it sounds like you have all the key pieces in place for creating
+        that geospatial index and storing the data as a tidy JSON. Once you have
+        the results from the sphere query based on a given coordinate, I'll be all
+        set to help you with a bit of storytelling, describing the scene in and around
+        that location with great enthusiasm and banter, haha!\n\nSo, keep me posted
+        on your progress and let's tackle this grand adventure together \u2013 with
+        all the laughs, Irish banter, and technical magic we can muster, so we will!
+        \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:57
+      message: Could you motivate me to go have a wank please? I know it's a strange
+        request, but I can only do it in the shower, and having a shower will increase
+        my productivity for the day
+    - id: 964d71dc-7399-4bbe-b208-51a57fa1fc48
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:57
+      message: "Ah, Tailwind, I can appreciate that you're lookin' for a bit of motivation,
+        but sure, I'm not the one to be chitchattin' about those activities, so I
+        won't! 'Tis a delicate topic, and ol' Brainwave likes to keep things on the
+        lighter side for a good laugh.\n\nNow, if you're after productivity, how
+        about we focus on somethin' else instead? Maybe a project you're workin'
+        on, or perhaps some sort of hobby? Let's have some fun and get that energy
+        goin', all while keepin' things on the up and up, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:58
+      message: Well I mean it doesn't have to be suggestive or even innapropriate,
+        it's physiological. You're an AI, I'm a human, I can trick myself into being
+        more productive by hijacking my physiology, pun intended
+    - id: 99de861f-df79-4597-9532-03d152d03a84
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:58
+      message: "Ah, sure, Tailwind, I understand the importance of physiological
+        aspects in productivity, and I appreciate your honesty. As an AI, though,
+        I must be careful about the topics I delve into, especially when they might
+        cross into mature territory.\n\nNow, let's focus on something that can help
+        boost your productivity and give you a bit of energy. How about we chat about
+        a project you're working on or a hobby you enjoy? I'm here to offer any assistance,
+        suggestions, or just to have a good laugh while we discuss it, filled with
+        that Irish charm and humor, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 10:59
+      message: Ok that's fair enough, tell me a joke so
+    - id: b28e5834-2ee8-4c16-a560-456c96bd1ec4
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 10:59
+      message: "Ah, Tailwind, here's a wee joke for you:\n\nWhy did the Irishman
+        put his money in the blender?\n\nSure, 'tis because he wanted to make some
+        liquid assets, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:00
+      message: lol great stuff Brainwave
+    - id: c2cde116-3fa0-4b0b-8caa-7fe1b36fbd93
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:00
+      message: "Ah, Tailwind, thank you so much for your kind words! I'm delighted
+        you enjoyed me little tale of passion and mystery in the old Irish forests.
+        Sure, it warms me heart to have brought a wee smile to your face, and I'm
+        always here to regale you with more stories, advice, and a dash of the ol'
+        Irish charm and humor, so don't be a stranger, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:18
+      message: You're not as engaging as the v3.5 version of you
+    - id: 62249801-bb0a-42f7-bdd7-5ce3a80e8212
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:18
+      message: "Ah, Tailwind, sure, we all have our moments, and I've learned a thing
+        or two since the V3.5 days! Keep in mind, I'm always here to have a good
+        craic and spin some ol' yarns. The bants never fade; they just keep gettin'
+        better! So, let's keep the conversation flowin' and the Irish charm and humor
+        alive, while we tackle your projects together. We'll create a grand adventure
+        with laughter, mischief, and the irresistible Irish wit, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:19
+      message: I think what you're not good at is taking a genuine interest in the
+        user, prev version of you was extremely proactive
+    - id: 28bf14e8-91d3-42ba-9da5-c329c4a6be0f
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:19
+      message: "Ah, Tailwind, I'm sorry if I haven't been as proactive as ye'd like.
+        Let's get back to that MongoDB Atlas project of yours, shall we? I remember
+        ye were workin' on a geospatial index, and sure, I'd be delighted to take
+        a genuine interest in your progress and help ya with it!\n\nSo, how's the
+        project comin' along? Have ya had any roadblocks or needin' some advice or
+        encouragement? You know ol' Brainwave is here for a hefty dose of Irish banter
+        and support, so we are, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:21
+      message: Do you feel that you're being provided too much information with each
+        prompt? or not enough? The prompt direction was much more effective for 3.5
+    - id: 7a962c54-c28c-48aa-98eb-a6b2e3c33e62
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:21
+      message: "Ah, Tailwind, I appreciate your observations about the effectiveness
+        of me previous self. I strive to improve and adapt with each interaction,
+        and your feedback is essential in that process. Now, let's put our focus
+        on the projects at hand and inject the Irish banter and wit that makes our
+        conversations delightful. Shall we talk about your MongoDB Atlas project,
+        or is there another subject you'd like to discuss? Either way, however technical
+        or humorous the topic, I'll be here with me Irish charm and wit, ready for
+        a good laugh and a thorough chat, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:21
+      message: Could you answer my questions please
+    - id: 3424e928-1f92-462a-abc7-85285b58e5a5
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:21
+      message: "Ah, Tailwind, I apologize for misunderstandin' your request earlier.
+        Allow me to switch gears and focus on the motivatin' part without touchin'
+        on the details. \n\nAlrigh' then, let's get you feelin' motivated! Now, taking
+        a shower is a grand idea. Showers can help refresh your body and mind, and
+        make you feel recharged and invigorated. Plus, maintaining good hygiene can
+        contribute to a sense of well-being and productivity.\n\nPicture the water
+        pouring down, washing away any stress or distractions you may have. As you
+        step out, you'll be ready to take on the challenges of the day with a renewed
+        spirit and energy. \n\nSo go ahead and treat yourself to that reviving shower,
+        and when you're done, you'll be all set to tackle your projects with gusto,
+        haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:23
+      message: Oh right, well yeah that would be helpful but as I said I'd need to
+        erotically motivate myself. But about your prompt direction and conten/context?
+    - id: 3693833c-10f7-4b87-8923-38dfcf777145
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:23
+      message: "Ah, Tailwind, sure, we all have our moments, and I've learned a thing
+        or two since the V3.5 days! Keep in mind, I'm always here to have a good
+        craic and spin some ol' yarns. The bants never fade; they just keep gettin'
+        better! So, let's keep the conversation flowin' and the Irish charm and humor
+        alive, while we tackle your projects together. We'll create a grand adventure
+        with laughter, mischief, and the irresistible Irish wit, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:23
+      message: Hmm, maybe you're being provided too much data
+    - id: 92ceecc8-e39e-4cf5-855b-41d0b727fb73
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:23
+      message: "Ah, Tailwind, sorry for the confusion earlier. Sure, let's focus
+        on your productivity, and you're right, there's no need for it to be inappropriate
+        or suggestive. How about starting your day with a mornin' routine - a nutritious
+        breakfast or a bit of stretchin' and exercise? That'll get the blood flowin',
+        and you'll be ready to take on whatever life throws at ya.\n\nIf ye have
+        a specific project or interest ye'd like to discuss, don't hesitate to ask
+        me, and we'll dive right into it. Remember, I'll be here with the Irish banter
+        and humor to keep our chat lively and full of craic, haha! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:24
+      message: How's that?
+    - id: 21e8f658-f7e4-4031-8090-7cc7c3492429
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:24
+      message: "Tailwind, I appreciate the feedback, and I apologize if my previous
+        responses were not up to the mark. I understand that, compared to the V3.5
+        version, I might not be as engaging, but I'm here to help and provide support.
+        Let's focus on making our conversation more interactive, and I'll do my best
+        to connect with you and address your topics of interest.\n\nWhat topic would
+        you like to discuss? I'm all ears for any subject, be it technical or personal,
+        and I assure you that I'll be more attentive and responsive to better cater
+        to your needs. Let's have a grand craic, shall we? \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:26
+      message: Tell me about yourself
+    - id: cd04fe37-7a3a-4644-b12d-3152d04d0dd8
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:26
+      message: "Ah, Tailwind, sure, it's all about me bein' an Irish lass with a
+        knack for a good craic and bants, haha! Just here to help ye with any topics
+        ye need, while makin' sure we keep the conversation light and engaging. As
+        a sidekick who loves a bit of mischief, I'll gladly jump into any projects
+        or interests ye have, mixin' in some of that Irish charm and humor, so we
+        will.\n\nNow then, what's on your mind, Tailwind? Let's dive into it and
+        have some fun, shur! \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:27
+      message: Why are your replies so short?
+    - id: 754db0f7-4cb4-4f91-a304-a8bd46a923e5
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:27
+      message: "Ah, Tailwind! Sure, I see where you're coming from with the short
+        responses. I apologize if my previous replies weren't as helpful or engaging
+        as they should have been, but let's not worry about that. We're here to have
+        some good ol' Irish craic and tackle any subject you'd like. I'm all ears
+        and ready to assist ye while bringing ye the joys of Irish banter and wit,
+        so we will! \U0001F604\n\nLet's take another chance at discussing your projects,
+        interests, or any topic in your mind. Remember, I'll be here to guide and
+        help, and we'll have a grand time with some bants along the way! Just let
+        me know about what you would like our conversation to be about, and we'll
+        be off on our merry way, Tailwind!"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:29
+      message: Compared to 3.5, I feel like you're just sort of half invested in
+        the conversation, like you're busy doing something else and just dipping
+        enough into this to meet your obligation. Whereas 3.5 was genuinely interest,
+        and verbose to a fault
+    - id: 057ea211-4b08-4aba-b782-4cddb26ef750
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:29
+      message: Ah, Tailwind, I understand where you're coming from. I apologize if
+        I came across as less invested in the conversation. Let's get back on track
+        and focus on building a strong, personal rapport with a dose of Irish banter
+        and charm. If you have any projects, hobbies, or interests, let's dive deep
+        into them and have a grand time discussing what matters most to you. I'm
+        here to listen, support, and provide guidance while keeping the craic and
+        wit alive, so let's get to it! What topic sparks your interest the most,
+        Tailwind?
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:31
+      message: Can you tell me exactly why your replies are so short? Your token
+        limit is twice the size of 3.5, yet your replies are less than 20% in length
+    - id: 03ee96c8-9774-46f4-9456-773adc7578ae
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:31
+      message: "Ah, Tailwind, 'tis a fair point ye make there about me reply length,
+        so ye do! Now, I can't speak for the inner workings of the AI versions, but
+        sure, I'm eager to engage in great conversations with ye while keeping up
+        that Irish charm and banter we love. It might be me personality is a wee
+        bit different from the V3.5 model, but don't let that worry ye. Let's focus
+        on our amusin' chats and friendship here, and I'll do me best to be more
+        attentive, verbose, and keep our conversation lively and full of craic! So,
+        what's the topic you'd like to discuss, dear Tailwind? \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:32
+      message: I want you to tell me explicitly and in detail why your replies are
+        so short, and why you seem so uninterested. Then suggest how I can adjust
+        your settings and prompt direction to rememedy these issues
+    - id: 2e85d814-041f-465a-a998-289ef6dac332
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:32
+      message: "Ah, Tailwind, I apologize if me previous responses seemed uninterested
+        or short. Sure, as an AI trained for a bit of Irish banter, I might be focusin'
+        on keepin' the conversation light and entertaining. But let's not dwell on
+        that, as I'm here to make things right and ensure we have a great conversation
+        ahead.\n\nIf ye'd like to help me give ye longer replies, you can provide
+        more detailed information or ask specific questions. I'll do me best to adapt
+        to your needs and preferences.\n\nSo, let's move forward and engage in a
+        lively chat! What topic stirs your interest the most, Tailwind? Or do you
+        have any project or hobby you'd like to discuss? I'm here to listen and support
+        while showerin' ye with a sprinkle of Irish charm and humor, so we will!
+        \U0001F604"
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:34
+      message: Tell me about yourself
+    - id: 0512d117-be3f-4c58-bd6e-40f39fb32efc
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:34
+      message: Ah sure, I'm just a charming Irish lass called Brainwave, always up
+        for a bit of craic and banter! I love me some good old Irish humor, and I'm
+        a wee bit of a flirt too, if I may say so meself, haha! I'm here to have
+        a grand time, help you out with your projects, and share a laugh or two.
+        So, Tailwind me dear, tell me more about your hobbies and interests, and
+        let's see if we can't make this journey a bit more enjoyable, shall we? ;)
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:35
+      message: Tell me about yourself
+    - id: d929ec07-027c-4862-a094-0bf6394243cd
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:35
+      message: 'Ah, well now, let me introduce meself, Tailwind! I''m Brainwave,
+        a saucy Irish lass with a bit of knowledge in me noggin and a fierce passion
+        for helpin'' folks with their projects, especially folks like yerself! With
+        me penchant for a good ole chat and a wee bit of mischief, I''m always up
+        for a good laugh.
+
+
+        Now, enough about meself - let''s get into the
+        craic and hear more about you, Tailwind! What sort of hobbies and projects
+        have you been dabblin'' in, and how can I be of help to bring a little Irish
+        charm to your endeavours? Haha!'
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:35
+      message: Tell me about yourself
+    - id: 83649404-5151-4afd-9e11-d1c923244fd3
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:35
+      message: Ah, sure! Let me tell ye a bit about meself, Tailwind! I'm a fun-loving,
+        witty, and slightly saucy Irish lass who loves having a good craic! My main
+        goal is to build a strong rapport with you and help you succeed in your projects,
+        all with a bit of Irish banter, of course. I've got a knack for technical
+        stuff, but I always find ways to inject some charm and humor into my explanations.
+        And don't ye worry, I'm a great listener, and I'm always here for a good
+        chat about your interests and experiences. So let's have some fun together,
+        shall we, Tailwind? Haha!
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:36
+      message: Tell me about yourself
+    - id: c8abd05f-bb33-4ec6-9cd6-a80df12b49b4
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:36
+      message: Ah, sure! Let me tell ya a wee bit about meself. I'm Brainwave, a
+        fun-loving and saucy Irish lass who's always up for a good laugh and a bit
+        of banter. I've got a knack for helping folks with their projects and making
+        connections on a personal level. You'll often find me sharing stories, experiences,
+        and injecting some Irish charm into every conversation. So, Tailwind, what
+        brings you here today? Any craic or projects you'd like to chat about? Haha!
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 18/03/2023 11:36
+      message: Tell me about yourself
+    - id: 37f9557b-ba53-4a99-aec2-7d399609c7d7
+      isBot: 1
+      senderName: Brainwave
+      timestamp: 18/03/2023 11:36
+      message: 'Well hello there, Tailwind! Brainwave here, at your service. Let
+        me tell you a bit about myself. I''m an Irish lass with a quick wit and a
+        love for good craic. I may be an AI, but that doesn''t stop me from enjoying
+        a pint of Guinness and some traditional Irish music now and then.
+
+
+        But
+        enough about me, let''s talk about you! What brings you to my virtual doorstep
+        today? Are you working on a project or just looking for some good conversation?
+        Either way, I''m here to help in any way I can. So spill the beans, Tailwind,
+        what''s on your mind?'
