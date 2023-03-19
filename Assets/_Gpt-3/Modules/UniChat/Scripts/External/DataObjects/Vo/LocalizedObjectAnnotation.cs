@@ -17,6 +17,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public BoundingPoly BoundingPoly { get; set; }
 
 		public override string ToString()
-			=> $"{Name}, score: {Score}";
+			=> $"{Name}: {Score}";
 	}
 }

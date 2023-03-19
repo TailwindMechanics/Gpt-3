@@ -15,7 +15,11 @@ MonoBehaviour:
   imageResolution: {x: 1920, y: 1080}
   savePath: Assets/_Gpt-3/Modules/UniChat/Data/ImageCaptures
   gcvSettings: {fileID: 11400000, guid: dbd1fee1ece84af42884b03792466de2, type: 2}
-  blackList:
+  areaRemoveList:
+  - SM_Prop_
+  - SM_Veh_
+  - SM_Env_
+  areaBlackList:
   - SM_Generic_SkyDome_01
   - VolumeSensor
   - Capsule

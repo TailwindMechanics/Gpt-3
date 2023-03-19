@@ -41,11 +41,11 @@ namespace Modules.UniChat.Internal.Apis
                                 new(){Type = "LABEL_DETECTION"},
                                 new(){Type = "TEXT_DETECTION"},
                                 new(){Type = "OBJECT_LOCALIZATION"},
-                                new(){Type = "FACE_DETECTION"},
-                                new(){Type = "LANDMARK_DETECTION"},
-                                new(){Type = "LOGO_DETECTION"},
+                                // new(){Type = "FACE_DETECTION"},
+                                // new(){Type = "LANDMARK_DETECTION"},
+                                // new(){Type = "LOGO_DETECTION"},
                                 new(){Type = "IMAGE_PROPERTIES"},
-                                new(){Type = "SAFE_SEARCH_DETECTION"},
+                                // new(){Type = "SAFE_SEARCH_DETECTION"},
                                 new(){Type = "WEB_DETECTION"},
                             }
                         }

@@ -11,17 +11,41 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public CameraViewData()
 			=> AreaContent = new List<string>();
 
-		[JsonProperty("timestamp")]
-		public string TimeStamp { get; set; }
+		[JsonProperty("time")]
+		public string Time { get; set; }
 
-		[JsonProperty("camera_position")]
-		public Vector3Serializable CameraPosition { get; set; }
+		[JsonProperty("day")]
+		public string Day { get; set; }
 
-		[JsonProperty("camera_rotation")]
-		public Vector3Serializable CameraRotation { get; set; }
+		[JsonProperty("season")]
+		public string Season { get; set; }
 
-		// [JsonProperty("area_size")]
-		// public Vector3Serializable AreaSize { get; set; }
+		[JsonProperty("year")]
+		public string Year { get; set; }
+
+		[JsonProperty("weather")]
+		public string Weather { get; set; }
+
+		[JsonProperty("sounds")]
+		public string Sounds { get; set; }
+
+		[JsonProperty("smells")]
+		public string Smells { get; set; }
+
+		[JsonProperty("geographic")]
+		public string Geographic { get; set; }
+
+		[JsonProperty("feelings")]
+		public string Feelings { get; set; }
+
+		[JsonProperty("doings")]
+		public string Doings { get; set; }
+
+		[JsonProperty("your_position")]
+		public string YourPosition { get; set; }
+
+		[JsonProperty("your_rotation")]
+		public string YourRotation { get; set; }
 
 		[JsonProperty("area_content")]
 		public List<string> AreaContent { get; set; }

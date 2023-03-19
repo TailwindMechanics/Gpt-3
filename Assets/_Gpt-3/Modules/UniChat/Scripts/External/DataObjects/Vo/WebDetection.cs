@@ -18,9 +18,9 @@ namespace Modules.UniChat.External.DataObjects.Vo
 			var result = "___";
 			foreach (var webEntity in WebEntities)
 			{
-				result += $" - {webEntity}";
+				result += $", {webEntity}";
 			}
-			return result.Replace("___ - ", "");
+			return result.Replace("___, ", "");
 		}
 	}
 
@@ -37,6 +37,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public float Score { get; set; }
 
 		public override string ToString()
-			=> $"Description:{Description}, Score:{Score}";
+			=> $"{Description}: {Score}";
 	}
 }

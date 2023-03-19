@@ -17,7 +17,7 @@ MonoBehaviour:
     sendSimilarChatCount: 8
     sendChatHistoryCount: 2
     memoryAccuracy: 0.86
-    maxTokens: 4096
+    maxTokens: 2048
     temperature: 0.9520000219345093
     topP: 1
     presencePenalty: 0

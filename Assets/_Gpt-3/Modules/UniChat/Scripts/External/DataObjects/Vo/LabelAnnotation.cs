@@ -25,6 +25,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		string label => string.IsNullOrWhiteSpace(Description) ? "Label" : $"{Description}: {Score}";
 
 		public override string ToString()
-			=> $"{Description}, score: {Score}";
+			=> $"{Description}: {Score}";
 	}
 }
