@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
-using System;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
@@ -45,11 +44,13 @@ namespace Modules.UniChat.Internal.Behaviours
                 Season          = "Spring",
                 Year            = "2023",
                 Weather         = "Cel:22/21/19, hum:2%, pre:65%, wind/11kmh, partly cloudy",
-                Sounds          = "Close: children playing, music small speaker, cutlery, plates, spatula on grill, cooking, jovial walla. Med: seagulls overhead, car park sounds. Far: main road. Distant: arcade sounds",
-                Smells          = "Strong: pizza, ketchup, onions, cooking. Med: exhaust, beer. Subtle: tarmac",
-                Geographic      = "I am 14km nnw of home. At 'Canesbury Market' strip mall 6th time this year. Drove here with Davey in my Flatbed Truck. Local Events: Food truck jamboree 17/04/23, 13:00-17:00",
-                Feelings        = "Safe, hungry, satisfied, happy, content, calm, warm, tipsy, mild need to pee, relieved, love, wholesome",
-                Doings          = "Sitting, eating, chatting with Davey, drinking beer, farting, smoking, laughing",
+
+                // Sounds          = "Close: children playing, music small speaker, cutlery, plates, spatula on grill, cooking, jovial walla. Med: seagulls overhead, car park sounds. Far: main road. Distant: arcade sounds",
+                // Smells          = "Strong: pizza, ketchup, onions, cooking. Med: exhaust, beer. Subtle: tarmac",
+                // Geographic      = "I am 14km nnw of home. At 'Canesbury Market' strip mall 6th time this year. Drove here with Davey in my Flatbed Truck. Local Events: Food truck jamboree 17/04/23, 13:00-17:00",
+                // Feelings        = "Safe, hungry, satisfied, happy, content, calm, warm, tipsy, mild need to pee, relieved, love, wholesome",
+                // Doings          = "Sitting, eating, chatting with Davey, drinking beer, farting, smoking, laughing",
+
                 YourPosition    = $"({camPos.x:F1},{camPos.y:F1},{camPos.z:F1})",
                 YourRotation    = $"({camRot.x:F0},{camRot.y:F0},{camRot.z:F0})",
                 AreaContent     = CaptureChunkContent(volumePos, volumeScale)

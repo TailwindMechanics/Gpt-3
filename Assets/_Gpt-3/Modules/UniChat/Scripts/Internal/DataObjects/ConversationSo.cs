@@ -12,6 +12,8 @@ using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Apis;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -118,9 +120,69 @@ namespace Modules.UniChat.Internal.DataObjects
 			// HistoryVo: Store the botReply locally with its index
 			history.Add(new MessageVo(botMessageId, modelSettings.Vo.BotName, botReply, true), true);
 
+			// Detect command
+			DoCommand(botReply);
+
 			// Return bots reply for display in UI
 			Log($"Returning chat bot reply: '{botReply}'");
 			return botReply;
+		}
+
+		void DoCommand(string botReply)
+		{
+			// var botReply = "```json{ \"new_position\": { \"x\": -5.0, \"y\": 1.6, \"z\": 55.0 }, \"new_rotation\": { \"x\": 0, \"y\": 240, \"z\": 0 }}```";
+
+			var json = ParseJsonFromAIResponse(botReply);
+			if (json == null) return;
+
+			var newPosition = json["new_position"]?.ToObject<Vector3Serializable>();
+			var newRotation = json["new_rotation"]?.ToObject<Vector3Serializable>();
+
+			Debug.Log($"New position: {newPosition}");
+			Debug.Log($"New rotation: {newRotation}");
+
+			Log("Moving");
+			var brainwave = GameObject.Find("Brainwave").transform;
+			brainwave.position = newPosition.Value;
+			brainwave.eulerAngles = newRotation.Value;
+		}
+
+		JObject ParseJsonFromAIResponse(string botReply)
+		{
+			var split = botReply.Split("```");
+			if (split.Length < 2)
+			{
+				Debug.LogError("Could not find ```json delimiter in the AI response. Check the response format.");
+				return null;
+			}
+
+			var jsonString = split[1].Replace("```", "").Replace("json", "").Trim();
+
+			if (string.IsNullOrWhiteSpace(jsonString))
+			{
+				Debug.LogError("Empty JSON string. Check the AI response format.");
+				return null;
+			}
+
+			try
+			{
+				var json = JObject.Parse(jsonString);
+				return json;
+			}
+			catch (JsonReaderException ex)
+			{
+				Debug.LogError($"Error parsing JSON string: {ex.Message}");
+				return null;
+			}
+		}
+
+		[Serializable]
+		public class BotNavigateCommand
+		{
+			[JsonProperty("new_position")]
+			public Vector3Serializable NewPosition {get;set;}
+			[JsonProperty("new_rotation")]
+			public Vector3Serializable NewRotation {get;set;}
 		}
 
 		void Log (string message)
