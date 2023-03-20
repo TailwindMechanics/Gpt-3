@@ -23,8 +23,8 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		[JsonProperty("year")]
 		public string Year { get; set; }
 
-		[JsonProperty("weather")]
-		public string Weather { get; set; }
+		// [JsonProperty("weather")]
+		// public string Weather { get; set; }
 
 		// [JsonProperty("sounds")]
 		// public string Sounds { get; set; }

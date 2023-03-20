@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -12,8 +14,6 @@ using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Apis;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -35,8 +35,6 @@ namespace Modules.UniChat.Internal.DataObjects
 		bool upsertUserLog;
 		[FoldoutGroup("Settings"), SerializeField]
 		string username = "Guest";
-		[FoldoutGroup("Settings"), SerializeField]
-		TextAsset direction;
 
 		[InlineEditor, SerializeField]
 		ModelSettingsSo modelSettings;
@@ -78,12 +76,20 @@ namespace Modules.UniChat.Internal.DataObjects
 		[HideLabel, SerializeField]
 		HistoryVo history;
 
-		string BotDirection => $"Your name: '{modelSettings.Vo.BotName}', the users name: '{username}'.{direction.text}";
+		string BotDirection => $"Your name: '{modelSettings.Vo.BotName}', the users name: '{username}'. {modelSettings.Vo.Direction}";
 		public List<MessageVo> History				=> history.Data;
 		public string Username						=> username;
 		public string BotName						=> modelSettings.Vo.BotName;
 
 
+		// todo change the positional info to be relative to camera
+			// object_name: dist:2.4m, angle: -12deg, height:1.6m, size: (0.4,0.2,0.8)m
+			// also add the camera_height so the ai has reference point for heights
+		// todo give brainwave a first person pointing arm
+			// And supply data to it as the distance an object is from Brainwave
+			// And the angle it is at, 0 being direct in front
+			// And the height from th ground ie where BWs 'feet' are
+			// Then ask it to point at stuff
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
 			Log($"Requesting bot reply for user message: '{message}'");

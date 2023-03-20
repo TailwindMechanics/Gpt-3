@@ -10,6 +10,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	public class ModelSettingsVo
 	{
 		public string BotName				=> botName;
+		public string Direction				=> direction.text;
 		public int SendSimilarChatCount		=> sendSimilarChatCount;
 		public int SendChatHistoryCount		=> sendChatHistoryCount;
 		public float MemoryAccuracy			=> memoryAccuracy;
@@ -22,6 +23,8 @@ namespace Modules.UniChat.External.DataObjects.Vo
 
 		[Tooltip("Display name of the model"), SerializeField]
 		string botName = "Bot";
+		[Tooltip("Text file containing prompt direction"),  SerializeField]
+		TextAsset direction;
 		[Range(0, 100), Tooltip("The max number of similar chat history messages sent to the bot."), SerializeField]
 		int sendSimilarChatCount = 5;
 		[Range(0, 100), Tooltip("The number of recent chat history messages sent to the bot."), SerializeField]

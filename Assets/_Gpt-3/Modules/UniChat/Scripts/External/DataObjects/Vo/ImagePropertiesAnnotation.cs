@@ -12,16 +12,15 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public DominantColors DominantColors { get; set; }
 
 
-
 		public override string ToString()
 		{
 			var colours = "___";
 			foreach (var dominantColor in DominantColors.Colors)
 			{
-				colours += $" - {dominantColor.Color}, Score: {dominantColor.Score}, PixelFraction: {dominantColor.PixelFraction}";
+				colours += $", {dominantColor.Color}: [score: {dominantColor.Score}, fraction:{dominantColor.PixelFraction}]";
 			}
 
-			return colours.Replace("___ - ", "");
+			return colours.Replace("___, ", "");
 		}
 	}
 
@@ -58,6 +57,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public int Blue { get; set; }
 
 		public override string ToString()
-			=> $"R:{Red},G:{Green},B:{Blue}:";
+			=> $"R{Red},G{Green},B{Blue}";
 	}
 }

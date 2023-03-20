@@ -40,10 +40,10 @@ namespace Modules.UniChat.Internal.Behaviours
             var chunkData = new CameraViewData
             {
                 Time            = "14:12",
-                Day             = "Sunday April 23rd",
+                Day             = "Sunday March 19th",
                 Season          = "Spring",
                 Year            = "2023",
-                Weather         = "Cel:22/21/19, hum:2%, pre:65%, wind/11kmh, partly cloudy",
+                // Weather         = "Cel:22/21/19, hum:2%, pre:65%, wind/11kmh, partly cloudy",
 
                 // Sounds          = "Close: children playing, music small speaker, cutlery, plates, spatula on grill, cooking, jovial walla. Med: seagulls overhead, car park sounds. Far: main road. Distant: arcade sounds",
                 // Smells          = "Strong: pizza, ketchup, onions, cooking. Med: exhaust, beer. Subtle: tarmac",

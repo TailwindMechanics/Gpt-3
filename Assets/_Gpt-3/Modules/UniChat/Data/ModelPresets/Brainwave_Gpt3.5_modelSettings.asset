@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
     botName: Brainwave
+    direction: {fileID: 4900000, guid: 8fd756c080f0d534fa854a36a28450cb, type: 3}
     sendSimilarChatCount: 8
     sendChatHistoryCount: 2
     memoryAccuracy: 0.86

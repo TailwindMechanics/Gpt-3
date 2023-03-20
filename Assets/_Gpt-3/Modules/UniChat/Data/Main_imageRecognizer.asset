@@ -20,6 +20,7 @@ MonoBehaviour:
   - SM_Veh_
   - SM_Env_
   - SM_Wep_
+  - SM_Bld_
   areaBlackList:
   - SM_Generic_SkyDome_01
   - VolumeSensor
