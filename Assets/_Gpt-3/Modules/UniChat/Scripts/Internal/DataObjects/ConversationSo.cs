@@ -14,6 +14,7 @@ using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Apis;
+using Modules.UniChat.Internal.Behaviours;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -43,6 +44,8 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
 		PineConeSettingsSo pineConeSettings;
+		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
+		AiPerceptionSettingsSo perceptionSettings;
 
 		[FoldoutGroup("Tools"), FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]
 		async void DescribeIndexStats ()
@@ -82,21 +85,18 @@ namespace Modules.UniChat.Internal.DataObjects
 		public string BotName						=> modelSettings.Vo.BotName;
 
 
-		// todo change the positional info to be relative to camera
-			// object_name: dist:2.4m, angle: -12deg, height:1.6m, size: (0.4,0.2,0.8)m
-			// also add the camera_height so the ai has reference point for heights
-		// todo give brainwave a first person pointing arm
-			// And supply data to it as the distance an object is from Brainwave
-			// And the angle it is at, 0 being direct in front
-			// And the height from th ground ie where BWs 'feet' are
-			// Then ask it to point at stuff
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
 			Log($"Requesting bot reply for user message: '{message}'");
 
+			var botPlayer			= FindObjectOfType<AiPlayer>();
 			var embeddingsApi		= new EmbeddingsApi() as IEmbeddingsApi;
 			var vectorDatabaseApi	= new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 			var chatBotApi			= new ChatBotApi() as IChatBotApi;
+			var botPerceiver		= new AiPerceiver() as IAiPerceiver;
+
+			// IAiPerceiver: Capture perceived scene data as json
+			var perceivedJson = await botPerceiver.Capture(botPlayer.Camera, botPlayer.Sensor, perceptionSettings.Vo);
 
 			// IEmbeddingsApi: convert the senderMessage to a senderVector
 			var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
@@ -109,7 +109,7 @@ namespace Modules.UniChat.Internal.DataObjects
 			var recentMessages = history.GetMostRecent(modelSettings.Vo.SendChatHistoryCount, true);
 
 			// IChatBotApi: send chatBot direction, context, senderMessage, get botReply
-			var botReply = await chatBotApi.GetReply(message, BotDirection, modelSettings.Vo, contextMessages, recentMessages, true);
+			var botReply = await chatBotApi.GetReply(message, $"{BotDirection}\n{perceivedJson}", modelSettings.Vo, contextMessages, recentMessages, true);
 
 			// IEmbeddingsApi: convert the botReply to a botVector
 			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, modelSettings.Vo.BotName, botReply, true);
@@ -141,16 +141,27 @@ namespace Modules.UniChat.Internal.DataObjects
 			var json = ParseJsonFromAIResponse(botReply);
 			if (json == null) return;
 
-			var newPosition = json["new_position"]?.ToObject<Vector3Serializable>();
-			var newRotation = json["new_rotation"]?.ToObject<Vector3Serializable>();
-
-			Debug.Log($"New position: {newPosition}");
-			Debug.Log($"New rotation: {newRotation}");
-
-			Log("Moving");
-			var brainwave = GameObject.Find("Brainwave").transform;
-			brainwave.position = newPosition.Value;
-			brainwave.eulerAngles = newRotation.Value;
+			// if (json.ContainsKey("move_to_position"))
+			// {
+			// 	var newPosition = json["new_position"]?.ToObject<Vector3Serializable>();
+			// 	var newRotation = json["new_rotation"]?.ToObject<Vector3Serializable>();
+			//
+			// 	Debug.Log($"New position: {newPosition}");
+			// 	Debug.Log($"New rotation: {newRotation}");
+			//
+			// 	Log("Moving");
+			// 	var brainwave = GameObject.Find("Brainwave").transform;
+			// 	brainwave.position = newPosition.Value();
+			// 	brainwave.eulerAngles = newRotation.Value();
+			// }
+			if (json.ContainsKey("point_in_direction"))
+			{
+				var pointer = GameObject.Find("Pointer").transform;
+				var newDir = JsonConvert.DeserializeObject<PointCommand>(json.ToString());
+				pointer.rotation = Quaternion.LookRotation(-newDir.Direction.Value());
+				var scale = pointer.localScale;
+				pointer.localScale = new Vector3(scale.x, scale.y, newDir.Direction.Value().magnitude);
+			}
 		}
 
 		JObject ParseJsonFromAIResponse(string botReply)
@@ -158,7 +169,7 @@ namespace Modules.UniChat.Internal.DataObjects
 			var split = botReply.Split("```");
 			if (split.Length < 2)
 			{
-				Debug.LogError("Could not find ```json delimiter in the AI response. Check the response format.");
+				Log("Could not find ```json delimiter in the AI response. Check the response format.");
 				return null;
 			}
 
@@ -166,7 +177,7 @@ namespace Modules.UniChat.Internal.DataObjects
 
 			if (string.IsNullOrWhiteSpace(jsonString))
 			{
-				Debug.LogError("Empty JSON string. Check the AI response format.");
+				Log("Empty JSON string. Check the AI response format.");
 				return null;
 			}
 
@@ -177,9 +188,16 @@ namespace Modules.UniChat.Internal.DataObjects
 			}
 			catch (JsonReaderException ex)
 			{
-				Debug.LogError($"Error parsing JSON string: {ex.Message}");
+				Log($"Error parsing JSON string: {ex.Message}");
 				return null;
 			}
+		}
+
+		[Serializable]
+		public class PointCommand
+		{
+			[JsonProperty("point_in_direction")]
+			public Vector3Serializable Direction {get;set;}
 		}
 
 		[Serializable]

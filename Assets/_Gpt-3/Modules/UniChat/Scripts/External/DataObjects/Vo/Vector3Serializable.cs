@@ -24,7 +24,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 			Z = vector3.z;
 		}
 
-		public Vector3 Value
+		public Vector3 Value()
 			=> new(X, Y, Z);
 
 		public override string ToString()

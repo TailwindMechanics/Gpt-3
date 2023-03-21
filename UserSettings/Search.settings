@@ -10,6 +10,9 @@ scopes = {
 	"last_search.110DEAF1" = "Assets/_EvergreenCove/Modules/BuildSetup"
 	"OpenInspectorPreview.110DEAF1" = "0"
 	"currentGroup.110DEAF1" = "all"
+	"last_search.E8DA15E5" = "table"
+	"OpenInspectorPreview.E8DA15E5" = "0"
+	"currentGroup.E8DA15E5" = "all"
 }
 providers = {
 	adb = {

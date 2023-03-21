@@ -10,8 +10,6 @@ namespace Modules.UniChat.External.DataObjects
 	{
 		public static async Task<string> Capture(Camera cam, string folderPath, string fileName, Vector2Int resolution)
 		{
-			Debug.Log("Capturing image...");
-
 			var renderTexture = new RenderTexture(resolution.x, resolution.y, 24);
 			cam.targetTexture = renderTexture;
 			var capturedImage = new Texture2D(resolution.x, resolution.y, TextureFormat.RGB24, false);
@@ -28,8 +26,6 @@ namespace Modules.UniChat.External.DataObjects
 			cam.targetTexture = null;
 			RenderTexture.active = null;
 			AssetDatabase.Refresh();
-
-			Debug.Log($"Image saved to {filePath}");
 
 			return filePath;
 		}

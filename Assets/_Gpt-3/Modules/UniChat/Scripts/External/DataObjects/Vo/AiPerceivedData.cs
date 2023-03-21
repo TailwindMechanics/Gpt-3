@@ -6,9 +6,9 @@ using System;
 namespace Modules.UniChat.External.DataObjects.Vo
 {
 	[Serializable]
-	public class CameraViewData
+	public class AiPerceivedData
 	{
-		public CameraViewData()
+		public AiPerceivedData()
 			=> AreaContent = new List<string>();
 
 		[JsonProperty("time")]

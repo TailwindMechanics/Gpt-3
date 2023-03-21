@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58068418bb5e40639480b21a5380d96b, type: 3}
-  m_Name: Brainwave_Gpt4_modelSettings
+  m_Name: Pointerbot_Gpt4_modelSettings
   m_EditorClassIdentifier: 
   settings:
-    botName: Brainwave
-    direction: {fileID: 4900000, guid: 8fd756c080f0d534fa854a36a28450cb, type: 3}
-    sendSimilarChatCount: 8
-    sendChatHistoryCount: 4
-    memoryAccuracy: 0.86
-    maxTokens: 2048
-    temperature: 0.9520000219345093
-    topP: 1
-    presencePenalty: 0
-    frequencyPenalty: 0
+    botName: Pointerbot
+    direction: {fileID: 4900000, guid: e1450899cd53cd14d82b38f6346b253e, type: 3}
+    sendSimilarChatCount: 1
+    sendChatHistoryCount: 1
+    memoryAccuracy: 0.8
+    maxTokens: 4096
+    temperature: 0.5
+    topP: 0.5
+    presencePenalty: 0.5
+    frequencyPenalty: 0.5
     model:
       model: gpt-4
       allModels:

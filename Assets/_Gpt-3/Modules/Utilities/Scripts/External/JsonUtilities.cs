@@ -7,17 +7,16 @@ namespace Modules.Utilities.External
 {
 	public static class JsonUtilities
 	{
-		public static string SaveAsJsonFile(string folderPath, string fileName, object obj)
+		public static (string json, string filePath) SaveAsJsonFile(string folderPath, string fileName, object obj, Formatting formatting = Formatting.Indented)
 		{
 			fileName = fileName.Replace(".json", "");
 			fileName += ".json";
 
 			var path = Path.Combine(folderPath, fileName);
-			var json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-			Debug.Log(json);
+			var json = JsonConvert.SerializeObject(obj, formatting);
 			File.WriteAllText(path, json);
 
-			return path;
+			return (json, path);
 		}
 	}
 }

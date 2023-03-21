@@ -68,7 +68,7 @@ namespace Modules.UniChat.Internal.Apis
 
                 if (logging)
                 {
-                    Log($"Received Google Cloud Vision response: {responseContent}");
+                    Log($"Received Google Cloud Vision");
                 }
 
                 if (visionResponse.Responses.Count > 0 && visionResponse.Responses[0].LabelAnnotations != null)
@@ -88,6 +88,6 @@ namespace Modules.UniChat.Internal.Apis
         }
 
         void Log(string message)
-            => Debug.Log($"<color=#B7D8BA><b>>>> ImageRecognition: {message.Replace("\n", "")}</b></color>");
+            => Debug.Log($"<color=#B6D8AA><b>>>> ImageRecognition: {message.Replace("\n", "")}</b></color>");
 	}
 }

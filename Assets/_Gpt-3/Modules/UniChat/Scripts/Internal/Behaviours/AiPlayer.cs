@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 
@@ -6,17 +5,12 @@ namespace Modules.UniChat.Internal.Behaviours
 {
     public class AiPlayer : MonoBehaviour
     {
-        [FoldoutGroup("References"), SerializeField]
-        Camera cam;
-        [FoldoutGroup("References"), SerializeField]
-        Transform volumeSensor;
-        [InlineEditor, SerializeField]
-        ImageRecognizer imageRecognizer;
+        public Camera Camera        => cam;
+        public Transform Sensor     => sensor;
+        public Transform Pointer    => pointer;
 
-        [FoldoutGroup("Tools"), Button(ButtonSizes.Medium)]
-        void CaptureSight ()
-        {
-            imageRecognizer.Capture(cam, volumeSensor);
-        }
+        [SerializeField] Camera cam;
+        [SerializeField] Transform sensor;
+        [SerializeField] Transform pointer;
     }
 }
