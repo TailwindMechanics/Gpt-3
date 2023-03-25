@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "title": "Using IJobChunk | Package Manager UI website",
+      "link": "https://docs.unity3d.com/Packages/com.unity.entities@0.0/manual/chunk_iteration_job.html",
+      "snippet": "You can implement IJobChunk inside a JobComponentSystem to iterate through your data by ... The steps involved in implementing an IJobChunk Job include:."
+    },
+    {
+      "title": "Using IJobChunk jobs | Entities | 0.17.0-preview.42",
+      "link": "https://docs.unity.cn/Packages/com.unity.entities@0.17/manual/chunk_iteration_job.html",
+      "snippet": "May 28, 2021 ... You can implement IJobChunk inside a system to iterate through your data by chunk. When you schedule an IJobChunk job in the OnUpdate() ..."
+    },
+    {
+      "title": "Feedback request: IJobEntity - Unity Forum",
+      "link": "https://forum.unity.com/threads/feedback-request-ijobentity.888121/",
+      "snippet": "May 11, 2020 ... With this interface, it would be possible to define the job and query ... written IJobChunk code (viewable through DOTS Compiler Inspector)"
+    },
+    {
+      "title": "Quick observation in IJobForEachWithEntity vs IJobChunk in ...",
+      "link": "https://github.com/Unity-Technologies/DOTS-training-samples/issues/7",
+      "snippet": "Sep 25, 2019 ... ... what kind of difference it would make changing it to be IJobChunk. ... sample did you use to get this working (which unity version) ?"
+    },
+    {
+      "title": "Getting started with Unity DOTS — Part 1: ECS | by Nikolay ...",
+      "link": "https://nikolayk.medium.com/getting-started-with-unity-dots-part-1-ecs-7f963777db8e",
+      "snippet": "May 19, 2020 ... Unity DOTS can be used to build any game you have in mind, ... can also execute a query by passing it to a job that implements IJobChunk :"
+    },
+    {
+      "title": "Unity ECS/DOTS rider error: Ambiguous invocation between ...",
+      "link": "https://youtrack.jetbrains.com/issue/RIDER-30605",
+      "snippet": "Unity ECS/DOTS rider error: Ambiguous invocation between IJobChunk and ... I can work around this by explicitly specify which one but unity doesnt detect ..."
+    },
+    {
+      "title": "Unity DOTS: Creating Generic Systems with Generic Jobs - No Time ...",
+      "link": "https://nagachiang.github.io/unity-dots-creating-generic-systems-with-generic-jobs/",
+      "snippet": "Aug 14, 2020 ... Since generic parameters are not currently supported in Entities.ForEach() , we must use IJobChunk to implement generic systems."
+    },
+    {
+      "title": "Everything about ISharedComponentData",
+      "link": "https://gametorrahod.com/everything-about-isharedcomponentdata/",
+      "snippet": "Mar 25, 2019 ... (It is) But having multiple chunks is not all bad as something like IJobChunk or IJobForEach could parallelize each chunk to work in a different ..."
+    },
+    {
+      "title": "Unity ECS - IJobChunk - DOTS Sample Project 2 [Old Version of ...",
+      "link": "https://www.youtube.com/watch?v=y678KoKmoEU",
+      "snippet": "Apr 7, 2020 ... Caution:* This video was made with an older version of ECS. See pinned comment for further Details ❗❗ Unity Sample Projects: ..."
+    },
+    {
+      "title": "Randomness in Unity ECS IJobChunk - HackMD",
+      "link": "https://hackmd.io/@No3371/H161yvJ68",
+      "snippet": "We are scheduling jobs to multiple threads, if there's something is guaranteed to be different between all parallel running jobs, it'd be the thread index."
+    }
+  ]
+}

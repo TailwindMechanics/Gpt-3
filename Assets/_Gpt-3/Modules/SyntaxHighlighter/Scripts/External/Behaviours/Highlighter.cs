@@ -26,6 +26,8 @@ namespace Modules.SyntaxHighlighter.External.Behaviours
             const string numbersPattern = @"\b-?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?[fFdD]?[uUlL]?[mM]?\b";
             const string booleansOrNullPattern = @"\b(?:true|false|null)\b";
 
+            code = code.Replace("csharp", "").Trim();
+            code = $"<color={settings.BaseColor}>{code}</color>";
             code = Regex.Replace(code, keywordsPattern, m => $"<color={settings.KeywordColor}>{m.Value}</color>");
             code = Regex.Replace(code, commentsPattern, m => $"<color={settings.CommentColor}>{m.Value}</color>");
             code = Regex.Replace(code, stringsPattern, m => $"<color={settings.StringColor}>{m.Value}</color>");
@@ -43,6 +45,8 @@ namespace Modules.SyntaxHighlighter.External.Behaviours
             const string numberPattern = @"(?<=\s)-?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?";
             const string booleanOrNullPattern = @"\b(?:true|false|null)\b";
 
+            code = code.Replace("json", "").Trim();
+            code = $"<color={settings.BaseColor}>{code}</color>";
             code = Regex.Replace(code, propertyNamePattern, m => $"<color={settings.PropertyNameColor}>{m.Value}</color>");
             code = Regex.Replace(code, stringPattern, m => $"<color={settings.StringColor}>{m.Value}</color>");
             code = Regex.Replace(code, numberPattern, m => $"<color={settings.NumberColor}>{m.Value}</color>");

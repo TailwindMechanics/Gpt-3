@@ -3,8 +3,8 @@
 using UnityEngine.UIElements;
 using UnityEditor;
 using System;
+
 using Modules.SyntaxHighlighter.Internal.DataObjects;
-using Highlighter = Modules.SyntaxHighlighter.External.Behaviours.Highlighter;
 
 
 namespace Modules.UniChat.Internal.Editor
@@ -68,6 +68,8 @@ namespace Modules.UniChat.Internal.Editor
 
             for (var i = 0; i < parts.Length; i++)
             {
+                parts[i] = parts[i].Trim();
+
                 if (i % 2 == 0)
                 {
                     var label = new Label(parts[i])
@@ -78,7 +80,9 @@ namespace Modules.UniChat.Internal.Editor
                             fontSize = message.style.fontSize,
                             color = message.style.color,
                             display = DisplayStyle.Flex,
-                            whiteSpace = WhiteSpace.Normal
+                            whiteSpace = WhiteSpace.Normal,
+                            marginTop = 5,
+                            marginBottom = 0
                         }
                     };
 
@@ -86,12 +90,7 @@ namespace Modules.UniChat.Internal.Editor
                 }
                 else
                 {
-                    var codeText = Highlighter.Highlight(parts[i], highlightSettings.Vo)
-                        .Replace("csharp", "")
-                        .Replace("json", "")
-                        .Trim();
-
-                    var codeBlock = new CodeBlockVisualElement(codeText);
+                    var codeBlock = new CodeBlockVisualElement(parts[i], highlightSettings.Vo);
                     textContainer.Add(codeBlock);
                 }
             }

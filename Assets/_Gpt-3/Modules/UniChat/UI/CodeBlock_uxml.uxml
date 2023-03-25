@@ -1,6 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Gpt-3/Modules/UniChat/UI/CodeBlock_uss.uss?fileID=7433441132597879392&amp;guid=1424ac129697eeb4f99ebeedea2d1566&amp;type=3#CodeBlock_uss" />
     <ui:VisualElement name="codeBlockContainer_visualElement" class="codeBlockContainer">
-        <ui:Label name="codeBlock_label" class="codeBlock" />
+        <ui:VisualElement name="Header" class="Header">
+            <ui:Label name="language_label" class="languageLabel" style="padding-left: 12px;" />
+            <ui:Button name="copyButton" text="Copy code" class="languageLabel" />
+        </ui:VisualElement>
+        <ui:Label name="codeBlock_label" class="codeBlock" style="align-items: auto; justify-content: center;" />
     </ui:VisualElement>
 </ui:UXML>

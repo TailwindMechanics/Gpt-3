@@ -69,3 +69,54 @@ By following this plan, you can gradually improve the scene's data and context f
 5. Parse the JSON responses returned by the MongoDB Atlas REST API in Unity to extract the data you need.
 6. Use the extracted data to feed into your chatbot AI for analysis.
 --------------------------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+1. UI Upgrade (Completed):
+    1a. Text Formatting: The UIToolkit chat interface has been improved with proper text formatting.
+    1b. Copying: A copy button has been added, allowing users to easily copy-paste text.
+2. Google Search API:
+    2a. Setup: The Google Search API will be configured to enable internet queries.
+    2b. Integration: AI will be equipped with the ability to use the Google Search API to perform a variety of searches.
+    2c. Paradigm Review: The query/command paradigm will be evaluated to optimize the chat experience and ensure effective communication between AI and the user.
+3. Github Actions and Code Analysis:
+    Investigation into Github actions and code analysis tools will be conducted to develop schematics of the Unity project and codebase. This will improve AI's ability to assist users with various needs.
+4. Unity Scene Exploration (for future consideration):
+    Enhancements to AI's perception systems will allow it to navigate and explore the Unity scene, providing users with greater visibility into the world Tailwind has created.
+--------------------------------------------------------------------------------------------------------------------------------\
+
+
+--------------------------------------------------------------------------------------------------------------------------------\
+Executive Summary:
+
+The goal was to find a solution that allows an AI to query the internet and retrieve more detailed information
+    than what is provided by search APIs like Google Search API and Bing Web Search API.
+    IBM Watson Discovery was identified as the most suitable option, as it can search, analyze,
+    and extract insights from multiple sources, including web pages, without the need for
+    additional web scraping.
+
+Steps to get another AI up to speed:
+    1. Sign up for IBM Cloud: If not already done, create an IBM Cloud account
+        at https://cloud.ibm.com/registration.
+    2. Create a Watson Discovery instance: In the IBM Cloud dashboard, click on "Create resource" and search
+        for "Watson Discovery" in the catalog. Choose a plan that suits the needs and click "Create" to
+        set up the instance.
+    3. Configure Watson Discovery: Access the "Manage" tab in the Watson Discovery settings to get the
+        API key and service URL, which are required to interact with the Watson Discovery API.
+    4. Set up a web crawl: In the Watson Discovery dashboard, create a new data collection and
+        configure a web crawl by providing the URLs to crawl and index. Set up custom crawling
+        patterns and extraction rules as needed.
+    5. Implement the WatsonDiscoveryApi class: Integrate the provided WatsonDiscoveryApi class into the
+        AI project. This class is responsible for sending queries to Watson Discovery and retrieving
+        responses. Update the necessary namespaces with the new IWatsonDiscoveryApi interface and the
+        WatsonDiscoverySettingsVo and WatsonDiscoveryResponse classes.
+    6. Configure the WatsonDiscoverySettingsVo: Replace placeholders in the WatsonDiscoverySettingsVo
+        class with the appropriate values for the Watson Discovery instance, such as the BaseUrl, ApiKey,
+        EnvironmentId, CollectionId, and Version.
+    7. Use WatsonDiscoveryApi.Search(): Utilize the Search() method of the WatsonDiscoveryApi class to
+        perform queries and retrieve more detailed information from web pages. Integrate this method
+        into the AI's logic as needed.
+By following these steps, the AI will be able to use Watson Discovery to search and analyze web content,
+    providing more detailed and contextually relevant information than what is possible with search APIs
+    like Google Search API and Bing Web Search API.
+--------------------------------------------------------------------------------------------------------------------------------\

@@ -8,6 +8,7 @@ namespace Modules.SyntaxHighlighter.Internal.DataObjects
 	[Serializable]
 	public class HighlightSettingsVo
 	{
+		public string BaseColor => baseColor.Hex;
 		public string KeywordColor => keywordColor.Hex;
 		public string CommentColor => commentColor.Hex;
 		public string StringColor => stringColor.Hex;
@@ -15,6 +16,7 @@ namespace Modules.SyntaxHighlighter.Internal.DataObjects
 		public string NumberColor => numberColor.Hex;
 		public string BooleanOrNullColor => booleanOrNullColor.Hex;
 
+		[SerializeField] HexColor baseColor = new("#569CD6");
 		[SerializeField] HexColor keywordColor = new("#569CD6");
 		[SerializeField] HexColor commentColor = new("#608B4E");
 		[SerializeField] HexColor stringColor = new("#D69D85");

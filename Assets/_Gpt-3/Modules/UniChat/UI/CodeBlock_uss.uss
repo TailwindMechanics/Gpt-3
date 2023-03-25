@@ -1,5 +1,12 @@
 .codeBlockContainer {
     padding: 4px 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: rgba(51, 51, 51, 0);
+    border-radius: 4px;
+    position: relative;
 }
 
 .codeBlock {
@@ -23,4 +30,38 @@
     border-bottom-right-radius: 3px;
     -unity-font-definition: url('project://database/Assets/_Gpt-3/Modules/UniChat/Data/Fonts/SourceCodePro/SourceCodePro-Regular%20SDF.asset?fileID=11400000&guid=66baee7f7339e49418138c11282900c2&type=2#SourceCodePro-Regular SDF');
     -unity-font-style: normal;
+}
+
+.Header {
+    background-color: rgba(33, 33, 33, 0);
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+    border-left-color: rgb(100, 100, 100);
+    border-right-color: rgb(100, 100, 100);
+    border-top-color: rgb(100, 100, 100);
+    border-bottom-color: rgb(100, 100, 100);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    bottom: -3px;
+}
+
+.languageLabel {
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 12px;
+    color: rgb(204, 204, 204);
+    -unity-text-outline-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    align-self: center;
+    justify-content: space-between;
+    padding-bottom: 3px;
 }
