@@ -38,14 +38,12 @@ namespace Modules.UniChat.Internal.DataObjects
 		string username = "Guest";
 
 		[InlineEditor, SerializeField]
-		ModelSettingsSo modelSettings;
+		ModelSettingsSo botSettings;
 		[FoldoutGroup("Settings/Embeddings Bot"), HideLabel, SerializeField]
 		SerializableModelVo embeddingModel;
 
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
 		PineConeSettingsSo pineConeSettings;
-		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
-		AiPerceptionSettingsSo perceptionSettings;
 
 		[FoldoutGroup("Tools"), FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]
 		async void DescribeIndexStats ()
@@ -58,7 +56,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		[FoldoutGroup("Tools/History"), Button(ButtonSizes.Medium)]
 		void ExportChatHistoryToJson()
 		{
-			var fileName = $"{modelSettings.Vo.BotName}-{username}_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+			var fileName = $"{botSettings.Vo.BotName}-{username}_{DateTime.Now:yyyyMMdd_HHmmss}.json";
 
 			var path = Path.Combine(historyFolderPath, fileName);
 			var json = JsonUtility.ToJson(history, true);
@@ -74,15 +72,15 @@ namespace Modules.UniChat.Internal.DataObjects
 		}
 
 		async Task DeleteAllInNamespace ()
-			=> await new VectorDatabaseApi(pineConeSettings.Vo).DeleteAllVectorsInNamespace(modelSettings.Vo.BotName, true);
+			=> await new VectorDatabaseApi(pineConeSettings.Vo).DeleteAllVectorsInNamespace(botSettings.Vo.BotName, true);
 
 		[HideLabel, SerializeField]
 		HistoryVo history;
 
-		string BotDirection => $"Your name: '{modelSettings.Vo.BotName}', the users name: '{username}'. {modelSettings.Vo.Direction}";
+		string BotDirection => $"Your name: '{botSettings.Vo.BotName}', the users name: '{username}'. {botSettings.Vo.Direction}";
 		public List<MessageVo> History				=> history.Data;
 		public string Username						=> username;
-		public string BotName						=> modelSettings.Vo.BotName;
+		public string BotName						=> botSettings.Vo.BotName;
 
 
 		public async Task<string> GetChatBotReply(string sender, string message)
@@ -95,38 +93,38 @@ namespace Modules.UniChat.Internal.DataObjects
 			var chatBotApi			= new ChatBotApi() as IChatBotApi;
 			var botPerceiver		= new AiPerceiver() as IAiPerceiver;
 
-			// IAiPerceiver: Capture perceived scene data as json
-			var perceivedJson = await botPerceiver.Capture(botPlayer.Camera, botPlayer.Sensor, perceptionSettings.Vo);
+			// Detect and do queries
+			var queryResult = await DoQuery(botPlayer, botPerceiver, history.GetPreviousBotReply(), true);
 
 			// IEmbeddingsApi: convert the senderMessage to a senderVector
 			var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
 
 			// IVectorDatabaseApi: query the senderVector, receive relevant contextual message IDs
-			var contextMessageIds = await vectorDatabaseApi.Query(modelSettings.Vo.BotName, senderVector, modelSettings.Vo.MemoryAccuracy, modelSettings.Vo.SendSimilarChatCount, true);
+			var contextMessageIds = await vectorDatabaseApi.Query(botSettings.Vo.BotName, senderVector, botSettings.Vo.MemoryAccuracy, botSettings.Vo.SendSimilarChatCount, true);
 
 			// HistoryVo: retrieve context messages with IDs, and most recent messages
 			var contextMessages = history.GetManyByIdList(contextMessageIds, true);
-			var recentMessages = history.GetMostRecent(modelSettings.Vo.SendChatHistoryCount, true);
+			var recentMessages = history.GetMostRecent(botSettings.Vo.SendChatHistoryCount, true);
 
 			// IChatBotApi: send chatBot direction, context, senderMessage, get botReply
-			var botReply = await chatBotApi.GetReply(message, $"{BotDirection}\n{perceivedJson}", modelSettings.Vo, contextMessages, recentMessages, true);
+			var botReply = await chatBotApi.GetReply(message, $"{BotDirection}\n{queryResult}", botSettings.Vo, contextMessages, recentMessages, true);
 
 			// IEmbeddingsApi: convert the botReply to a botVector
-			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, modelSettings.Vo.BotName, botReply, true);
+			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botSettings.Vo.BotName, botReply, true);
 
 			// IVectorDatabaseApi: Upsert the senderVector, receive the index
 			var senderId = Guid.Empty;
-			if (upsertUserLog) senderId = await vectorDatabaseApi.Upsert(modelSettings.Vo.BotName, senderVector, true);
+			if (upsertUserLog) senderId = await vectorDatabaseApi.Upsert(botSettings.Vo.BotName, senderVector, true);
 
 			// HistoryVo: Store the senderMessage locally with its index
 			history.Add(new MessageVo(senderId, sender, message, false), true);
 
 			// IVectorDatabaseApi: Upsert the botVector, receive the index
-			var botMessageId = await vectorDatabaseApi.Upsert(modelSettings.Vo.BotName, botVector, true);
+			var botMessageId = await vectorDatabaseApi.Upsert(botSettings.Vo.BotName, botVector, true);
 			// HistoryVo: Store the botReply locally with its index
-			history.Add(new MessageVo(botMessageId, modelSettings.Vo.BotName, botReply, true), true);
+			history.Add(new MessageVo(botMessageId, botSettings.Vo.BotName, botReply, true), true);
 
-			// Detect command
+			// Detect and do commands
 			DoCommand(botReply);
 
 			// Return bots reply for display in UI
@@ -136,33 +134,49 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		void DoCommand(string botReply)
 		{
-			// var botReply = "```json{ \"new_position\": { \"x\": -5.0, \"y\": 1.6, \"z\": 55.0 }, \"new_rotation\": { \"x\": 0, \"y\": 240, \"z\": 0 }}```";
-
 			var json = ParseJsonFromAIResponse(botReply);
 			if (json == null) return;
 
-			// if (json.ContainsKey("move_to_position"))
-			// {
-			// 	var newPosition = json["new_position"]?.ToObject<Vector3Serializable>();
-			// 	var newRotation = json["new_rotation"]?.ToObject<Vector3Serializable>();
-			//
-			// 	Debug.Log($"New position: {newPosition}");
-			// 	Debug.Log($"New rotation: {newRotation}");
-			//
-			// 	Log("Moving");
-			// 	var brainwave = GameObject.Find("Brainwave").transform;
-			// 	brainwave.position = newPosition.Value();
-			// 	brainwave.eulerAngles = newRotation.Value();
-			// }
 			if (json.ContainsKey("point_in_direction"))
 			{
-				var pointer = GameObject.Find("Pointer").transform;
-				var newDir = JsonConvert.DeserializeObject<PointCommand>(json.ToString());
-				pointer.rotation = Quaternion.LookRotation(-newDir.Direction.Value());
-				var scale = pointer.localScale;
-				pointer.localScale = new Vector3(scale.x, scale.y, newDir.Direction.Value().magnitude);
+				PointInDirection(json);
 			}
 		}
+
+		async Task<string> DoQuery (AiPlayer botPlayer, IAiPerceiver botPerceiver, string previousBotReply, bool logging = false)
+		{
+			if (string.IsNullOrWhiteSpace(previousBotReply))
+			{
+				if (logging)
+				{
+					Log("No previous bot reply to query from");
+				}
+
+				return null;
+			}
+
+			var json = ParseJsonFromAIResponse(previousBotReply);
+			if (json == null) return null;
+
+			if (json.ContainsKey("take_snapshot"))
+			{
+				return await TakeSnapshot(botPlayer, botPerceiver);
+			}
+
+			return null;
+		}
+
+		void PointInDirection (JObject json)
+		{
+			var pointer = GameObject.Find("Pointer").transform;
+			var newDir = JsonConvert.DeserializeObject<PointCommand>(json.ToString());
+			pointer.rotation = Quaternion.LookRotation(-newDir.Direction.Value());
+			var scale = pointer.localScale;
+			pointer.localScale = new Vector3(scale.x, scale.y, newDir.Direction.Value().magnitude);
+		}
+
+		async Task<string> TakeSnapshot (AiPlayer botPlayer, IAiPerceiver botPerceiver)
+			=> await botPerceiver.Capture(botPlayer.Camera, botPlayer.Sensor, botSettings.Vo.Perception.Vo);
 
 		JObject ParseJsonFromAIResponse(string botReply)
 		{

@@ -1,0 +1,26 @@
+.codeBlockContainer {
+    padding: 4px 8px;
+}
+
+.codeBlock {
+    white-space: normal;
+    unity-font: resource('LegacyRuntime.ttf');
+    font-size: 11px;
+    background-color: rgb(56, 56, 56);
+    color: rgb(204, 204, 204);
+    padding: 4px 8px;
+    border-left-color: rgb(100, 100, 100);
+    border-right-color: rgb(100, 100, 100);
+    border-top-color: rgb(100, 100, 100);
+    border-bottom-color: rgb(100, 100, 100);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -unity-font-definition: url('project://database/Assets/_Gpt-3/Modules/UniChat/Data/Fonts/SourceCodePro/SourceCodePro-Regular%20SDF.asset?fileID=11400000&guid=66baee7f7339e49418138c11282900c2&type=2#SourceCodePro-Regular SDF');
+    -unity-font-style: normal;
+}

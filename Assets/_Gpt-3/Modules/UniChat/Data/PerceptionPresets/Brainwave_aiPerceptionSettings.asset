@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3dc4ca9b2fc4e71a8834b2ee4582cca, type: 3}
+  m_Name: Brainwave_aiPerceptionSettings
+  m_EditorClassIdentifier: 
+  settings:
+    resolution: {x: 1920, y: 960}
+    savePath: Assets/_Gpt-3/Modules/UniChat/Data/ImageCaptures
+    cloudVisionCreds: {fileID: 11400000, guid: dbd1fee1ece84af42884b03792466de2, type: 2}
+    areaBlackList:
+    - SM_Generic_SkyDome_01
+    - VolumeSensor
+    - Capsule
+    - Cube
+    removeFromNames:
+    - SM_Generic_
+    - SM_Prop_
+    - SM_Veh_
+    - SM_Env_
+    - SM_Wep_
+    - SM_Bld_

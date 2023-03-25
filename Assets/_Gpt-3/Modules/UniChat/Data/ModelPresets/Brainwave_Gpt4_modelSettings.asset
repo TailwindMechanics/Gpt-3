@@ -96,3 +96,5 @@ MonoBehaviour:
       - text-davinci:001
       - text-curie:001
       - text-babbage:001
+    perceptionSettings: {fileID: 11400000, guid: 16b165ed7a7d7ed4db841531de46d41b,
+      type: 2}

@@ -1,13 +1,7 @@
 {
-    "name": "UniChat.Editor",
+    "name": "SyntaxHighlighter.Internal",
     "rootNamespace": "Modules",
-    "references": [
-        "GUID:ac74810195be3f24fac2ebaa732e3431",
-        "GUID:3248779d86bd31747b5d2214f30b01ac",
-        "GUID:c531dbe43e9b5fc4bb1fca88e5b85011",
-        "GUID:d34b559d7d64c4d4da631737ea3eb870",
-        "GUID:ea2c3e03097bc4c449a0f435d92e974e"
-    ],
+    "references": ["GUID:b1ca1f4e291bbef4e884160111f7bea8"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

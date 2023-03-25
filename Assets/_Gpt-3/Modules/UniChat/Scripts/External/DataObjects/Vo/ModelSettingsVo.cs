@@ -2,6 +2,7 @@
 using OpenAI.Models;
 using UnityEngine;
 using System;
+using Modules.UniChat.External.DataObjects.So;
 
 
 namespace Modules.UniChat.External.DataObjects.Vo
@@ -20,6 +21,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public double PresencePenalty		=> presencePenalty;
 		public double FrequencyPenalty		=> frequencyPenalty;
 		public Model Model					=> model.Model;
+		public AiPerceptionSettingsSo Perception => perceptionSettings;
 
 		[Tooltip("Display name of the model"), SerializeField]
 		string botName = "Bot";
@@ -43,5 +45,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		double frequencyPenalty = 0.0;
 		[Tooltip("Only chat models are valid currently."), HideLabel, SerializeField]
 		SerializableModelVo model;
+		[Tooltip("Settings for how this bot perceives"), InlineEditor, SerializeField]
+		AiPerceptionSettingsSo perceptionSettings;
 	}
 }

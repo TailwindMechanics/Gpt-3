@@ -1,4 +1,5 @@
-.root {
+.root
+{
     background-color: rgb(42, 42, 42);
     -unity-slice-left: 0;
     -unity-slice-top: 0;
@@ -6,10 +7,7 @@
     -unity-slice-bottom: 0;
     opacity: 1;
     display: flex;
-    margin-left: 6px;
-    margin-right: 6px;
-    margin-top: 0;
-    margin-bottom: 6px;
+    margin: 0 6px 6px;
     flex-grow: 1;
     align-self: stretch;
     justify-content: flex-start;
@@ -22,15 +20,13 @@
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 5px;
     padding-top: 4px;
     padding-bottom: 6px;
 }
 
-.timestamp {
+.timestamp
+{
     color: rgb(204, 204, 204);
     font-size: 12px;
     -unity-font-style: italic;
@@ -39,7 +35,8 @@
     white-space: normal;
 }
 
-.sender {
+.sender
+{
     -unity-font-style: bold;
     margin-left: 5px;
     margin-right: 5px;
@@ -49,10 +46,10 @@
     white-space: normal;
 }
 
-.message {
+.message
+{
     flex-grow: 1;
     margin-left: 20px;
-    text-overflow: clip;
     flex-wrap: nowrap;
     width: auto;
     margin-right: 20px;

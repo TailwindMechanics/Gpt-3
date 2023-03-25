@@ -9,6 +9,17 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	[Serializable]
 	public class HistoryVo
 	{
+		public string GetPreviousBotReply(bool logging = false)
+		{
+			var result = Data.LastOrDefault(item => item.IsBot);
+			if (logging)
+			{
+				Log($"Got previous bot reply: {JsonUtility.ToJson(result)}");
+			}
+
+			return result?.Message;
+		}
+
 		public List<MessageVo> GetMostRecent(int count, bool logging = false)
 		{
 			var result = new List<MessageVo>();

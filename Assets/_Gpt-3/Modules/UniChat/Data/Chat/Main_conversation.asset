@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upsertUserLog: 0
   username: Tailwind
-  modelSettings: {fileID: 11400000, guid: c352695c13f5c8b4c8987eb1a1bbdfc5, type: 2}
+  botSettings: {fileID: 11400000, guid: 5fee547608a1d684c989213dc8c6b3d0, type: 2}
   embeddingModel:
     model: text-embedding-ada-002
     allModels:
@@ -88,64 +88,83 @@ MonoBehaviour:
     - text-curie:001
     - text-babbage:001
   pineConeSettings: {fileID: 11400000, guid: bb8b936abbd2a4f4ebbdcb661dfe06c2, type: 2}
-  perceptionSettings: {fileID: 11400000, guid: 272c9812fea3ee8498574b77a83be77f, type: 2}
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
     - id: 00000000-0000-0000-0000-000000000000
       isBot: 0
       senderName: Tailwind
-      timestamp: 21/03/2023 08:34
-      message: Good morning Pointerbot, could you point at the banana please?
-    - id: 9caf98c9-f6f7-4890-bacf-d9e424f84103
+      timestamp: 25/03/2023 12:35
+      message: Hi Brainwave, could you show me a sample csharp code block and also
+        a sample json code block please, I'm just testing formatting in the UI here
+    - id: 9ed5af6a-4def-4a69-b5aa-4f77f7a82e68
       isBot: 1
-      senderName: Pointerbot
-      timestamp: 21/03/2023 08:34
-      message: '```json
-
-        {"point_in_direction":{"x":1.4,"y":0.6,"z":-0.4}}
-
-        ```'
+      senderName: Brainwave
+      timestamp: 25/03/2023 12:35
+      message: "Here's a sample C# code block for you:\n\n```csharp\nusing System;\n\nnamespace
+        SampleApp\n{\n    class Program\n    {\n        static void Main(string[]
+        args)\n        {\n            Console.WriteLine(\"Ahoy there, Tailwind! Welcome
+        to the C# sample code with a touch of Irish charm!\");\n\n            int
+        a = 4;\n            int b = 2;\n            int sum = a + b;\n\n           
+        Console.WriteLine($\"The sum of {a} and {b} be {sum}, so it is! Hahaha!\");\n       
+        }\n    }\n}\n```\n\nAnd here's a sample JSON code block for ye:\n\n```json\n{\n   
+        \"name\": \"Tailwind\",\n    \"interests\": [\n        \"Programming\",\n       
+        \"Travel\",\n        \"Cooking\"\n    ],\n    \"details\": {\n        \"age\":
+        28,\n        \"location\": \"Dublin\"\n    },\n    \"message\": \"Sure now,
+        this be a fine JSON example for ye, Tailwind! Hahaha!\"\n}\n```\n\nEnjoy
+        the craic with these samples, Tailwind! If you be needin' any more assistance,
+        don't be shy now! Just give us a shout!"
     - id: 00000000-0000-0000-0000-000000000000
       isBot: 0
       senderName: Tailwind
-      timestamp: 21/03/2023 08:34
-      message: Very good, and could you now please point at the Pineapple?
-    - id: e5f2db0c-9d45-4bc1-b02c-d9690e589ff8
+      timestamp: 25/03/2023 12:36
+      message: Could you ensure all types are represented in the json please
+    - id: 73afad08-7464-43ca-8a29-1a6d2da4bd11
       isBot: 1
-      senderName: Pointerbot
-      timestamp: 21/03/2023 08:34
-      message: '```json
-
-        {"point_in_direction":{"x":1.3,"y":0.6,"z":-1.3}}
-
-        ```'
+      senderName: Brainwave
+      timestamp: 25/03/2023 12:36
+      message: "Top o' the mornin' to ya, Tailwind! Here's a lovely C# code block
+        for your fine UI testing:\n\n```csharp\nusing System;\n\nnamespace UI_Test\n{\n   
+        class Program\n    {\n        static void Main(string[] args)\n        {\n           
+        string[] hobbies = { \"coding\", \"travel\", \"cooking\" };\n           
+        \n            Console.WriteLine(\"Ahoy, Tailwind! Here's a C# sample with
+        a touch of Irish charm for ya:\");\n\n            foreach (string hobby in
+        hobbies)\n            {\n                Console.WriteLine($\"- {hobby}\");\n           
+        }\n        }\n    }\n}\n```\n\nAnd for ye, a grand JSON code block with all
+        types represented, so it is!\n\n```json\n{\n    \"name\": \"Tailwind\",\n   
+        \"isDeveloper\": true,\n    \"hobbies\": [\n        \"Programming\",\n       
+        \"Travel\",\n        \"Cooking\"\n    ],\n    \"favorites\": {\n        \"color\":
+        \"Green\",\n        \"food\": null\n    },\n    \"ratings\": [\n        5,\n       
+        4.5,\n        3.2\n    ],\n    \"message\": \"Sure, this be a fine JSON example
+        with all types for ya, Tailwind! Hahaha!\"\n}\n```\n\nHave a grand time with
+        your UI testing, me dear! If you need any more help, just give us a shout,
+        will ya? Hahaha!"
     - id: 00000000-0000-0000-0000-000000000000
       isBot: 0
       senderName: Tailwind
-      timestamp: 21/03/2023 08:35
-      message: Could you now please point at the key ingredient found in the iconic
-        all-American pie please?
-    - id: f7c411c8-e363-4395-945c-86a06f783ecf
+      timestamp: 25/03/2023 12:48
+      message: Ok and could you also show a few more basic types in the csharp too
+        please?
+    - id: 82272167-5151-4987-9a3c-c09b6ebc5f28
       isBot: 1
-      senderName: Pointerbot
-      timestamp: 21/03/2023 08:35
-      message: '```json
-
-        {"point_in_direction":{"x":1.4,"y":0.6,"z":-0.1}}
-
-        ```'
-    - id: 00000000-0000-0000-0000-000000000000
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 21/03/2023 08:36
-      message: Could you point at the coffee making machine please
-    - id: 34100cd7-e65d-4710-af8f-a9e10133a9ab
-      isBot: 1
-      senderName: Pointerbot
-      timestamp: 21/03/2023 08:36
-      message: '```json
-
-        {"point_in_direction":{"x":-2.7,"y":0.4,"z":-3.9}}
-
-        ```'
+      senderName: Brainwave
+      timestamp: 25/03/2023 12:48
+      message: "Of course, Tailwind! Let me give you an updated C# code block showcasing
+        more basic types. As for JSON, I'll include representations of string, number,
+        boolean, object, array, and null for you.\n\nHere's the C# code block:\n\n```csharp\nusing
+        System;\n\nnamespace UI_Test\n{\n    class Program\n    {\n        static
+        void Main(string[] args)\n        {\n            int age = 28;\n           
+        double weight = 70.5;\n            bool isDeveloper = true;\n           
+        char initial = 'T';\n            string name = \"Tailwind\";\n           
+        \n            Console.WriteLine(\"Hello, Tailwind! Here's a C# sample with
+        various basic types:\");\n\n            Console.WriteLine($\"Name: {name}\");\n           
+        Console.WriteLine($\"Initial: {initial}\");\n            Console.WriteLine($\"Age:
+        {age}\");\n            Console.WriteLine($\"Weight: {weight}\");\n           
+        Console.WriteLine($\"Is a developer: {isDeveloper}\");\n        }\n    }\n}\n```\n\nAnd
+        here's the JSON code block with all the types represented:\n\n```json\n{\n   
+        \"name\": \"Tailwind\",\n    \"age\": 28,\n    \"weight\": 70.5,\n    \"isDeveloper\":
+        true,\n    \"initial\": \"T\",\n    \"hobbies\": [\n        \"coding\",\n       
+        \"travel\",\n        \"cooking\"\n    ],\n    \"address\": {\n        \"street\":
+        \"1234 Example St\",\n        \"city\": \"Dublin\"\n    },\n    \"favoriteFood\":
+        null\n}\n```\n\nI hope these samples help you with your UI testing, Tailwind!
+        If you need any more assistance, just give us a shout!"

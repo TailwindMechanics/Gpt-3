@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Gpt-3/Modules/UniChat/UI/CodeBlock_uss.uss?fileID=7433441132597879392&amp;guid=1424ac129697eeb4f99ebeedea2d1566&amp;type=3#CodeBlock_uss" />
+    <ui:VisualElement name="codeBlockContainer_visualElement" class="codeBlockContainer">
+        <ui:Label name="codeBlock_label" class="codeBlock" />
+    </ui:VisualElement>
+</ui:UXML>
