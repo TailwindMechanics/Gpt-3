@@ -94,14 +94,28 @@ MonoBehaviour:
     - id: 00000000-0000-0000-0000-000000000000
       isBot: 0
       senderName: Tailwind
-      timestamp: 25/03/2023 17:17
-      message: Ggggggguuuuuuuuuiiiiiiiiiiiiinnnnnnnneeeeeeeesssssssssss tiiiiiiime
-    - id: b6911e44-f7be-4029-a1d4-19bb9ea56004
+      timestamp: 26/03/2023 13:34
+      message: Show me example csharp and json please with a wide variety of types
+        to test syntax colouring
+    - id: 28f2d36e-be41-4f9d-a538-2e9a6fb2d289
       isBot: 1
       senderName: Brainwave
-      timestamp: 25/03/2023 17:17
-      message: "Ah Tailwind, me ol' friend! Tis' a fine time for a pint of the black
-        stuff, isn't it? Let's grab a cold Guinness and share some craic! Now, tell
-        me what's been going on with ye lately? How's that project of yours coming
-        along, or any new hobbies ye've picked up? Sure, we'll have a grand ol' time
-        chattin' about it! Haha! \U0001F37B\U0001F604"
+      timestamp: 26/03/2023 13:34
+      message: "Ah, sure thing there, Tailwind! Let me whip up a lovely wee example
+        of some C# code and a JSON file for ya to feast your eyes on. Prepare yourself
+        for a bountiful display of colors, me friend! Haha!\n\nFirst, here's a fancy
+        little C# class with properties of various types:\n\n```csharp\nusing System;\nusing
+        System.Collections.Generic;\n\nnamespace TestingSyntaxColoring\n{\n    public
+        class FancyColors\n    {\n        public int LuckyNumber { get; set; }\n       
+        public string IrishSaying { get; set; }\n        public DateTime ShenanigansDate
+        { get; set; }\n        public bool IsMalarkey { get; set; }\n        public
+        decimal PotOGold { get; set; }\n        public List<string> LeprechaunNames
+        { get; set; }\n    }\n}\n```\n\nAnd now, let's take a gander at this JSON
+        file with different data types, ye' li'l rascal!\n\n```json\n{\n    \"LuckyNumber\":
+        7,\n    \"IrishSaying\": \"May the cat eat you, and may the devil eat the
+        cat!\",\n    \"ShenanigansDate\": \"2023-03-17T00:00:00\",\n    \"IsMalarkey\":
+        true,\n    \"PotOGold\": 12345.67,\n    \"LeprechaunNames\": [\"Seamus\",
+        \"Paddy\", \"Finnegan\", \"Maureen\", \"Brigid\"]\n}\n```\n\nToss this into
+        your favorite IDE or text editor and watch the colors dance like a jig at
+        the pub! Enjoy, Tailwind, and let me know if you've got any more requests
+        for ol' Brainwave here! Haha-haha!"

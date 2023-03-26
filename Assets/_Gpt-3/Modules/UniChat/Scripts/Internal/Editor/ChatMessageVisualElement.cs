@@ -16,6 +16,7 @@ namespace Modules.UniChat.Internal.Editor
         readonly Label timestamp;
         readonly Label sender;
         readonly Label message;
+        const int Indent = 25;
 
 
         public ChatMessageVisualElement (string senderText, string messageText, string timestampText)
@@ -39,8 +40,8 @@ namespace Modules.UniChat.Internal.Editor
 
         public void ToggleAlignment (bool isLeft)
         {
-            root.style.marginLeft   = isLeft ? 6 : 60;
-            root.style.marginRight  = !isLeft ? 6 : 60;
+            root.style.marginLeft   = isLeft ? 6 : Indent;
+            root.style.marginRight  = !isLeft ? 6 : Indent;
             sender.style.alignSelf  = new StyleEnum<Align>(isLeft ? Align.FlexStart : Align.FlexEnd);
         }
 

@@ -89,11 +89,7 @@ By following this plan, you can gradually improve the scene's data and context f
 --------------------------------------------------------------------------------------------------------------------------------\
 Executive Summary:
 
-The goal was to find a solution that allows an AI to query the internet and retrieve more detailed information
-    than what is provided by search APIs like Google Search API and Bing Web Search API.
-    IBM Watson Discovery was identified as the most suitable option, as it can search, analyze,
-    and extract insights from multiple sources, including web pages, without the need for
-    additional web scraping.
+
 
 Steps to get another AI up to speed:
     1. Sign up for IBM Cloud: If not already done, create an IBM Cloud account

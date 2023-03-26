@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58068418bb5e40639480b21a5380d96b, type: 3}
+  m_Name: SearchSummaryBot_Gpt4_modelSettings
+  m_EditorClassIdentifier: 
+  settings:
+    botName: SearchSummaryBot
+    direction: {fileID: 4900000, guid: 870a173eeb9e13344aae38cf17dca24c, type: 3}
+    sendSimilarChatCount: 0
+    sendChatHistoryCount: 0
+    memoryAccuracy: 0.86
+    maxTokens: 2048
+    temperature: 0.699999988079071
+    topP: 0.8999999761581421
+    presencePenalty: 0.10000000149011612
+    frequencyPenalty: 0.10000000149011612
+    model:
+      model: gpt-4
+      allModels:
+      - babbage
+      - davinci
+      - babbage-code-search-code
+      - text-similarity-babbage-001
+      - text-davinci-001
+      - ada
+      - curie-instruct-beta
+      - babbage-code-search-text
+      - babbage-similarity
+      - gpt-3.5-turbo
+      - gpt-4
+      - code-search-babbage-text-001
+      - gpt-3.5-turbo-0301
+      - gpt-4-0314
+      - code-cushman-001
+      - code-search-babbage-code-001
+      - text-ada-001
+      - text-embedding-ada-002
+      - text-similarity-ada-001
+      - text-davinci-insert-002
+      - code-davinci-002
+      - ada-code-search-code
+      - ada-similarity
+      - whisper-1
+      - text-davinci-003
+      - code-search-ada-text-001
+      - text-search-ada-query-001
+      - text-curie-001
+      - text-davinci-edit-001
+      - davinci-search-document
+      - ada-code-search-text
+      - text-search-ada-doc-001
+      - code-davinci-edit-001
+      - davinci-instruct-beta
+      - text-similarity-curie-001
+      - code-search-ada-code-001
+      - ada-search-query
+      - text-search-davinci-query-001
+      - curie-search-query
+      - davinci-search-query
+      - text-davinci-insert-001
+      - babbage-search-document
+      - ada-search-document
+      - text-search-curie-query-001
+      - text-search-babbage-doc-001
+      - text-davinci-002
+      - curie-search-document
+      - text-search-curie-doc-001
+      - babbage-search-query
+      - text-babbage-001
+      - text-search-davinci-doc-001
+      - text-search-babbage-query-001
+      - curie-similarity
+      - curie
+      - text-similarity-davinci-001
+      - davinci-similarity
+      - cushman:2020-05-03
+      - ada:2020-05-03
+      - babbage:2020-05-03
+      - curie:2020-05-03
+      - davinci:2020-05-03
+      - if-davinci-v2
+      - if-curie-v2
+      - if-davinci:3.0.0
+      - davinci-if:3.0.0
+      - davinci-instruct-beta:2.0.0
+      - text-ada:001
+      - text-davinci:001
+      - text-curie:001
+      - text-babbage:001
+    perceptionSettings: {fileID: 0}

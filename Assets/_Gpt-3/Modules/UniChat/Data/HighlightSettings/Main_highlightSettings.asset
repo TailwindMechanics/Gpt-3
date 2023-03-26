@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Main_highlightSettings
   m_EditorClassIdentifier: 
   settings:
+    baseColor:
+      hexCode: CCCCCC
     keywordColor:
       hexCode: 569CD6
     commentColor:

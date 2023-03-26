@@ -11,7 +11,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		public string Title { get; set; }
 
 		[JsonProperty("link")]
-		public string Link { get; set; }
+		public string Url { get; set; }
 
 		[JsonProperty("snippet")]
 		public string Snippet { get; set; }

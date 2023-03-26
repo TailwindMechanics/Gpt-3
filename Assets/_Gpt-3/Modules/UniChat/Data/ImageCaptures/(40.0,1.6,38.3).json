@@ -1,0 +1,60 @@
+{
+  "time": "14:12",
+  "day": "Sunday March 19th",
+  "season": "Spring",
+  "year": "2023",
+  "your_position": "(40.0,1.6,38.3)",
+  "your_rotation": "(0,235,0)",
+  "area_content": [
+    "Bar_Stool: dir:(4.1, 1.2, 2.5), size:(0.4, 0.7, 0.4)",
+    "Bar_Bottles_Set: dir:(0.7, -0.2, 2.9), size:(2.7, 1.0, 0.2)",
+    "Bar_Shelf: dir:(0.8, 0.4, 3.0), size:(3.4, 2.4, 0.5)",
+    "Music_Electric_Guitar: dir:(4.8, -0.2, 0.4), size:(0.1, 1.7, 0.5)",
+    "Bar_Bench: dir:(2.9, 1.1, 2.5), size:(1.1, 1.0, 1.5)",
+    "Music_Amplifier: dir:(4.6, 1.2, 0.4), size:(0.5, 0.8, 0.9)",
+    "Bar_Stool: dir:(2.2, 1.2, 1.0), size:(0.4, 0.7, 0.4)",
+    "Music_Microphone: dir:(4.5, 0.8, 0.7), size:(0.1, 0.1, 0.2)",
+    "Bar_Bench_Corner: dir:(2.8, 1.1, 1.1), size:(1.3, 1.0, 1.3)",
+    "Bar_Stool: dir:(2.7, 1.2, 0.1), size:(0.4, 0.7, 0.4)",
+    "Bar_Stool: dir:(3.7, 1.2, 1.1), size:(0.4, 0.7, 0.4)",
+    "Bar_Bottle: dir:(2.8, 0.4, 2.5), size:(0.1, 0.3, 0.1)",
+    "Base_Wall_(182): dir:(3.7, 0.1, 3.3), size:(2.5, 3.0, 0.2)",
+    "Bar_Stool: dir:(0.6, 1.2, -0.2), size:(0.4, 0.7, 0.4)",
+    "Shopfront_Door: dir:(4.4, 0.6, -1.3), size:(1.0, 2.0, 0.4)",
+    "Base_Wall_(208): dir:(1.2, 0.1, 3.3), size:(2.5, 3.0, 0.2)",
+    "Warehouse_Cardboard_Box: dir:(2.4, 1.4, 4.4), size:(0.7, 0.3, 0.5)",
+    "Bar_Bench: dir:(0.7, 0.8, 1.0), size:(2.9, 1.6, 1.1)",
+    "ShopFront_Glass: dir:(5.0, -0.1, 0.7), size:(0.1, 2.0, 3.9)",
+    "ShopFront: dir:(5.1, 0.1, 0.8), size:(0.6, 3.0, 5.0)",
+    "Music_Framed_Record: dir:(4.0, -0.4, 3.2), size:(0.7, 0.9, 0.1)",
+    "Wall_Shutter_Bars: dir:(4.6, 0.1, 5.8), size:(0.0, 2.9, 4.8)",
+    "Warehouse_Cardboard_Box: dir:(1.2, 1.4, 4.1), size:(0.7, 0.3, 0.4)",
+    "Warehouse_Cardboard_Box: dir:(-0.3, 1.4, 2.8), size:(0.7, 0.5, 0.3)",
+    "Bar_Stool: dir:(1.7, 1.2, -0.1), size:(0.4, 0.7, 0.4)",
+    "Warehouse_Cardboard_Box: dir:(1.4, 1.2, 4.6), size:(1.0, 0.7, 0.4)",
+    "Bar_Bottle: dir:(2.9, 0.6, 2.2), size:(0.3, 0.1, 0.3)",
+    "ShopFront_Glass: dir:(4.8, 0.0, 5.8), size:(0.0, 2.0, 4.3)",
+    "ShopFront: dir:(4.9, 0.0, 5.8), size:(0.6, 3.1, 5.0)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Building: 0.9498742",
+      "Property: 0.9421486",
+      "House: 0.865253",
+      "Wood: 0.859341",
+      "Picture frame: 0.8567016",
+      "Interior design: 0.8548614",
+      "Window: 0.8306527",
+      "Art: 0.8087422",
+      "Flooring: 0.7713636",
+      "Painting: 0.7416687"
+    ],
+    "text_annotations": "___",
+    "image_properties_annotation": "R88,G86,B85: [score: 0.2788805, fraction:0.3213333], R93,G122,B153: [score: 0.1032693, fraction:0.06604444], R139,G196,B226: [score: 0.03520063, fraction:0.004977778], R56,G52,B54: [score: 0.1447165, fraction:0.2412445], R61,G85,B111: [score: 0.08809166, fraction:0.04737778], R42,G59,B80: [score: 0.06202894, fraction:0.03928889], R110,G111,B114: [score: 0.04587562, fraction:0.04773333], R123,G157,B190: [score: 0.04492798, fraction:0.006311111], R38,G28,B29: [score: 0.03346207, fraction:0.1214222], R149,G194,B227: [score: 0.02184044, fraction:0.002933333]",
+    "web_detection": ": 0.5167, Interior design: 0.472341, Design: 0.4119, Room: 0.3495731, Screenshot: 0.3485907, Personal computer: 0.3471",
+    "localized_object_annotations": [
+      "Window: 0.5183848",
+      "Guitar: 0.5127673"
+    ]
+  }
+}
