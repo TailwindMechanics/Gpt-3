@@ -1,12 +1,9 @@
 #if UNITY_EDITOR
 
-using System.Collections.Generic;
 using Event = UnityEngine.Event;
 using UnityEngine.UIElements;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEditor;
-using System.Linq;
 using System;
 
 using Modules.UniChat.Internal.DataObjects;
@@ -85,37 +82,32 @@ namespace Modules.UniChat.Internal.Editor
             });
         }
 
-        async void ProcessCommand(string senderName, string command, string message)
-        {
-            if (command.Equals(SearchBotName, StringComparison.OrdinalIgnoreCase)
-            && !senderName.Equals(SearchBotName, StringComparison.OrdinalIgnoreCase))
-            {
-                var searchBotReply = await conversation.GetSearchBotReply(message);
-                DisplayMessage(SearchBotName, searchBotReply);
-
-                await RequestBotReply(conversation.BotName, SearchBotName, searchBotReply);
-            }
-        }
-
         async void OnSendMessage()
         {
-            var message = inputBoxTextField.text.Trim();
-            DisplayMessage(conversation.Username, message);
-
-            var botMentions = FindMentionedBots(message);
-            foreach (var mention in botMentions)
-            {
-                ProcessCommand(conversation.Username, mention, message);
-            }
-
+            var userMessage = inputBoxTextField.text.Trim();
             ResetInputField();
-            await RequestBotReply(conversation.BotName, conversation.Username, message);
-        }
+            DisplayMessage(conversation.Username, userMessage);
 
-        List<string> FindMentionedBots(string message)
-        {
-            var words = message.Split(' ');
-            return (from t in words where t.StartsWith("@") select t[1..]).ToList();
+            if (userMessage.Contains($"@{SearchBotName}", StringComparison.OrdinalIgnoreCase))
+            {
+                var searchBotReply = await conversation.GetSearchBotReply(SearchBotName, userMessage);
+                DisplayMessage(SearchBotName, searchBotReply);
+                var chatBotReply = await conversation.GetChatBotReply(conversation.Username, $"{userMessage}\n{searchBotReply}");
+                DisplayMessage(conversation.BotName, chatBotReply);
+            }
+            else
+            {
+                var chatBotReply = await conversation.GetChatBotReply(conversation.Username, userMessage);
+                DisplayMessage(conversation.BotName, chatBotReply);
+
+                if (chatBotReply.Contains($"@{SearchBotName}", StringComparison.OrdinalIgnoreCase))
+                {
+                    var searchBotReply = await conversation.GetSearchBotReply(SearchBotName, chatBotReply);
+                    DisplayMessage(SearchBotName, searchBotReply);
+                    chatBotReply = await conversation.GetChatBotReply(SearchBotName, searchBotReply);
+                    DisplayMessage(conversation.BotName, chatBotReply);
+                }
+            }
         }
 
         void ResetInputField ()
@@ -130,17 +122,6 @@ namespace Modules.UniChat.Internal.Editor
             newMessageVe.ToggleAlignment(senderName == conversation.Username);
             chatBoxScrollView.Add(newMessageVe);
             SetEditorDirty();
-        }
-
-        async Task RequestBotReply(string botName, string senderName, string messageText)
-        {
-            var result = await conversation.GetChatBotReply(senderName, messageText);
-            var botMentions = FindMentionedBots(result);
-            foreach (var mention in botMentions)
-            {
-                ProcessCommand(botName, mention, result);
-            }
-            DisplayMessage(botName, result);
         }
 
         void SetEditorDirty ()

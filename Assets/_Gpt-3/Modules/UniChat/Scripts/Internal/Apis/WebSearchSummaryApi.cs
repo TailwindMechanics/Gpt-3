@@ -24,6 +24,7 @@ namespace Modules.UniChat.Internal.Apis
         readonly OpenAIClient openAiApi;
         readonly HttpClient httpClient;
 
+
         public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings)
         {
             try
@@ -32,11 +33,10 @@ namespace Modules.UniChat.Internal.Apis
                 openAiApi = new OpenAIClient();
                 httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
-                Log("APIs initialized successfully");
             }
             catch (HttpRequestException ex)
             {
-                Debug.LogError($"Error initializing APIs: {ex.Message}");
+                Log($"Error initializing APIs: {ex.Message}", true);
                 throw;
             }
         }
@@ -64,21 +64,30 @@ namespace Modules.UniChat.Internal.Apis
 
                     if (logging) Log($"Scraping URL (attempt {retryCount}): {url}");
                     var extractedContent = await ScrapeUrlAsync(url, cssSelector, logging);
-                    if (string.IsNullOrEmpty(extractedContent.Content))
+                    if (extractedContent == null || string.IsNullOrEmpty(extractedContent.Content))
                     {
                         continue;
                     }
 
                     if (logging) Log("Scraped top URL successfully");
 
-                    if (logging) Log("Sending extracted content to OpenAI for salient summary");
-                    summarizedData = await GetSalientSummaryFromOpenAiAsync(query, new[] { extractedContent }, logging);
-                    if (logging) Log($"Received executive summary from OpenAI: {summarizedData}");
+                    if (logging) Log("Sending extracted content to OpenAI for executive summary");
+                    summarizedData = await GetSummary(query, extractedContent, logging);
+                    if (logging) Log($"Received summary from OpenAI: {summarizedData}");
 
                     if (!summarizedData.Contains("Content not relevant"))
                     {
                         break;
                     }
+                    if (logging)
+                    {
+                        Log($"Skipping attempt({retryCount}) due to irrelevant content");
+                    }
+                }
+
+                if (summarizedData.Contains("Content not relevant"))
+                {
+                    summarizedData = "Unable to generate a summary due to insufficient data.";
                 }
 
                 Log(summarizedData);
@@ -87,7 +96,7 @@ namespace Modules.UniChat.Internal.Apis
             }
             catch (HttpRequestException ex)
             {
-                Log($"Error processing query: {ex.Message}");
+                Log($"Error processing query: {ex.Message}", true);
                 throw;
             }
         }
@@ -130,7 +139,7 @@ namespace Modules.UniChat.Internal.Apis
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Error constructing query with AI: {ex.Message}");
+                Log($"Error constructing query with AI: {ex.Message}", true);
                 throw;
             }
         }
@@ -161,7 +170,7 @@ namespace Modules.UniChat.Internal.Apis
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Error searching with Google API: {ex.Message}");
+                Log($"Error searching with Google API: {ex.Message}", true);
                 throw;
             }
         }
@@ -192,77 +201,30 @@ namespace Modules.UniChat.Internal.Apis
             }
             catch (WebException ex)
             {
-                Debug.LogError($"WebException {url}: {ex.Message}");
+                Log($"WebException {url}: {ex.Message}", true);
                 return null;
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Exception {url}: {ex.Message}");
+                Log($"Exception {url}: {ex.Message}", true);
                 return null;
             }
         }
 
-        async Task<string> GetSalientSummaryFromOpenAiAsync(string query, IEnumerable<UrlContent> extractedContents, bool logging)
+        async Task<string> GetSummary(string query, UrlContent content, bool logging)
         {
-            var enumerable = extractedContents as UrlContent[] ?? extractedContents.ToArray();
-            if (!enumerable.Any())
-            {
-                Log("No valid extracted contents to generate a summary.");
-                return "Unable to generate a summary due to insufficient data.";
-            }
-
             const int maxContentTokens = 2000;
-            var summaries = new List<string>();
+            var truncatedContent = TruncateToTokens(content.Content, maxContentTokens);
 
-            foreach (var content in enumerable)
+            var chatPrompts = new List<ChatPrompt>
             {
-                var truncatedContent = TruncateToTokens(content.Content, maxContentTokens);
-
-                var chatPrompts = new List<ChatPrompt>
-                {
-                    new("system", $"{webSettings.SummaryModel.Direction}\nquery: {query}, content: {truncatedContent}")
-                };
-
-                var chatRequest = new ChatRequest
-                (
-                    model: webSettings.SummaryModel.Model,
-                    messages: chatPrompts,
-                    maxTokens: webSettings.SummaryModel.MaxTokens,
-                    temperature: webSettings.SummaryModel.Temperature,
-                    topP: webSettings.SummaryModel.TopP,
-                    presencePenalty: webSettings.SummaryModel.PresencePenalty,
-                    frequencyPenalty: webSettings.SummaryModel.FrequencyPenalty
-                );
-
-                var result = await openAiApi.ChatEndpoint.GetCompletionAsync(chatRequest);
-                var summary = result.FirstChoice.ToString();
-
-                if (summary.Contains("Content not relevant"))
-                {
-                    if (logging)
-                    {
-                        Log($"Skipped non-relevant content: {truncatedContent.Split(' ').Length} tokens, summary: {summary}, url: {content.Url}");
-                    }
-                    continue;
-                }
-
-                summaries.Add(summary);
-
-                if (logging)
-                {
-                    Log($"Generated salient summary with {truncatedContent.Split(' ').Length} tokens: {summaries.Last()}, url: {content.Url}");
-                }
-            }
-
-            var finalSummaryPrompt = new List<ChatPrompt>
-            {
-                new("system", $"Please provide a concise and coherent executive summary of the following information in response to the query: '{query}'\n\n{string.Join("\n\n", summaries)}")
+                new("system", $"{webSettings.SummaryModel.Direction}\nquery: {query}, content: {truncatedContent}")
             };
 
-            var finalSummaryRequest = new ChatRequest
+            var summaryRequest = new ChatRequest
             (
                 model: webSettings.SummaryModel.Model,
-                messages: finalSummaryPrompt,
+                messages: chatPrompts,
                 maxTokens: webSettings.SummaryModel.MaxTokens,
                 temperature: webSettings.SummaryModel.Temperature,
                 topP: webSettings.SummaryModel.TopP,
@@ -270,8 +232,16 @@ namespace Modules.UniChat.Internal.Apis
                 frequencyPenalty: webSettings.SummaryModel.FrequencyPenalty
             );
 
-            var finalResult = await openAiApi.ChatEndpoint.GetCompletionAsync(finalSummaryRequest);
-            return finalResult.FirstChoice.ToString();
+            var response = await openAiApi.ChatEndpoint.GetCompletionAsync(summaryRequest);
+            var summary = response.FirstChoice.ToString().Trim();
+            if (!summary.Contains("Content not relevant")) return summary;
+
+            if (logging)
+            {
+                Log($"Skipped non-relevant content: {truncatedContent.Split(' ').Length} tokens, summary: {summary}, url: {content.Url}");
+            }
+
+            return summary;
         }
 
         string TruncateToTokens(string text, int maxTokens)
@@ -280,7 +250,10 @@ namespace Modules.UniChat.Internal.Apis
             return words.Length <= maxTokens ? text : string.Join(" ", words.Take(maxTokens));
         }
 
-        void Log(string message)
-            => Debug.Log($"<color=#ADD9D9><b>>>> WebSearchSummaryApi: {message.Replace("\n", "")}</b></color>");
+        void Log(string message, bool error = false)
+        {
+            var color = error ? "#ff6961" : "#ADD9D9";
+            Debug.Log($"<color={color}><b>>>> WebSearchSummaryApi: {message.Replace("\n", "")}</b></color>");
+        }
     }
 }

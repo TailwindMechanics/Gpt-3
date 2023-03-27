@@ -18,10 +18,10 @@ MonoBehaviour:
     sendSimilarChatCount: 0
     sendChatHistoryCount: 0
     memoryAccuracy: 0.86
-    maxTokens: 2048
-    temperature: 0.699999988079071
+    maxTokens: 1024
+    temperature: 0
     topP: 0.8999999761581421
-    presencePenalty: 0.10000000149011612
+    presencePenalty: 0.8999999761581421
     frequencyPenalty: 0.10000000149011612
     model:
       model: gpt-4

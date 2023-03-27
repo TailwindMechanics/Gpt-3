@@ -13,8 +13,8 @@ using System;
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
-using Modules.UniChat.Internal.Apis;
 using Modules.UniChat.Internal.Behaviours;
+using Modules.UniChat.Internal.Apis;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -85,10 +85,19 @@ namespace Modules.UniChat.Internal.DataObjects
 		public string BotName						=> botSettings.Vo.BotName;
 
 
-		public async Task<string> GetSearchBotReply (string message)
+		public async Task<string> GetSearchBotReply (string botName, string message)
 		{
-			var api = new WebSearchSummaryApi(webSearchSettings.Vo) as IWebSearchSummaryApi;
-			return await api.SearchAndGetSummary(message, true);
+			var embeddingsApi		= new EmbeddingsApi() as IEmbeddingsApi;
+			var vectorDatabaseApi	= new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
+			var api					= new WebSearchSummaryApi(webSearchSettings.Vo) as IWebSearchSummaryApi;
+
+			var botReply			= await api.SearchAndGetSummary(message, true);
+			var botVector			= await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);
+			var botMessageId		= await vectorDatabaseApi.Upsert(botName, botVector, true);
+
+			history.Add(new MessageVo(botMessageId, botName, botReply, true), true);
+
+			return botReply;
 		}
 
 		public async Task<string> GetChatBotReply(string sender, string message)
