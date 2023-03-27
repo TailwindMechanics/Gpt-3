@@ -44,6 +44,8 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
 		PineConeSettingsSo pineConeSettings;
+		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
+		WebSearchSettingsSo webSearchSettings;
 
 		[FoldoutGroup("Tools"), FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]
 		async void DescribeIndexStats ()
@@ -82,6 +84,12 @@ namespace Modules.UniChat.Internal.DataObjects
 		public string Username						=> username;
 		public string BotName						=> botSettings.Vo.BotName;
 
+
+		public async Task<string> GetSearchBotReply (string message)
+		{
+			var api = new WebSearchSummaryApi(webSearchSettings.Vo) as IWebSearchSummaryApi;
+			return await api.SearchAndGetSummary(message, true);
+		}
 
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{

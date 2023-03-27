@@ -10,7 +10,7 @@ using Modules.UniChat.External.DataObjects.Vo;
 
 namespace Modules.UniChat.Internal.Apis
 {
-	public class WebSearchApi : IGoogleSearchApi
+	public class WebSearchApi : IWebSearchApi
 	{
 		readonly WebSearchSettingsVo settings;
 

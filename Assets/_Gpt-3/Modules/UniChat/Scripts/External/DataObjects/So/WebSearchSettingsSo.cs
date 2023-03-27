@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 using Modules.UniChat.External.DataObjects.Vo;
-using Sirenix.OdinInspector;
 
 
 namespace Modules.UniChat.External.DataObjects.So

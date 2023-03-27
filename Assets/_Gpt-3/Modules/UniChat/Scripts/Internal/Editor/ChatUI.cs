@@ -1,10 +1,12 @@
 #if UNITY_EDITOR
 
+using System.Collections.Generic;
 using Event = UnityEngine.Event;
 using UnityEngine.UIElements;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 using System;
 
 using Modules.UniChat.Internal.DataObjects;
@@ -14,6 +16,7 @@ namespace Modules.UniChat.Internal.Editor
 {
     public class ChatUI : EditorWindow
     {
+        const string SearchBotName = "SearchBot";
         ScrollView chatBoxScrollView;
         TextField inputBoxTextField;
         ConversationSo conversation;
@@ -82,12 +85,37 @@ namespace Modules.UniChat.Internal.Editor
             });
         }
 
-        async void OnSendMessage ()
+        async void ProcessCommand(string senderName, string command, string message)
+        {
+            if (command.Equals(SearchBotName, StringComparison.OrdinalIgnoreCase)
+            && !senderName.Equals(SearchBotName, StringComparison.OrdinalIgnoreCase))
+            {
+                var searchBotReply = await conversation.GetSearchBotReply(message);
+                DisplayMessage(SearchBotName, searchBotReply);
+
+                await RequestBotReply(conversation.BotName, SearchBotName, searchBotReply);
+            }
+        }
+
+        async void OnSendMessage()
         {
             var message = inputBoxTextField.text.Trim();
             DisplayMessage(conversation.Username, message);
+
+            var botMentions = FindMentionedBots(message);
+            foreach (var mention in botMentions)
+            {
+                ProcessCommand(conversation.Username, mention, message);
+            }
+
             ResetInputField();
-            await RequestChatBotReply(conversation.Username, message);
+            await RequestBotReply(conversation.BotName, conversation.Username, message);
+        }
+
+        List<string> FindMentionedBots(string message)
+        {
+            var words = message.Split(' ');
+            return (from t in words where t.StartsWith("@") select t[1..]).ToList();
         }
 
         void ResetInputField ()
@@ -104,10 +132,15 @@ namespace Modules.UniChat.Internal.Editor
             SetEditorDirty();
         }
 
-        async Task RequestChatBotReply(string senderName, string messageText)
+        async Task RequestBotReply(string botName, string senderName, string messageText)
         {
             var result = await conversation.GetChatBotReply(senderName, messageText);
-            DisplayMessage(conversation.BotName, result);
+            var botMentions = FindMentionedBots(result);
+            foreach (var mention in botMentions)
+            {
+                ProcessCommand(botName, mention, result);
+            }
+            DisplayMessage(botName, result);
         }
 
         void SetEditorDirty ()
