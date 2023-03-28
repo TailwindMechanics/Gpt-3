@@ -1,12 +1,15 @@
 #if UNITY_EDITOR
 
+using System.Text.RegularExpressions;
 using Event = UnityEngine.Event;
+using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using UnityEngine;
 using UnityEditor;
 using System;
-
+using System.Web;
 using Modules.UniChat.Internal.DataObjects;
+using UnityEngine.Networking;
 
 
 namespace Modules.UniChat.Internal.Editor
@@ -86,27 +89,47 @@ namespace Modules.UniChat.Internal.Editor
         {
             var userMessage = inputBoxTextField.text.Trim();
             ResetInputField();
-            DisplayMessage(conversation.Username, userMessage);
+
+            conversation.AddUserMessage(conversation.Username, userMessage);
 
             if (userMessage.Contains($"@{SearchBotName}", StringComparison.OrdinalIgnoreCase))
             {
-                var searchBotReply = await conversation.GetSearchBotReply(SearchBotName, userMessage);
-                DisplayMessage(SearchBotName, searchBotReply);
-                var chatBotReply = await conversation.GetChatBotReply(conversation.Username, $"{userMessage}\n{searchBotReply}");
-                DisplayMessage(conversation.BotName, chatBotReply);
+                await ProcessMessagesWithSearchBot(userMessage);
             }
             else
             {
-                var chatBotReply = await conversation.GetChatBotReply(conversation.Username, userMessage);
-                DisplayMessage(conversation.BotName, chatBotReply);
+                await ProcessMessagesWithoutSearchBot(userMessage);
+            }
+        }
 
-                if (chatBotReply.Contains($"@{SearchBotName}", StringComparison.OrdinalIgnoreCase))
-                {
-                    var searchBotReply = await conversation.GetSearchBotReply(SearchBotName, chatBotReply);
-                    DisplayMessage(SearchBotName, searchBotReply);
-                    chatBotReply = await conversation.GetChatBotReply(SearchBotName, searchBotReply);
-                    DisplayMessage(conversation.BotName, chatBotReply);
-                }
+        async Task ProcessMessagesWithSearchBot(string userMessage)
+        {
+            DisplayMessage(conversation.Username, userMessage);
+            var searchBotReply = await conversation.GetSearchBotReply(SearchBotName, userMessage);
+            DisplayMessage(SearchBotName, searchBotReply);
+
+            var chatBotReply = await conversation.GetChatBotReply(conversation.Username, $"{userMessage}\n{searchBotReply}");
+            if (conversation.BotName != null)
+            {
+                DisplayMessage(conversation.BotName, chatBotReply);
+            }
+        }
+
+        async Task ProcessMessagesWithoutSearchBot(string userMessage)
+        {
+            DisplayMessage(conversation.Username, userMessage);
+            if (conversation.BotName == null) return;
+
+            var chatBotReply = await conversation.GetChatBotReply(conversation.Username, userMessage);
+            DisplayMessage(conversation.BotName, chatBotReply);
+
+            if (chatBotReply.Contains($"@{SearchBotName}", StringComparison.OrdinalIgnoreCase))
+            {
+                var searchBotReply = await conversation.GetSearchBotReply(SearchBotName, chatBotReply);
+                DisplayMessage(SearchBotName, searchBotReply);
+
+                chatBotReply = await conversation.GetChatBotReply(SearchBotName, searchBotReply);
+                DisplayMessage(conversation.BotName, chatBotReply);
             }
         }
 
@@ -116,8 +139,14 @@ namespace Modules.UniChat.Internal.Editor
             inputBoxTextField.Focus();
         }
 
-        void DisplayMessage (string senderName, string messageText)
+        void DisplayMessage(string senderName, string messageText)
         {
+            messageText = Regex.Replace(messageText, $"@{SearchBotName}", _ =>
+            {
+                var result = $"<color=#40A0FF><u>@{SearchBotName}</u></color>";
+                return result;
+            }, RegexOptions.IgnoreCase);
+
             var newMessageVe = new ChatMessageVisualElement(senderName, messageText, DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             newMessageVe.ToggleAlignment(senderName == conversation.Username);
             chatBoxScrollView.Add(newMessageVe);

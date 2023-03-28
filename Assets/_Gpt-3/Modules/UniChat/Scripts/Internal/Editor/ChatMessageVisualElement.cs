@@ -53,9 +53,6 @@ namespace Modules.UniChat.Internal.Editor
 
         void ParseMessage(string messageText)
         {
-            const string codeBlockDelimiter = "```";
-            var parts = messageText.Split(new[] { codeBlockDelimiter }, StringSplitOptions.None);
-
             var textContainer = new VisualElement
             {
                 style =
@@ -67,33 +64,35 @@ namespace Modules.UniChat.Internal.Editor
             };
             message.Add(textContainer);
 
+            const string codeBlockDelimiter = "```";
+            if (!messageText.Contains(codeBlockDelimiter))
+            {
+                var label = new Label(messageText)
+                {
+                    style =
+                    {
+                        unityFont = message.style.unityFont,
+                        fontSize = message.style.fontSize,
+                        color = message.style.color,
+                        display = DisplayStyle.Flex,
+                        whiteSpace = WhiteSpace.Normal,
+                        marginTop = 5,
+                        marginBottom = 0
+                    }
+                };
+
+                textContainer.Add(label);
+                return;
+            }
+
+            var parts = messageText.Split(new[] { codeBlockDelimiter }, StringSplitOptions.None);
             for (var i = 0; i < parts.Length; i++)
             {
                 parts[i] = parts[i].Trim();
+                if (i % 2 == 0) continue;
 
-                if (i % 2 == 0)
-                {
-                    var label = new Label(parts[i])
-                    {
-                        style =
-                        {
-                            unityFont = message.style.unityFont,
-                            fontSize = message.style.fontSize,
-                            color = message.style.color,
-                            display = DisplayStyle.Flex,
-                            whiteSpace = WhiteSpace.Normal,
-                            marginTop = 5,
-                            marginBottom = 0
-                        }
-                    };
-
-                    textContainer.Add(label);
-                }
-                else
-                {
-                    var codeBlock = new CodeBlockVisualElement(parts[i], highlightSettings.Vo);
-                    textContainer.Add(codeBlock);
-                }
+                var codeBlock = new CodeBlockVisualElement(parts[i], highlightSettings.Vo);
+                textContainer.Add(codeBlock);
             }
         }
     }

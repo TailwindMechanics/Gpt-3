@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637d520dffef1974190259a3ae5eb9d2, type: 3}
+  m_Name: Main_trainingDataEditor
+  m_EditorClassIdentifier: 
+  color:
+    hexCode: 40A0FF
+  fileName: SearchBot_Command_TrainingSet
+  savePath: Assets/_Gpt-3/Modules/UniChat/Data/TrainingData
+  input: 
+  output: 
+  trainingSet:
+    trainingData:
+    - input: Hey @searchBot how do I update the Entity Component System in Unity?
+      output: 'SearchBot: To update the Entity Component System (ECS) in Unity, you
+        need to create a System class that inherits from SystemBase or JobComponentSystem.
+        Implement the OnUpdate() method to define the logic for updating your entities
+        and components. Finally, add the [UpdateInGroup] attribute to the System
+        class to specify the update order.'
+    - input: Can you find a tutorial on implementing DOTS in Unity? @searchBot
+      output: 'SearchBot: Here is a tutorial on implementing DOTS in Unity: ''Getting
+        Started with Unity DOTS: A Comprehensive Guide.'' This tutorial covers the
+        basics of the Data-Oriented Technology Stack, including the Entity Component
+        System, C# Job System, and Burst Compiler. You can find the tutorial at [tutorial_URL].'

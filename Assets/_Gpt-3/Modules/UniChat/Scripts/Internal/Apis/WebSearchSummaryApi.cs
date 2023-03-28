@@ -4,11 +4,11 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using OpenAI.Chat;
 using System.Linq;
+using System.Text;
 using UnityEngine;
-using System.Net;
 using AngleSharp;
-using System.IO;
 using System;
+using System.Text.RegularExpressions;
 using OpenAI;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
@@ -18,17 +18,25 @@ using Modules.UniChat.Internal.DataObjects;
 
 namespace Modules.UniChat.Internal.Apis
 {
+    public class IsGdResponse
+    {
+        [JsonProperty("shorturl")]
+        public string ShortUrl { get; set; }
+    }
+
     public class WebSearchSummaryApi : IWebSearchSummaryApi
     {
         readonly WebSearchSettingsVo webSettings;
         readonly OpenAIClient openAiApi;
         readonly HttpClient httpClient;
+        readonly bool logging;
 
 
-        public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings)
+        public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings, bool doLogging)
         {
             try
             {
+                logging = doLogging;
                 webSettings = newWebSettings;
                 openAiApi = new OpenAIClient();
                 httpClient = new HttpClient();
@@ -41,58 +49,43 @@ namespace Modules.UniChat.Internal.Apis
             }
         }
 
-        public async Task<string> SearchAndGetSummary(string message, bool logging = false)
+        public async Task<string> SearchAndGetSummary(string message)
         {
             try
             {
-                var query = await ConstructSearchQuery(message, logging);
+                var query = await ConstructSearchQuery(message);
+                var searchResults = await Search(query);
+                var parsedSearch = ParseSearchResults(searchResults);
+                var summary = await GetSummary(query, new UrlContent("google.com", parsedSearch));
 
-                const string cssSelector = "main, article, #content";
-                if (logging) Log($"Sending search query to Google Search API: {query}");
-                var searchResults = await Search(query, logging);
-                if (logging) Log($"Received search results from Google Search API: {searchResults.Items.Count}");
-
-                var topUrls = searchResults.Items.Select(sr => sr.Url).ToList();
-                if (logging) Log($"Attempting to scrape top URLs: {topUrls.Count}");
-                var summarizedData = "Unable to generate a summary due to insufficient data.";
-
-                var retryCount = 0;
-                foreach (var url in topUrls)
+                if (!string.IsNullOrEmpty(summary) && !summary.Contains("Content not relevant"))
                 {
-                    retryCount++;
-                    if (retryCount > 3) break;
+                    Log($"Received summary: {summary}");
+                    return summary;
+                }
 
-                    if (logging) Log($"Scraping URL (attempt {retryCount}): {url}");
-                    var extractedContent = await ScrapeUrlAsync(url, cssSelector, logging);
-                    if (extractedContent == null || string.IsNullOrEmpty(extractedContent.Content))
+                const int maxResultsToProcess = 5;
+                foreach (var item in searchResults.Items.Take(maxResultsToProcess))
+                {
+                    try
                     {
-                        continue;
+                        var extractedContent = await ScrapeUrlAsync(item.Url);
+                        if (extractedContent == null) continue;
+
+                        if (!string.IsNullOrEmpty(summary) && !summary.Contains("Content not relevant"))
+                        {
+                            summary = await ShortenLongUrlsInText(summary);
+                            Log($"Received summary: {summary}");
+                            return summary;
+                        }
                     }
-
-                    if (logging) Log("Scraped top URL successfully");
-
-                    if (logging) Log("Sending extracted content to OpenAI for executive summary");
-                    summarizedData = await GetSummary(query, extractedContent, logging);
-                    if (logging) Log($"Received summary from OpenAI: {summarizedData}");
-
-                    if (!summarizedData.Contains("Content not relevant"))
+                    catch (Exception ex)
                     {
-                        break;
-                    }
-                    if (logging)
-                    {
-                        Log($"Skipping attempt({retryCount}) due to irrelevant content");
+                        Log($"Error processing URL {item.Url}: {ex.Message}", true);
                     }
                 }
 
-                if (summarizedData.Contains("Content not relevant"))
-                {
-                    summarizedData = "Unable to generate a summary due to insufficient data.";
-                }
-
-                Log(summarizedData);
-
-                return summarizedData;
+                return "Unable to generate a summary due to insufficient data.";
             }
             catch (HttpRequestException ex)
             {
@@ -101,14 +94,11 @@ namespace Modules.UniChat.Internal.Apis
             }
         }
 
-        async Task<string> ConstructSearchQuery(string chatMessage, bool logging)
+        async Task<string> ConstructSearchQuery(string chatMessage)
         {
             try
             {
-                if (logging)
-                {
-                    Log($"Constructing query with AI using chat message: {chatMessage}");
-                }
+                Log($"Constructing query with AI using chat message: {chatMessage}");
 
                 var chatPrompts = new List<ChatPrompt>
                 {
@@ -130,10 +120,7 @@ namespace Modules.UniChat.Internal.Apis
                 var result = await openAiApi.ChatEndpoint.GetCompletionAsync(chatRequest);
                 var constructedQuery = result.FirstChoice.ToString().Trim();
 
-                if (logging)
-                {
-                    Log($"Constructed query with AI: {constructedQuery}");
-                }
+                Log($"Constructed query with AI: {constructedQuery}");
 
                 return constructedQuery;
             }
@@ -144,28 +131,19 @@ namespace Modules.UniChat.Internal.Apis
             }
         }
 
-        async Task<GoogleSearchResponse> Search(string query, bool logging)
+        async Task<GoogleSearchResponse> Search(string query)
         {
             try
             {
-                if (logging)
-                {
-                    Log($"Searching: {query}");
-                }
+                Log($"Searching: {query}");
 
                 var requestUrl = $"{webSettings.BaseUrl}{webSettings.ApiKey}&cx={webSettings.EngineId}&q={Uri.EscapeDataString(query)}";
                 var response = await httpClient.GetAsync(requestUrl);
-
                 response.EnsureSuccessStatusCode();
-
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var searchResponse = JsonConvert.DeserializeObject<GoogleSearchResponse>(responseContent);
 
-                if (logging)
-                {
-                    Log($"Received Google Search results: {responseContent.Length}");
-                }
-
+                Log($"Received Google Search results: {searchResponse.Items.Count}");
                 return searchResponse;
             }
             catch (Exception ex)
@@ -175,33 +153,40 @@ namespace Modules.UniChat.Internal.Apis
             }
         }
 
-        async Task<UrlContent> ScrapeUrlAsync(string url, string cssSelector, bool logging)
+        async Task<UrlContent> ScrapeUrlAsync(string url)
         {
             try
             {
-                var request = WebRequest.Create(url);
-                using var response = await request.GetResponseAsync();
-                await using var stream = response.GetResponseStream();
-                if (stream == null) return null;
+                const string cssSelector = "main, article, #content, .content, .post, .article, .entry-content, .post-content";
+                var exclusionSelectors = new List<string> { "nav", "footer", ".ad", ".advertisement", ".promo", ".widget", ".comment", ".comments", ".related-posts" };
 
-                using var reader = new StreamReader(stream);
-                var responseContent = await reader.ReadToEndAsync();
+                using var response = await httpClient.GetAsync(url);
+                var byteArray = await response.Content.ReadAsByteArrayAsync();
+                var responseContent = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
 
                 var config = Configuration.Default.WithDefaultLoader();
                 var document = await BrowsingContext.New(config).OpenAsync(req => req.Content(responseContent));
                 var targetedElements = document.QuerySelectorAll(cssSelector);
+                Log($"HTML Document: {document.DocumentElement.OuterHtml}");
 
-                if (logging)
+                exclusionSelectors.ForEach(selector =>
                 {
-                    Log($"Scraped: {url}");
-                }
+                    document.QuerySelectorAll(selector).ToList().ForEach(element =>
+                    {
+                        element.Remove();
+                    });
+                });
 
-                var content = string.Join("\n\n", targetedElements.Select(e => e.TextContent.Trim()));
+                var filteredElements = targetedElements.Where(e => e.Parent != null);
+                var content = string.Join("\n\n", filteredElements.Select(e => e.TextContent.Trim()));
+
+                Log($"Scraped: {url}, content: {content}");
+
                 return new UrlContent(url, content);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                Log($"WebException {url}: {ex.Message}", true);
+                Log($"HttpRequestException {url}: {ex.Message}", true);
                 return null;
             }
             catch (Exception ex)
@@ -211,37 +196,47 @@ namespace Modules.UniChat.Internal.Apis
             }
         }
 
-        async Task<string> GetSummary(string query, UrlContent content, bool logging)
+        async Task<string> GetSummary(string query, UrlContent content)
         {
-            const int maxContentTokens = 2000;
-            var truncatedContent = TruncateToTokens(content.Content, maxContentTokens);
-
-            var chatPrompts = new List<ChatPrompt>
+            try
             {
-                new("system", $"{webSettings.SummaryModel.Direction}\nquery: {query}, content: {truncatedContent}")
-            };
+                const int maxContentTokens = 2000;
+                var truncatedContent = TruncateToTokens(content.Content, maxContentTokens);
 
-            var summaryRequest = new ChatRequest
-            (
-                model: webSettings.SummaryModel.Model,
-                messages: chatPrompts,
-                maxTokens: webSettings.SummaryModel.MaxTokens,
-                temperature: webSettings.SummaryModel.Temperature,
-                topP: webSettings.SummaryModel.TopP,
-                presencePenalty: webSettings.SummaryModel.PresencePenalty,
-                frequencyPenalty: webSettings.SummaryModel.FrequencyPenalty
-            );
+                var system = $"{webSettings.SummaryModel.Direction}\ndatetime: {DateTime.UtcNow:yyyy-MM-dd HH:mm}\n";
+                var chatPrompts = new List<ChatPrompt>
+                {
+                    new("system", system),
+                    new("user", $"query: {query}"),
+                    new("user", $"content: {truncatedContent}")
+                };
 
-            var response = await openAiApi.ChatEndpoint.GetCompletionAsync(summaryRequest);
-            var summary = response.FirstChoice.ToString().Trim();
-            if (!summary.Contains("Content not relevant")) return summary;
+                Log($"Requesting summary for url: {content.Url}, system: {system}");
 
-            if (logging)
-            {
+                var summaryRequest = new ChatRequest
+                (
+                    model: webSettings.SummaryModel.Model,
+                    messages: chatPrompts,
+                    maxTokens: webSettings.SummaryModel.MaxTokens,
+                    temperature: webSettings.SummaryModel.Temperature,
+                    topP: webSettings.SummaryModel.TopP,
+                    presencePenalty: webSettings.SummaryModel.PresencePenalty,
+                    frequencyPenalty: webSettings.SummaryModel.FrequencyPenalty
+                );
+
+                var response = await openAiApi.ChatEndpoint.GetCompletionAsync(summaryRequest);
+                var summary = response.FirstChoice.ToString().Trim();
+                if (!summary.Contains("Content not relevant")) return summary;
+
                 Log($"Skipped non-relevant content: {truncatedContent.Split(' ').Length} tokens, summary: {summary}, url: {content.Url}");
-            }
 
-            return summary;
+                return summary;
+            }
+            catch (Exception ex)
+            {
+                Log($"Error generating summary: {ex.Message}", true);
+                throw;
+            }
         }
 
         string TruncateToTokens(string text, int maxTokens)
@@ -250,9 +245,73 @@ namespace Modules.UniChat.Internal.Apis
             return words.Length <= maxTokens ? text : string.Join(" ", words.Take(maxTokens));
         }
 
+        string ParseSearchResults(GoogleSearchResponse response)
+        {
+            try
+            {
+                const int resultsToParse = 20;
+                if (response.Items.Count > resultsToParse)
+                {
+                    response.Items.RemoveRange(resultsToParse, response.Items.Count - resultsToParse);
+                }
+
+                Log($"Parsed {response.Items.Count} search results.");
+
+                var sb = new StringBuilder();
+                foreach (var item in response.Items)
+                {
+                    sb.AppendLine(item.Title);
+                    sb.AppendLine(item.Snippet);
+                    sb.AppendLine(item.Url);
+                    sb.AppendLine();
+                }
+
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                Log($"Error parsing search results: {ex.Message}", true);
+                throw;
+            }
+        }
+
+        async Task<string> ShortenLongUrlsInText(string text)
+        {
+            const int maxLength = 50;
+            const string urlPattern = @"https?://\S+";
+
+            var matches = Regex.Matches(text, urlPattern);
+            var outputText = text;
+
+            foreach (Match match in matches)
+            {
+                if (match.Value.Length > maxLength)
+                {
+                    var shortUrl = await ShortenUrl(match.Value);
+                    outputText = outputText.Replace(match.Value, shortUrl);
+                }
+            }
+
+            return outputText;
+        }
+
+        async Task<string> ShortenUrl(string longUrl)
+        {
+            var apiEndpoint = $"https://is.gd/create.php?format=json&url={Uri.EscapeDataString(longUrl)}";
+            var response = await httpClient.GetAsync(apiEndpoint);
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var jsonResponseObj = JsonConvert.DeserializeObject<IsGdResponse>(jsonResponse);
+            var shortUrl = jsonResponseObj.ShortUrl;
+            return shortUrl;
+        }
+
         void Log(string message, bool error = false)
         {
-            var color = error ? "#ff6961" : "#ADD9D9";
+            if (!logging) return;
+
+            var color = error ? "#E08B87" : "#ADD9D9";
+            message = message.Replace("<", "&lt;").Replace(">", "&gt;");
             Debug.Log($"<color={color}><b>>>> WebSearchSummaryApi: {message.Replace("\n", "")}</b></color>");
         }
     }

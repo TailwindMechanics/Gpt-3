@@ -1,0 +1,6 @@
+[
+  {
+    "Input": "What objects are in the current Unity scene? @sceneBot",
+    "Output": "@sceneBot detected the following objects in the current Unity scene: 1. Directional Light, 2. Main Camera, 3. Terrain, 4. Player character, 5. Enemy AI."
+  }
+]

@@ -33,12 +33,10 @@ namespace Modules.UniChat.Internal.DataObjects
 		}
 
 		[FoldoutGroup("Settings"), SerializeField]
-		bool upsertUserLog;
-		[FoldoutGroup("Settings"), SerializeField]
 		string username = "Guest";
 
 		[InlineEditor, SerializeField]
-		ModelSettingsSo botSettings;
+		ModelSettingsSo chatBotSettings;
 		[FoldoutGroup("Settings/Embeddings Bot"), HideLabel, SerializeField]
 		SerializableModelVo embeddingModel;
 
@@ -58,7 +56,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		[FoldoutGroup("Tools/History"), Button(ButtonSizes.Medium)]
 		void ExportChatHistoryToJson()
 		{
-			var fileName = $"{botSettings.Vo.BotName}-{username}_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+			var fileName = $"{chatBotSettings.Vo.BotName}-{username}_{DateTime.Now:yyyyMMdd_HHmmss}.json";
 
 			var path = Path.Combine(historyFolderPath, fileName);
 			var json = JsonUtility.ToJson(history, true);
@@ -74,79 +72,81 @@ namespace Modules.UniChat.Internal.DataObjects
 		}
 
 		async Task DeleteAllInNamespace ()
-			=> await new VectorDatabaseApi(pineConeSettings.Vo).DeleteAllVectorsInNamespace(botSettings.Vo.BotName, true);
+		{
+			if (chatBotSettings == null) return;
+
+			await new VectorDatabaseApi(pineConeSettings.Vo).DeleteAllVectorsInNamespace(chatBotSettings.Vo.BotName, true);
+		}
 
 		[HideLabel, SerializeField]
 		HistoryVo history;
 
-		string BotDirection => $"Your name: '{botSettings.Vo.BotName}', the users name: '{username}'. {botSettings.Vo.Direction}";
-		public List<MessageVo> History				=> history.Data;
-		public string Username						=> username;
-		public string BotName						=> botSettings.Vo.BotName;
+		string BotDirection => $"Your name: '{chatBotSettings.Vo.BotName}', the users name: '{username}'. {chatBotSettings.Vo.Direction}";
+		public List<MessageVo> History	=> history.Data;
+		public string Username			=> username;
+		public string BotName			=> chatBotSettings != null ? chatBotSettings.Vo.BotName : null;
 
 
 		public async Task<string> GetSearchBotReply (string botName, string message)
 		{
-			var embeddingsApi		= new EmbeddingsApi() as IEmbeddingsApi;
-			var vectorDatabaseApi	= new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
-			var api					= new WebSearchSummaryApi(webSearchSettings.Vo) as IWebSearchSummaryApi;
+			var api = new WebSearchSummaryApi(webSearchSettings.Vo, true) as IWebSearchSummaryApi;
+			var botReply = await api.SearchAndGetSummary(message);
 
-			var botReply			= await api.SearchAndGetSummary(message, true);
-			var botVector			= await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);
-			var botMessageId		= await vectorDatabaseApi.Upsert(botName, botVector, true);
+			var botMessageId = Guid.NewGuid();
+			if (chatBotSettings != null)
+			{
+				var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
+				var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
+				var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);
+				botMessageId = await vectorDatabaseApi.Upsert(botName, botVector, true);
+			}
 
 			history.Add(new MessageVo(botMessageId, botName, botReply, true), true);
 
 			return botReply;
 		}
 
+		public void AddUserMessage(string userName, string message)
+		{
+			var userMessageId = Guid.NewGuid();
+			if (chatBotSettings != null)
+			{
+				var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
+				var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
+				var userVector = embeddingsApi.ConvertToVector(embeddingModel.Model, userName, message, true).Result;
+				userMessageId = vectorDatabaseApi.Upsert(userName, userVector, true).Result;
+			}
+
+			history.Add(new MessageVo(userMessageId, userName, message, false), true);
+		}
+
 		public async Task<string> GetChatBotReply(string sender, string message)
 		{
-			Log($"Requesting bot reply for user message: '{message}'");
+		    if (chatBotSettings == null) return null;
 
-			var botPlayer			= FindObjectOfType<AiPlayer>();
-			var embeddingsApi		= new EmbeddingsApi() as IEmbeddingsApi;
-			var vectorDatabaseApi	= new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
-			var chatBotApi			= new ChatBotApi() as IChatBotApi;
-			var botPerceiver		= new AiPerceiver() as IAiPerceiver;
+		    Log($"Requesting bot reply for user message: '{message}'");
 
-			// Detect and do queries
-			var queryResult = await DoQuery(botPlayer, botPerceiver, history.GetPreviousBotReply(), true);
+		    var botPlayer           = FindObjectOfType<AiPlayer>();
+		    var embeddingsApi       = new EmbeddingsApi() as IEmbeddingsApi;
+		    var vectorDatabaseApi   = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
+		    var chatBotApi          = new ChatBotApi() as IChatBotApi;
+		    var botPerceiver        = new AiPerceiver() as IAiPerceiver;
 
-			// IEmbeddingsApi: convert the senderMessage to a senderVector
-			var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
+		    var queryResult			= await DoQuery(botPlayer, botPerceiver, history.GetPreviousBotReply(), true);
+		    var senderVector		= await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
+		    var contextMessageIds	= await vectorDatabaseApi.Query(chatBotSettings.Vo.BotName, senderVector, chatBotSettings.Vo.MemoryAccuracy, chatBotSettings.Vo.SendSimilarChatCount, true);
+		    var contextMessages		= history.GetManyByIdList(contextMessageIds, true);
+		    var recentMessages		= history.GetMostRecent(chatBotSettings.Vo.SendChatHistoryCount, true);
+		    var botReply			= await chatBotApi.GetReply(message, $"{BotDirection}\n{queryResult}", chatBotSettings.Vo, contextMessages, recentMessages, true);
+		    var botVector			= await embeddingsApi.ConvertToVector(embeddingModel.Model, chatBotSettings.Vo.BotName, botReply, true);
 
-			// IVectorDatabaseApi: query the senderVector, receive relevant contextual message IDs
-			var contextMessageIds = await vectorDatabaseApi.Query(botSettings.Vo.BotName, senderVector, botSettings.Vo.MemoryAccuracy, botSettings.Vo.SendSimilarChatCount, true);
+		    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
+		    history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
 
-			// HistoryVo: retrieve context messages with IDs, and most recent messages
-			var contextMessages = history.GetManyByIdList(contextMessageIds, true);
-			var recentMessages = history.GetMostRecent(botSettings.Vo.SendChatHistoryCount, true);
+		    DoCommand(botReply);
 
-			// IChatBotApi: send chatBot direction, context, senderMessage, get botReply
-			var botReply = await chatBotApi.GetReply(message, $"{BotDirection}\n{queryResult}", botSettings.Vo, contextMessages, recentMessages, true);
-
-			// IEmbeddingsApi: convert the botReply to a botVector
-			var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botSettings.Vo.BotName, botReply, true);
-
-			// IVectorDatabaseApi: Upsert the senderVector, receive the index
-			var senderId = Guid.Empty;
-			if (upsertUserLog) senderId = await vectorDatabaseApi.Upsert(botSettings.Vo.BotName, senderVector, true);
-
-			// HistoryVo: Store the senderMessage locally with its index
-			history.Add(new MessageVo(senderId, sender, message, false), true);
-
-			// IVectorDatabaseApi: Upsert the botVector, receive the index
-			var botMessageId = await vectorDatabaseApi.Upsert(botSettings.Vo.BotName, botVector, true);
-			// HistoryVo: Store the botReply locally with its index
-			history.Add(new MessageVo(botMessageId, botSettings.Vo.BotName, botReply, true), true);
-
-			// Detect and do commands
-			DoCommand(botReply);
-
-			// Return bots reply for display in UI
-			Log($"Returning chat bot reply: '{botReply}'");
-			return botReply;
+		    Log($"Returning chat bot reply: '{botReply}'");
+		    return botReply;
 		}
 
 		void DoCommand(string botReply)
@@ -193,7 +193,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		}
 
 		async Task<string> TakeSnapshot (AiPlayer botPlayer, IAiPerceiver botPerceiver)
-			=> await botPerceiver.Capture(botPlayer.Camera, botPlayer.Sensor, botSettings.Vo.Perception.Vo);
+			=> await botPerceiver.Capture(botPlayer.Camera, botPlayer.Sensor, chatBotSettings.Vo.Perception.Vo);
 
 		JObject ParseJsonFromAIResponse(string botReply)
 		{

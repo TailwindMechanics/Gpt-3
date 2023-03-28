@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: EditorShortcuts.Editor:Tailwind.Modules.EditorShortcuts.Editor:SelectionShortcuts
   showLogs: 0
   shortcut1: Main_conversation
-  shortcut2: Brainwave
-  shortcut3: Brainwave_aiPerceptionSettings
-  shortcut4: GoogleTest
+  shortcut2: Main_trainingDataEditor
+  shortcut3: 
+  shortcut4: 
   shortcut5: 
   shortcut6: 
   shortcut7: 

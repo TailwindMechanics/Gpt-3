@@ -1,0 +1,8 @@
+{
+  "training_data": [
+    {
+      "Input": "How do I update the Entity Component System in Unity? @searchBot",
+      "Output": "@searchBot returned: To update the Entity Component System (ECS) in Unity, you need to create a System class that inherits from SystemBase or JobComponentSystem. Implement the OnUpdate() method to define the logic for updating your entities and components. Finally, add the [UpdateInGroup] attribute to the System class to specify the update order."
+    }
+  ]
+}
