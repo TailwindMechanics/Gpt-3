@@ -16,18 +16,9 @@ namespace Modules.UniChat.Internal.Apis
     {
         readonly OpenAIClient openAiApi;
 
-        public ChatBotApi()
-        {
-            try
-            {
-                openAiApi = new OpenAIClient();
-            }
-            catch (HttpRequestException ex)
-            {
-                Debug.LogError($"OpenAI error: {ex.Message}");
-                throw;
-            }
-        }
+
+        public ChatBotApi(OpenAiSettingsVo settings)
+            => openAiApi = new OpenAIClient(new OpenAIAuthentication(settings.ApiKey, settings.OrgId));
 
         public async Task<string> GetReply(string senderMessage, string direction, ModelSettingsVo settings, List<MessageVo> context, List<MessageVo> history, bool logging = false)
         {

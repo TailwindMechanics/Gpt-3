@@ -16,12 +16,17 @@ namespace Modules.UniChat.Internal.Editor
 
 		public CodeBlockVisualElement(string codeText, HighlightSettingsVo highlightSettings)
 		{
-			originalCode = codeText.Replace("json", "").Replace("csharp", "").Trim();
+			foreach (var lang in Highlighter.Languages)
+			{
+				originalCode = codeText.Replace(lang, "");
+			}
+			originalCode = codeText.Trim();
 
 			var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Constants.CodeBlockUxmlPath);
 			Add(visualTree.Instantiate());
 
-			var languageMatch = Regex.Match(codeText, @"^(json|csharp)\s+");
+			var languagesPattern = string.Join("|", Highlighter.Languages);
+			var languageMatch = Regex.Match(codeText, $"^({languagesPattern})\\s+");
 			if (languageMatch.Success)
 			{
 				language = languageMatch.Value.Trim();

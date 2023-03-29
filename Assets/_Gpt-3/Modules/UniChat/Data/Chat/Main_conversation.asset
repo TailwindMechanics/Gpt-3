@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
   username: Tailwind
+  openAiSettings: {fileID: 11400000, guid: b2137be371340fa4d9a8c8132a66b9b8, type: 2}
   chatBotSettings: {fileID: 0}
   embeddingModel:
     model: text-embedding-ada-002
@@ -91,13 +92,155 @@ MonoBehaviour:
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
-    - id: 49283290-a278-4580-bedd-af4cee34c521
+    - id: 645ac5a7-4beb-4136-acd4-5b502fabbf0e
       isBot: 0
       senderName: Tailwind
-      timestamp: 29/03/2023 00:55
-      message: '@searchBot how''s the weather in Monte Gordo Portugal?'
-    - id: 2613b050-3171-4042-92c1-5310f3f0fb75
+      timestamp: 29/03/2023 14:51
+      message: '@searchbot send me code blocks of csharp, python, javascript, json,
+        and java please'
+    - id: c79c4b33-6ea9-42f0-a7f9-0e912ad050b1
+      isBot: 1
+      senderName: SearchBot
+      timestamp: 29/03/2023 14:52
+      message: "Here are some examples of code blocks in various programming languages:\n\n<b>JavaScript:</b>\n<i>For
+        loop snippet example</i>\n```javascript\nfor (let i = 0; i < array.length;
+        i++) {\n    // Your code here\n}\n```\nSource: <a href=\"https://code.visualstudio.com/docs/editor/userdefinedsnippets\">Visual
+        Studio Code - User Defined Snippets</a>\n\n<b>C#:</b>\n<i>Azure Functions
+        HTTP trigger example</i>\n```csharp\npublic static async Task<IActionResult>
+        Run(\n    HttpRequest req, ILogger log)\n{\n    string name = req.Query[\"name\"];\n\n   
+        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();\n   
+        dynamic data = JsonConvert.DeserializeObject(requestBody);\n    name = name
+        ?? data?.name;\n\n    return name != null\n        ? (ActionResult)new OkObjectResult($\"Hello,
+        {name}\")\n        : new BadRequestObjectResult(\"Please pass a name on the
+        query string or in the request body\");\n}\n```\nSource: <a href=\"https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger\">Azure
+        Functions HTTP trigger | Microsoft Learn</a>\n\n<b>Java:</b>\n<i>Code block
+        example</i>\n```java\npublic class HelloWorld {\n    public static void main(String[]
+        args) {\n        System.out.println(\"Hello, world!\");\n    }\n}\n```\nSource:
+        <a href=\"https://confluence.atlassian.com/doc/code-block-macro-139390.html\">Code
+        Block Macro | Confluence Data Center and Server 8.1</a>\n\n<b>Python:</b>\n<i>For
+        loop snippet example</i>\n```python\nfor item in iterable:\n    # Your code
+        here\n```\nSource: <a href=\"https://docs.document360.com/docs/code-blocks\">What
+        is code block | Document360</a>\n\n<b>JSON:</b>\n<i>Example JSON object</i>\n```json\n{\n   
+        \"name\": \"John Doe\",\n    \"age\": 30,\n    \"city\": \"New York\"\n}\n```\nSource:
+        <a href=\"https://docs.readme.com/rdmd/docs/code-blocks\">Code Blocks | ReadMe</a>\n\nThese
+        examples should give you a good starting point for working with code blocks
+        in C#, Java, JavaScript, Python, and JSON."
+    - id: 9051bd26-3538-486e-8423-13d5b09b4fed
       isBot: 0
       senderName: Tailwind
-      timestamp: 29/03/2023 01:00
-      message: '@searchBot how''s the weather in Dublin?'
+      timestamp: 29/03/2023 14:54
+      message: '```javascript for (let i = 0; i < array.length; i++) {     // Your
+        code here } ```'
+    - id: a6df4297-622a-48a5-b49c-cb33bc2564b5
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 14:55
+      message: '```csharp public static async Task<IActionResult> Run(     HttpRequest
+        req, ILogger log) {     string name = req.Query["name"];      string requestBody
+        = await new StreamReader(req.Body).ReadToEndAsync();     dynamic data = JsonConvert.DeserializeObject(requestBody);    
+        name = name ?? data?.name;      return name != null         ? (ActionResult)new
+        OkObjectResult($"Hello, {name}")         : new BadRequestObjectResult("Please
+        pass a name on the query string or in the request body"); } ```'
+    - id: f4b5c987-553b-43cd-863c-25b688070350
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 20:20
+      message: 'csharp public static async Task<IActionResult> Run(     HttpRequest
+        req, ILogger log) {     string name = req.Query["name"];      string requestBody
+        = await new StreamReader(req.Body).ReadToEndAsync();     dynamic data = JsonConvert.DeserializeObject(requestBody);    
+        name = name ?? data?.name;      return name != null         ? (ActionResult)new
+        OkObjectResult($"Hello, {name}")         : new BadRequestObjectResult("Please
+        pass a name on the query string or in the request body"); }'
+    - id: 652c9f31-820f-4335-81ec-ce8e623a3082
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 20:20
+      message: '''''''csharp public static async Task<IActionResult> Run(     HttpRequest
+        req, ILogger log) {     string name = req.Query["name"];      string requestBody
+        = await new StreamReader(req.Body).ReadToEndAsync();     dynamic data = JsonConvert.DeserializeObject(requestBody);    
+        name = name ?? data?.name;      return name != null         ? (ActionResult)new
+        OkObjectResult($"Hello, {name}")         : new BadRequestObjectResult("Please
+        pass a name on the query string or in the request body"); }'''''''
+    - id: 25203281-4641-4e99-9d62-50b5c6d4a764
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 20:29
+      message: '@searchBot could you send me a python code block with a variety of
+        types please? I''m testing syntax highlighting'
+    - id: f2187204-2af9-4f1e-aa3c-e5009f5442b7
+      isBot: 1
+      senderName: SearchBot
+      timestamp: 29/03/2023 20:30
+      message: "Here's a Python code block containing a variety of data types for
+        syntax highlighting:\n\n```python\n# Python Code Block with Various Data
+        Types\n\n# Integer\ninteger_var = 42\n\n# Float\nfloat_var = 3.14\n\n# String\nstring_var
+        = \"Hello, World!\"\n\n# List\nlist_var = [1, 2, 3, 4, 5]\n\n# Tuple\ntuple_var
+        = (6, 7, 8, 9, 10)\n\n# Dictionary\ndict_var = {\"key1\": \"value1\", \"key2\":
+        \"value2\"}\n\n# Boolean\nbool_var = True\n\n# Function\ndef greet(name):\n   
+        return f\"Hello, {name}!\"\n\nprint(greet(\"SearchBot\"))\n```\n\nFor more
+        information on syntax highlighting in various tools and platforms, you can
+        refer to the following resources:\n\n1. <a href=\"https://confluence.atlassian.com/doc/code-block-macro-139390.html\">Code
+        Block Macro | Confluence Data Center and Server 8.1</a> (Feb 14, 2023)\n2.
+        <a href=\"https://tinyurl.com/mr24r8uj\">Creating and highlighting code blocks
+        - GitHub Docs</a>\n3. <a href=\"https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide\">Syntax
+        Highlight Guide | Visual Studio Code Extension API</a>\n4. <a href=\"https://www.jetbrains.com/help/pycharm/creating-and-registering-file-types.html\">File
+        type associations | PyCharm Documentation</a> (Nov 30, 2022)\n5. <a href=\"https://squidfunk.github.io/mkdocs-material/reference/code-blocks/\">Code
+        blocks - Material for MkDocs</a>\n6. <a href=\"https://docs.gitlab.com/ee/user/markdown.html\">GitLab
+        Flavored Markdown (GLFM) | GitLab</a>\n7. <a href=\"https://www.notion.so/help/code-blocks\">How
+        to use code blocks in Notion \u2013 Notion Help Center</a>\n8. <a href=\"https://docs.mattermost.com/channels/format-messages.html\">Format
+        messages</a>\n9. <a href=\"https://prismjs.com/\">Prism</a>\n10. <a href=\"https://quarto.org/docs/output-formats/html-code.html\">HTML
+        Code Blocks - Quarto</a>"
+    - id: c788da4a-fe30-4e68-9699-685b211bf719
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:01
+      message: '@searchbot could you please send me a GLSL codeblock and also some
+        Bash in a code block, just to test syntax highlighting'
+    - id: cfcd59c7-ea59-4f84-9401-af03d16e594f
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:04
+      message: ''''''' glsl #version 330 core  in vec3 vertexPosition; in vec3 vertexColor; 
+        uniform mat4 modelViewProjection;  out vec3 fragColor;  void main() {    
+        fragColor = vertexColor;     gl_Position = modelViewProjection * vec4(vertexPosition,
+        1.0); } '''''''
+    - id: bd33d6c1-a6d9-4340-ae9d-e4480fd2c0b2
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:05
+      message: ''''''' bash #!/bin/bash  # This script prints "Hello, World!" to
+        the console echo "Hello, World!"  # Defining a variable and using it greeting="Hello,
+        User!" echo $greeting  # Simple loop to print numbers from 1 to 5 for i in
+        {1..5} do     echo "Number: $i" done  '''''''
+    - id: c68e0ac8-b6e9-4d1f-be26-08fd8936ca7d
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:06
+      message: '``` glsl #version 330 core  in vec3 vertexPosition; in vec3 vertexColor; 
+        uniform mat4 modelViewProjection;  out vec3 fragColor;  void main() {    
+        fragColor = vertexColor;     gl_Position = modelViewProjection * vec4(vertexPosition,
+        1.0); }  ```'
+    - id: 2304bc00-ed20-4120-873c-ae50a52f7888
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:08
+      message: '``` bash #!/bin/bash  # This script prints "Hello, World!" to the
+        console echo "Hello, World!"  # Defining a variable and using it greeting="Hello,
+        User!" echo $greeting  # Simple loop to print numbers from 1 to 5 for i in
+        {1..5} do     echo "Number: $i" done   ```'
+    - id: 8e89210c-3ede-40af-afe9-386f7db79428
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:10
+      message: '@searchbot send me a bash example in a codeblock please'
+    - id: d5072d4a-7ee7-4e99-98a9-c93181cee113
+      isBot: 1
+      senderName: SearchBot
+      timestamp: 29/03/2023 21:11
+      message: "I found an example of a code block in bash from Stack Overflow. Here's
+        the summary:\n\n<b>Example of Bash Code Block:</b>\n<pre>\n{\n  command1\n 
+        command2\n}\n</pre>\n\nThis example demonstrates how to use braces ({ })
+        to create a code block in bash. By putting commands inside braces, it makes
+        it clear that these commands are part of a single block and should be executed
+        together.\n\nSource: <a href=\"https://stackoverflow.com/questions/5717972/code-block-usage-in-bash\">Code
+        block usage { } in bash - Stack Overflow (Apr 19, 2011)</a>"

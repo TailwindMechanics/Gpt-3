@@ -6,6 +6,7 @@ using UnityEngine;
 using OpenAI;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.Vo;
 
 
 namespace Modules.UniChat.Internal.Apis
@@ -15,8 +16,8 @@ namespace Modules.UniChat.Internal.Apis
 		readonly OpenAIClient openAiApi;
 
 
-		public EmbeddingsApi()
-			=> openAiApi = new OpenAIClient();
+		public EmbeddingsApi(OpenAiSettingsVo settings)
+			=> openAiApi = new OpenAIClient(new OpenAIAuthentication(settings.ApiKey, settings.OrgId));
 
 		public async Task<IReadOnlyList<double>> ConvertToVector(Model model, string sender, string message, bool logging = false)
 		{

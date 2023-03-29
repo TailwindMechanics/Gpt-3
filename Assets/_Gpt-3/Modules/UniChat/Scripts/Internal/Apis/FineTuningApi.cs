@@ -5,6 +5,7 @@ using UnityEngine;
 using OpenAI;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.External.DataObjects.Vo;
 
 
 namespace Modules.UniChat.Internal.Apis
@@ -14,8 +15,8 @@ namespace Modules.UniChat.Internal.Apis
 		readonly OpenAIClient openAiApi;
 
 
-		public FineTuningApi()
-			=> openAiApi = new OpenAIClient();
+		public FineTuningApi(OpenAiSettingsVo settings)
+			=> openAiApi = new OpenAIClient(new OpenAIAuthentication(settings.ApiKey, settings.OrgId));
 
 		public async Task<FineTuneJob> CreateFineTuneJobAsync(CreateFineTuneJobRequest request, bool logging = false)
 		{

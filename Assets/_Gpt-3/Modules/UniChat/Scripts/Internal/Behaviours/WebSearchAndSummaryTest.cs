@@ -17,6 +17,7 @@ namespace Modules.UniChat.Internal.Behaviours
 		[Range(1, 5), SerializeField] int resultCount = 1;
 		[FolderPath, SerializeField] string savePath;
 		[SerializeField] string fileName;
+		[SerializeField] OpenAiSettingsSo openAiSettings;
 		[SerializeField] WebSearchSettingsSo settings;
 		[SerializeField, TextArea(5,5)] string query;
 
@@ -46,7 +47,7 @@ namespace Modules.UniChat.Internal.Behaviours
 		[Button(ButtonSizes.Medium)]
 		async void DoSearch()
 		{
-			var api = new WebSearchSummaryApi(settings.Vo, true) as IWebSearchSummaryApi;
+			var api = new WebSearchSummaryApi(settings.Vo, openAiSettings.Vo, true) as IWebSearchSummaryApi;
 			var result = await api.SearchAndGetSummary(query);
 			JsonUtilities.SaveAsJsonFile(savePath, fileName, result);
 

@@ -10,12 +10,13 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	[Serializable]
 	public class WebSearchSettingsVo
 	{
-
+		public TinyUrlSettingsVo TinyUrlSettingsVo => tinyUrlSettings.Vo;
 		public ModelSettingsVo SummaryModel => modelSettings.Vo;
 		public string BaseUrl => baseUrl;
 		public string ApiKey => apiKey;
 		public string EngineId => engineId;
 
+		[InlineEditor, SerializeField] TinyUrlSettingsSo tinyUrlSettings;
 		[InlineEditor, SerializeField] ModelSettingsSo modelSettings;
 		[TextArea(1,2), SerializeField] string baseUrl = "https://www.googleapis.com/customsearch/v1?key=";
 		[TextArea(1,2), SerializeField] string apiKey;

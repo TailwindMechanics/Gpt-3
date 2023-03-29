@@ -7,9 +7,8 @@ using UnityEngine.UIElements;
 using UnityEngine;
 using UnityEditor;
 using System;
-using System.Web;
+
 using Modules.UniChat.Internal.DataObjects;
-using UnityEngine.Networking;
 
 
 namespace Modules.UniChat.Internal.Editor

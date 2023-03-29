@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -8,7 +10,6 @@ using System.Text;
 using UnityEngine;
 using AngleSharp;
 using System;
-using System.Text.RegularExpressions;
 using OpenAI;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
@@ -18,12 +19,6 @@ using Modules.UniChat.Internal.DataObjects;
 
 namespace Modules.UniChat.Internal.Apis
 {
-    public class IsGdResponse
-    {
-        [JsonProperty("shorturl")]
-        public string ShortUrl { get; set; }
-    }
-
     public class WebSearchSummaryApi : IWebSearchSummaryApi
     {
         readonly WebSearchSettingsVo webSettings;
@@ -32,13 +27,13 @@ namespace Modules.UniChat.Internal.Apis
         readonly bool logging;
 
 
-        public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings, bool doLogging)
+        public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings, OpenAiSettingsVo openAiSettings, bool doLogging)
         {
             try
             {
                 logging = doLogging;
                 webSettings = newWebSettings;
-                openAiApi = new OpenAIClient();
+                openAiApi = new OpenAIClient(new OpenAIAuthentication(openAiSettings.ApiKey, openAiSettings.OrgId));
                 httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             }
@@ -60,6 +55,7 @@ namespace Modules.UniChat.Internal.Apis
 
                 if (!string.IsNullOrEmpty(summary) && !summary.Contains("Content not relevant"))
                 {
+                    summary = await ShortenLongUrlsInText(summary);
                     Log($"Received summary: {summary}");
                     return summary;
                 }
@@ -277,19 +273,18 @@ namespace Modules.UniChat.Internal.Apis
 
         async Task<string> ShortenLongUrlsInText(string text)
         {
-            const int maxLength = 50;
-            const string urlPattern = @"https?://\S+";
+            const int maxLength = 100;
+            const string urlPattern = @"https?://(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'"".,<>?«»“”‘’])";
 
             var matches = Regex.Matches(text, urlPattern);
             var outputText = text;
 
             foreach (Match match in matches)
             {
-                if (match.Value.Length > maxLength)
-                {
-                    var shortUrl = await ShortenUrl(match.Value);
-                    outputText = outputText.Replace(match.Value, shortUrl);
-                }
+                if (match.Value.Length <= maxLength) continue;
+
+                var shortUrl = await ShortenUrl(match.Value);
+                outputText = outputText.Replace(match.Value, shortUrl);
             }
 
             return outputText;
@@ -297,13 +292,44 @@ namespace Modules.UniChat.Internal.Apis
 
         async Task<string> ShortenUrl(string longUrl)
         {
-            var apiEndpoint = $"https://is.gd/create.php?format=json&url={Uri.EscapeDataString(longUrl)}";
-            var response = await httpClient.GetAsync(apiEndpoint);
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var jsonResponseObj = JsonConvert.DeserializeObject<IsGdResponse>(jsonResponse);
-            var shortUrl = jsonResponseObj.ShortUrl;
-            return shortUrl;
+            try
+            {
+                var request = new { url = longUrl };
+                var jsonRequest = JsonConvert.SerializeObject(request);
+                var requestContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", webSettings.TinyUrlSettingsVo.ApiKey);
+
+                var response = await httpClient.PostAsync(webSettings.TinyUrlSettingsVo.Endpoint, requestContent);
+                response.EnsureSuccessStatusCode();
+
+                var utf8Encoding = Encoding.GetEncoding("UTF-8");
+                var contentBytes = await response.Content.ReadAsByteArrayAsync();
+                var jsonResponse = utf8Encoding.GetString(contentBytes);
+
+                var jsonResponseObj = JsonConvert.DeserializeObject<TinyUrlResponse>(jsonResponse);
+                var shortUrl = jsonResponseObj.Data.TinyUrl;
+
+                Log($"Shortened url: {longUrl} -> {shortUrl}");
+                return shortUrl;
+            }
+            catch (HttpRequestException ex)
+            {
+                Log($"Failed to shorten url {ex.Message}: {longUrl}", true);
+                return null;
+            }
+        }
+
+        public class TinyUrlResponse
+        {
+            [JsonProperty("data")]
+            public TinyUrlData Data { get; set; }
+        }
+
+        public class TinyUrlData
+        {
+            [JsonProperty("tiny_url")]
+            public string TinyUrl { get; set; }
         }
 
         void Log(string message, bool error = false)

@@ -1,0 +1,19 @@
+```
+bash
+#!/bin/bash
+
+# This script prints "Hello, World!" to the console
+echo "Hello, World!"
+
+# Defining a variable and using it
+greeting="Hello, User!"
+echo $greeting
+
+# Simple loop to print numbers from 1 to 5
+for i in {1..5}
+do
+    echo "Number: $i"
+done
+
+
+```
