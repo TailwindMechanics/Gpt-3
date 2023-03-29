@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
   username: Tailwind
-  openAiSettings: {fileID: 11400000, guid: b2137be371340fa4d9a8c8132a66b9b8, type: 2}
   chatBotSettings: {fileID: 0}
   embeddingModel:
     model: text-embedding-ada-002
@@ -244,3 +243,25 @@ MonoBehaviour:
         it clear that these commands are part of a single block and should be executed
         together.\n\nSource: <a href=\"https://stackoverflow.com/questions/5717972/code-block-usage-in-bash\">Code
         block usage { } in bash - Stack Overflow (Apr 19, 2011)</a>"
+    - id: c6178426-6e5d-49ae-a638-238967a13adb
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 21:20
+      message: '@searchbot ballpark how much would it cost me to stay for a month
+        in Monte Gordi next month?'
+    - id: 87a485cc-c28c-4904-b0f6-184e3f689e15
+      isBot: 1
+      senderName: SearchBot
+      timestamp: 29/03/2023 21:21
+      message: "Based on the provided content, I cannot give you an exact average
+        monthly cost for accommodation in Monte Gordo next month. However, I can
+        provide some general information about rental prices in the Algarve region.\n\n<b>Algarve
+        Rental Prices:</b>\nMonthly rental prices in the Algarve start from around
+        \u20AC300 for a basic 1 or 2-bedroom apartment, and there are many apartments
+        in the \u20AC400-700 range. For more detailed information on the cost of
+        living in the Algarve, visit <a href=\"https://www.portugalist.com/algarve-cost-of-living/\">Portugalist</a>.\n\nFor
+        short-term furnished apartment rentals in Portugal, you can check out <a
+        href=\"https://www.flatio.com/i/apartments-for-rent-portugal\">Flatio</a>,
+        where prices start at only \u20AC250 per month.\n\nTo find specific accommodations
+        in Monte Gordo, consider visiting websites like <a href=\"https://www.booking.com/cheap/city/pt/monte-gordo.html\">Booking.com</a>
+        and <a href=\"https://www.vrbo.com/vacation-rentals/europe/portugal/algarve-region/monte-gordo\">Vrbo</a>."

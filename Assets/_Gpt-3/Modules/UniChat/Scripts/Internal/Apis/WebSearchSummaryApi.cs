@@ -27,13 +27,13 @@ namespace Modules.UniChat.Internal.Apis
         readonly bool logging;
 
 
-        public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings, OpenAiSettingsVo openAiSettings, bool doLogging)
+        public WebSearchSummaryApi(WebSearchSettingsVo newWebSettings, bool doLogging)
         {
             try
             {
                 logging = doLogging;
                 webSettings = newWebSettings;
-                openAiApi = new OpenAIClient(new OpenAIAuthentication(openAiSettings.ApiKey, openAiSettings.OrgId));
+                openAiApi = new OpenAIClient();
                 httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             }

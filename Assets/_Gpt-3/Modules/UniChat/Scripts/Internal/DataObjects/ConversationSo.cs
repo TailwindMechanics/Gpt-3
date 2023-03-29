@@ -36,8 +36,6 @@ namespace Modules.UniChat.Internal.DataObjects
 		string username = "Guest";
 
 		[InlineEditor, SerializeField]
-		OpenAiSettingsSo openAiSettings;
-		[InlineEditor, SerializeField]
 		ModelSettingsSo chatBotSettings;
 		[FoldoutGroup("Settings/Embeddings Bot"), HideLabel, SerializeField]
 		SerializableModelVo embeddingModel;
@@ -91,13 +89,13 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		public async Task<string> GetSearchBotReply (string botName, string message)
 		{
-			var api = new WebSearchSummaryApi(webSearchSettings.Vo, openAiSettings.Vo, true) as IWebSearchSummaryApi;
+			var api = new WebSearchSummaryApi(webSearchSettings.Vo, true) as IWebSearchSummaryApi;
 			var botReply = await api.SearchAndGetSummary(message);
 
 			var botMessageId = Guid.NewGuid();
 			if (chatBotSettings != null)
 			{
-				var embeddingsApi = new EmbeddingsApi(openAiSettings.Vo) as IEmbeddingsApi;
+				var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
 				var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 				var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, botName, botReply, true);
 				botMessageId = await vectorDatabaseApi.Upsert(botName, botVector, true);
@@ -113,7 +111,7 @@ namespace Modules.UniChat.Internal.DataObjects
 			var userMessageId = Guid.NewGuid();
 			if (chatBotSettings != null)
 			{
-				var embeddingsApi = new EmbeddingsApi(openAiSettings.Vo) as IEmbeddingsApi;
+				var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
 				var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 				var userVector = embeddingsApi.ConvertToVector(embeddingModel.Model, userName, message, true).Result;
 				userMessageId = vectorDatabaseApi.Upsert(userName, userVector, true).Result;
@@ -129,9 +127,9 @@ namespace Modules.UniChat.Internal.DataObjects
 		    Log($"Requesting bot reply for user message: '{message}'");
 
 		    var botPlayer           = FindObjectOfType<AiPlayer>();
-		    var embeddingsApi       = new EmbeddingsApi(openAiSettings.Vo) as IEmbeddingsApi;
+		    var embeddingsApi       = new EmbeddingsApi() as IEmbeddingsApi;
 		    var vectorDatabaseApi   = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
-		    var chatBotApi          = new ChatBotApi(openAiSettings.Vo) as IChatBotApi;
+		    var chatBotApi          = new ChatBotApi() as IChatBotApi;
 		    var botPerceiver        = new AiPerceiver() as IAiPerceiver;
 
 		    var queryResult			= await DoQuery(botPlayer, botPerceiver, history.GetPreviousBotReply(), true);

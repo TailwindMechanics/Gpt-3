@@ -17,8 +17,8 @@ namespace Modules.UniChat.Internal.Apis
         readonly OpenAIClient openAiApi;
 
 
-        public ChatBotApi(OpenAiSettingsVo settings)
-            => openAiApi = new OpenAIClient(new OpenAIAuthentication(settings.ApiKey, settings.OrgId));
+        public ChatBotApi()
+            => openAiApi = new OpenAIClient();
 
         public async Task<string> GetReply(string senderMessage, string direction, ModelSettingsVo settings, List<MessageVo> context, List<MessageVo> history, bool logging = false)
         {
