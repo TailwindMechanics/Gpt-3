@@ -96,3 +96,8 @@ MonoBehaviour:
       senderName: Tailwind
       timestamp: 29/03/2023 00:55
       message: '@searchBot how''s the weather in Monte Gordo Portugal?'
+    - id: 2613b050-3171-4042-92c1-5310f3f0fb75
+      isBot: 0
+      senderName: Tailwind
+      timestamp: 29/03/2023 01:00
+      message: '@searchBot how''s the weather in Dublin?'
