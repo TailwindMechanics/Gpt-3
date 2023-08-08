@@ -14,31 +14,27 @@ namespace Modules.UniChat.Internal.Apis
 {
     public class ChatBotApi : IChatBotApi
     {
-        readonly OpenAIClient openAiApi;
-
-
-        public ChatBotApi()
-            => openAiApi = new OpenAIClient();
+        readonly OpenAIClient openAiApi = new();
 
         public async Task<string> GetReply(string senderMessage, string direction, ModelSettingsVo settings, List<MessageVo> context, List<MessageVo> history, bool logging = false)
         {
             try
             {
-                var chatPrompts = new List<ChatPrompt>();
+                var chatPrompts = new List<Message>();
 
                 context.ForEach(item =>
                 {
-                    var key = item.IsBot ? "assistant" : "user";
-                    chatPrompts.Add(new ChatPrompt(key, item.Message));
+                    var key = item.IsBot ? Role.Assistant : Role.User;
+                    chatPrompts.Add(new Message(key, item.Message));
                 });
                 history.ForEach(item =>
                 {
-                    var key = item.IsBot ? "assistant" : "user";
-                    chatPrompts.Add(new ChatPrompt(key, item.Message));
+                    var key = item.IsBot ? Role.Assistant : Role.User;
+                    chatPrompts.Add(new Message(key, item.Message));
                 });
 
-                chatPrompts.Add(new ChatPrompt("user", senderMessage));
-                chatPrompts.Add(new ChatPrompt("system", direction));
+                chatPrompts.Add(new Message(Role.User, senderMessage));
+                chatPrompts.Add(new Message(Role.System, direction));
 
                 var chatRequest = new ChatRequest
                 (

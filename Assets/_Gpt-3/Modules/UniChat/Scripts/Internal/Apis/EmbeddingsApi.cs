@@ -12,11 +12,8 @@ namespace Modules.UniChat.Internal.Apis
 {
 	public class EmbeddingsApi : IEmbeddingsApi
 	{
-		readonly OpenAIClient openAiApi;
+		readonly OpenAIClient openAiApi = new();
 
-
-		public EmbeddingsApi()
-			=> openAiApi = new OpenAIClient();
 
 		public async Task<IReadOnlyList<double>> ConvertToVector(Model model, string sender, string message, bool logging = false)
 		{
@@ -27,7 +24,7 @@ namespace Modules.UniChat.Internal.Apis
 
 			try
 			{
-				var embeddingsResponse = await openAiApi.EmbeddingsEndpoint.CreateEmbeddingAsync(message, model);
+				var embeddingsResponse = await openAiApi.EmbeddingsEndpoint.CreateEmbeddingAsync(message, model.Id, sender);
 				var embedding = embeddingsResponse.Data[0].Embedding;
 
 				if (logging)

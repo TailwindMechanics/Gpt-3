@@ -106,15 +106,16 @@ namespace Modules.UniChat.Internal.DataObjects
 			return botReply;
 		}
 
-		public void AddUserMessage(string userName, string message)
+		public async void AddUserMessage(string userName, string message)
 		{
 			var userMessageId = Guid.NewGuid();
 			if (chatBotSettings != null)
 			{
 				var embeddingsApi = new EmbeddingsApi() as IEmbeddingsApi;
 				var vectorDatabaseApi = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
-				var userVector = embeddingsApi.ConvertToVector(embeddingModel.Model, userName, message, true).Result;
-				userMessageId = vectorDatabaseApi.Upsert(userName, userVector, true).Result;
+
+				var userVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, userName, message, true);
+				userMessageId = await vectorDatabaseApi.Upsert(userName, userVector, true);
 			}
 
 			history.Add(new MessageVo(userMessageId, userName, message, false), true);
@@ -143,7 +144,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
 		    history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
 
-		    DoCommand(botReply);
+		    // DoCommand(botReply);
 
 		    Log($"Returning chat bot reply: '{botReply}'");
 		    return botReply;

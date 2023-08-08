@@ -96,10 +96,10 @@ namespace Modules.UniChat.Internal.Apis
             {
                 Log($"Constructing query with AI using chat message: {chatMessage}");
 
-                var chatPrompts = new List<ChatPrompt>
+                var chatPrompts = new List<Message>
                 {
-                    new("system", "You are SearchBot. Please construct a Google search query based on the following chat message:"),
-                    new("user", chatMessage)
+                    new(Role.System, "You are SearchBot. Please construct a Google search query based on the following chat message:"),
+                    new(Role.User, chatMessage)
                 };
 
                 var chatRequest = new ChatRequest
@@ -200,11 +200,11 @@ namespace Modules.UniChat.Internal.Apis
                 var truncatedContent = TruncateToTokens(content.Content, maxContentTokens);
 
                 var system = $"{webSettings.SummaryModel.Direction}\ndatetime: {DateTime.UtcNow:yyyy-MM-dd HH:mm}\n";
-                var chatPrompts = new List<ChatPrompt>
+                var chatPrompts = new List<Message>
                 {
-                    new("system", system),
-                    new("user", $"query: {query}"),
-                    new("user", $"content: {truncatedContent}")
+                    new(Role.System, system),
+                    new(Role.User, $"query: {query}"),
+                    new(Role.User, $"content: {truncatedContent}")
                 };
 
                 Log($"Requesting summary for url: {content.Url}, system: {system}");
@@ -331,6 +331,7 @@ namespace Modules.UniChat.Internal.Apis
             [JsonProperty("tiny_url")]
             public string TinyUrl { get; set; }
         }
+
 
         void Log(string message, bool error = false)
         {
