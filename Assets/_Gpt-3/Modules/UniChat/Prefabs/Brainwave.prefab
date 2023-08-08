@@ -23,15 +23,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516287482956014577}
-  m_LocalRotation: {x: -0.022468325, y: -0.3254146, z: -0.007734826, w: 0.9452728}
+  m_LocalRotation: {x: -0.09993743, y: 0.010618872, z: -0.0010666287, w: -0.9949365}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 4.2095127}
+  m_LocalScale: {x: 1, y: 1, z: 5.5308228}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4462182603009431475}
   m_Father: {fileID: 3844644145408023429}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 62.041, y: -96.707, z: -50.779}
+  m_LocalEulerAnglesHint: {x: 117.59, y: -19.822, z: 0}
 --- !u!1 &3044985018836441092
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1792439245086302728}
   - component: {fileID: 4855106143901079469}
+  - component: {fileID: 5840111036261048883}
   m_Layer: 0
   m_Name: Brainwave
   m_TagString: Untagged
@@ -445,9 +446,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f60430f3e93f874fbc3e1a7438e5087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 11400000, guid: c352695c13f5c8b4c8987eb1a1bbdfc5, type: 2}
   cam: {fileID: 7607720734384969895}
   sensor: {fileID: 2486339764807145988}
   pointer: {fileID: 9140693175429045034}
+--- !u!114 &5840111036261048883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046979613105805272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d06cc57be467e4a839d94fe5a20682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prompt: Apple
+  visionResult: "{\r\n  \"time\": \"00:23\",\r\n  \"day\": \"9\",\r\n  \"season\":
+    \"Summer\",\r\n  \"year\": \"2023\",\r\n  \"your_position\": \"(-17.5,1.6,29.5)\",\r\n 
+    \"your_rotation\": \"(0,54,0)\",\r\n  \"area_content\": [\r\n    \"Food_Apple:
+    dir:(-4.3, 1.1, -3.3), size:(0.2, 0.2, 0.2)\",\r\n    \"Cafe_Grinder_Glass: dir:(-1.2,
+    0.1, -4.1), size:(0.3, 0.2, 0.3)\",\r\n    \"Cafe_Grinder: dir:(-1.3, 0.3, -4.1),
+    size:(0.3, 0.7, 0.4)\",\r\n    \"Small_Rocks_(11): dir:(-3.2, 1.5, 0.5), size:(0.4,
+    0.1, 0.7)\",\r\n    \"Cafe_Sign_Outdoor: dir:(-1.3, 1.0, -2.8), size:(0.9, 1.1,
+    0.9)\",\r\n    \"Food_Banana: dir:(-4.8, 0.1, -2.3), size:(0.4, 0.1, 0.3)\",\r\n   
+    \"Cafe_Machine_Cup_Set: dir:(-2.7, 0.0, -3.7), size:(0.6, 0.2, 0.3)\",\r\n   
+    \"Cafe_Table_Folding: dir:(-2.1, 1.1, -4.0), size:(2.2, 0.9, 0.9)\",\r\n    \"Clothes_Shirt_Set:
+    dir:(-4.9, 0.5, -1.4), size:(0.9, 1.0, 1.7)\",\r\n    \"Gazebo: dir:(-2.2, 0.1,
+    -4.6), size:(2.5, 3.0, 2.5)\",\r\n    \"Warehouse_Boxes_Stacked: dir:(-4.5, 1.0,
+    -3.8), size:(1.5, 1.1, 1.7)\",\r\n    \"Gazebo: dir:(-5.1, 0.1, 1.7), size:(2.5,
+    3.0, 2.5)\",\r\n    \"Cafe_Table_Folding: dir:(-5.0, 1.1, 1.6), size:(0.9, 0.9,
+    2.2)\",\r\n    \"Food_Watermelon: dir:(-3.0, 1.5, -3.4), size:(0.5, 0.3, 0.5)\",\r\n   
+    \"Food_Pear: dir:(-1.2, -0.2, -4.1), size:(0.2, 0.2, 0.2)\",\r\n    \"Cafe_Machine_Portafilter:
+    dir:(-2.8, 0.3, -4.0), size:(0.2, 0.1, 0.2)\",\r\n    \"Cafe_Machine_Portafilter:
+    dir:(-2.5, 0.3, -4.0), size:(0.2, 0.1, 0.2)\",\r\n    \"Cafe_Machine_SteamWand:
+    dir:(-3.0, 0.3, -4.0), size:(0.1, 0.2, 0.2)\",\r\n    \"Cafe_Machine_SteamWand:
+    dir:(-2.3, 0.3, -4.0), size:(0.1, 0.2, 0.2)\",\r\n    \"Cafe_Machine_Steam_Handle:
+    dir:(-3.1, 0.2, -4.1), size:(0.1, 0.1, 0.2)\",\r\n    \"Cafe_Machine_Steam_Handle:
+    dir:(-2.2, 0.2, -4.0), size:(0.1, 0.1, 0.2)\",\r\n    \"Cafe_Machine: dir:(-2.7,
+    0.4, -3.9), size:(0.9, 0.6, 0.6)\",\r\n    \"Flower_Stand_Preset: dir:(-4.1,
+    0.7, 1.7), size:(0.9, 1.7, 1.4)\",\r\n    \"Gazebo: dir:(-5.1, 0.1, -1.4), size:(2.5,
+    3.0, 2.5)\",\r\n    \"Food_Lamington: dir:(-2.4, 0.1, -3.8), size:(0.1, 0.1,
+    0.1)\",\r\n    \"Warehouse_Cardboard_Box: dir:(-1.8, 1.3, -3.7), size:(0.8, 0.6,
+    0.4)\",\r\n    \"Food_Tomato_Whole: dir:(-3.0, 0.6, -3.6), size:(0.1, 0.1, 0.2)\",\r\n   
+    \"Clothes_Sweater_Set: dir:(-4.3, 0.6, -1.4), size:(0.8, 1.1, 1.0)\",\r\n   
+    \"Clothes_Rack: dir:(-4.6, 0.8, -1.5), size:(1.2, 1.5, 1.9)\",\r\n    \"Cafe_Bin:
+    dir:(-2.7, 1.4, -3.9), size:(0.4, 0.4, 0.4)\",\r\n    \"Food_Pineapple_Whole:
+    dir:(-4.5, 0.4, -3.8), size:(0.6, 0.3, 0.5)\"\r\n  ],\r\n  \"cloud_vision_data\":
+    {\r\n    \"label_annotations\": [\r\n      \"Sky: 0.9427473\",\r\n      \"Cloud:
+    0.9378819\",\r\n      \"Shade: 0.8761655\",\r\n      \"Architecture: 0.8522311\",\r\n     
+    \"Urban design: 0.8384498\",\r\n      \"Biome: 0.8375204\",\r\n      \"Public
+    space: 0.8057486\",\r\n      \"City: 0.7372429\",\r\n      \"Leisure: 0.7360627\",\r\n     
+    \"Facade: 0.7198904\"\r\n    ],\r\n    \"text_annotations\": \"Specials, TOILE,
+    PACING, FLORIST\",\r\n    \"image_properties_annotation\": \"R43,G98,B50: [score:
+    0.10298, fraction:0.03724444], R106,G84,B34: [score: 0.09938183, fraction:0.01484444],
+    R51,G46,B47: [score: 0.08217838, fraction:0.1611556], R104,G174,B198: [score:
+    0.03690663, fraction:0.05448889], R187,G139,B86: [score: 0.01569028, fraction:0.002311111],
+    R112,G74,B31: [score: 0.08162793, fraction:0.0088], R97,G79,B54: [score: 0.07941192,
+    fraction:0.01591111], R87,G87,B85: [score: 0.0675788, fraction:0.1660444], R73,G170,B213:
+    [score: 0.03467352, fraction:0.1502222], R84,G51,B61: [score: 0.03197057, fraction:0.007555556]\",\r\n   
+    \"web_detection\": \"Real Estate: 0.42, House: 0.4115328, Leisure: 0.3866197,
+    Screenshot: 0.3527328, Estate: 0.3061, : 0.288\",\r\n    \"localized_object_annotations\":
+    [\r\n      \"Luggage & bags: 0.5257788\"\r\n    ]\r\n  }\r\n}"
 --- !u!1 &7391382466320967826
 GameObject:
   m_ObjectHideFlags: 0

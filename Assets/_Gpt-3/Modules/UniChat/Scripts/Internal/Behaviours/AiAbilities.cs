@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.Internal.DataObjects.Schemas;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Apis;
+using Modules.Utilities.External;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -16,8 +18,11 @@ namespace Modules.UniChat.Internal.Behaviours
 		AiPlayer AiPlayer => aiPlayer ? aiPlayer : aiPlayer = GetComponent<AiPlayer>();
 		AiPlayer aiPlayer;
 
+		[UsedImplicitly]
+		string VisionDataLabel => $"Vision Data ({StringUtilities.Ellipses(visionResult)})";
 		[TextArea, SerializeField] string prompt;
-		[TextArea, SerializeField] string visionResult;
+		[FoldoutGroup("$VisionDataLabel"), HideLabel, TextArea(20, 20), PropertyOrder(1), SerializeField]
+		string visionResult;
 		[Button(ButtonSizes.Medium)]
 		async void Capture ()
 		{
@@ -34,13 +39,13 @@ namespace Modules.UniChat.Internal.Behaviours
 		async Task PointInDirection(string prompt, string context)
 		{
 			var chatbotApi = new StructuredChatApi() as IStructuredChatApi;
-			var schemaGenerator = new VectorSchemaGenerator(
+			var schemaGenerator = new VectorSchema(
 				"PointInDirection",
 				"Points in the direction of the given vector.",
 				"direction"
 			);
 
-			var response = await chatbotApi.GetStructuredReply<VectorSchemaGenerator.ResponseData>(
+			var response = await chatbotApi.GetStructuredReply<VectorSchema.Response>(
 				prompt,
 				context,
 				schemaGenerator.Schema,
@@ -49,6 +54,9 @@ namespace Modules.UniChat.Internal.Behaviours
 			);
 
 			var direction = response.Direction.Value();
+			Debug.Log($"<color=magenta><b>>>> direction: {direction}</b></color>");
+			direction = direction == Vector3.zero ? Vector3.one : direction;
+
 			AiPlayer.Pointer.rotation = Quaternion.LookRotation(-direction);
 			var scale = AiPlayer.Pointer.localScale;
 			AiPlayer.Pointer.localScale = new Vector3(scale.x, scale.y, direction.magnitude);

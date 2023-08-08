@@ -7,17 +7,17 @@ using Modules.UniChat.External.DataObjects.Vo;
 
 namespace Modules.UniChat.Internal.DataObjects.Schemas
 {
-	public class VectorSchemaGenerator
+	public class VectorSchema
 	{
 		public Function Schema { get; private set; }
 
-		public class ResponseData
+		public class Response
 		{
 			[JsonProperty("direction")]
 			public Vector3Serializable Direction { get; set; }
 		}
 
-		public VectorSchemaGenerator(string functionName, string functionDescription, string vectorKeyName)
+		public VectorSchema(string functionName, string functionDescription, string vectorKeyName)
 			=> Schema = GenerateSchema(functionName, functionDescription, vectorKeyName);
 
 		Function GenerateSchema(string functionName, string functionDescription, string vectorKeyName)
