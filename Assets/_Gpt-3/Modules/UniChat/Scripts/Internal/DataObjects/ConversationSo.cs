@@ -144,7 +144,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
 		    history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
 
-		    // DoCommand(botReply);
+		    DoCommand(botReply);
 
 		    Log($"Returning chat bot reply: '{botReply}'");
 		    return botReply;
@@ -194,7 +194,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		}
 
 		async Task<string> TakeSnapshot (AiPlayer botPlayer, IAiPerceiver botPerceiver)
-			=> await botPerceiver.Capture(botPlayer.Camera, botPlayer.Sensor, chatBotSettings.Vo.Perception.Vo);
+			=> await botPerceiver.CaptureVision(botPlayer.Camera, botPlayer.Sensor, chatBotSettings.Vo.Perception.Vo);
 
 		JObject ParseJsonFromAIResponse(string botReply)
 		{

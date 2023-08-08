@@ -17,7 +17,7 @@ namespace Modules.UniChat.Internal.Behaviours
     [Serializable]
     public class AiPerceiver : IAiPerceiver
     {
-        public async Task<string> Capture (Camera cam, Transform volume, AiPerceptionSettingsVo settings)
+        public async Task<string> CaptureVision (Camera cam, Transform volume, AiPerceptionSettingsVo settings)
         {
             Log($"Capturing from camera: {cam.name}");
 
@@ -30,10 +30,10 @@ namespace Modules.UniChat.Internal.Behaviours
             volume.gameObject.SetActive(false);
             var chunkData = new AiPerceivedData
             {
-                Time            = "14:12",
-                Day             = "Sunday March 19th",
-                Season          = "Spring",
-                Year            = "2023",
+                Time            = DateUtils.CurrentTime(),
+                Day             = DateUtils.CurrentDay(),
+                Season          = DateUtils.CurrentSeason(),
+                Year            = DateUtils.CurrentYear(),
 
                 // Weather         = "Cel:22/21/19, hum:2%, pre:65%, wind/11kmh, partly cloudy",
                 // Sounds          = "Close: children playing, music small speaker, cutlery, plates, spatula on grill, cooking, jovial walla. Med: seagulls overhead, car park sounds. Far: main road. Distant: arcade sounds",

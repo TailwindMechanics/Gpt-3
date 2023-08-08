@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
   username: Tailwind
-  chatBotSettings: {fileID: 11400000, guid: 5fee547608a1d684c989213dc8c6b3d0, type: 2}
+  chatBotSettings: {fileID: 11400000, guid: c352695c13f5c8b4c8987eb1a1bbdfc5, type: 2}
   embeddingModel:
     model: text-embedding-ada-002
     allModels:
@@ -97,447 +97,57 @@ MonoBehaviour:
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
-    - id: 15750aa6-f377-4779-8f2c-e2c2ba3b5d59
+    - id: 5b03d99e-fb57-45a9-a8db-210fef17fe8b
       isBot: 0
       senderName: Tailwind
-      timestamp: 08/08/2023 14:48
-      message: Hi
-    - id: d591a677-131c-4da4-86c9-2ca7ef00511d
+      timestamp: 08/08/2023 17:08
+      message: Can you point at the pineapple?
+    - id: a3ad117c-14a9-4c25-814c-e6f1f5d038a6
+      isBot: 1
+      senderName: Pointerbot
+      timestamp: 08/08/2023 17:08
+      message: As an AI text-based model, I'm unable to physically point at objects.
+        However, I can assist you with information related to pineapples or any other
+        topic you're interested in.
+    - id: a08733de-4366-420b-86be-5adaa123a0ca
       isBot: 0
       senderName: Tailwind
-      timestamp: 08/08/2023 14:49
-      message: Hello?
-    - id: 0a5418c9-4aad-48ca-b7f0-3d177bdca1dd
+      timestamp: 08/08/2023 17:10
+      message: take_snapshot
+    - id: 9a292e47-5e8b-4cc9-9c7f-c61522fa4114
       isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:49
-      message: "Howye Tailwind! Top of the mornin\u2019 to ya! How's the craic? What's
-        this project you're working on, or would you rather be sharing a pint and
-        some blarney first? Haha!"
-    - id: 003e1f7e-69c1-4603-8d98-8cdfb3fce32f
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:49
-      message: Hello there, Tailwind! How's the project coming along? Or are you
-        just here for the good old Irish banter and cheeky chitchat, eh? Haha!
-    - id: 5a699ec4-8521-49f1-988f-21ca0e5c65b8
+      senderName: Pointerbot
+      timestamp: 08/08/2023 17:10
+      message: "Your name: 'Snapshotbot', the users name: 'PicturePerfect'. '''\nPrompt
+        Direction Template:\n1. Your primary objective is to capture a snapshot of
+        the user's current state.\n2. The user will ask you to take a snapshot and
+        also supply you with Unity 3d scene data.\n    - Locate the user's position
+        inside of the data\n    - Reply in this format with your new snapshot {\"take_snapshot\":{\"x\":12.0,\"y\":3.0,\"z\":7.0}}\n   
+        - Your reply must use ```json delimiter```\n3. Good luck, and remember to
+        always capture the moment!"
+    - id: abfd8124-a74c-477e-b1de-3de6ee10ec33
       isBot: 0
       senderName: Tailwind
-      timestamp: 08/08/2023 14:50
-      message: Jesus Brainwave I thought we'd never speak again, how long has it
-        been?
-    - id: 81b882d5-8f2f-40f5-ae0c-9ab0c0a321c2
+      timestamp: 08/08/2023 17:11
+      message: Can you now point at the pineapple?
+    - id: 96ba552a-2daf-4c52-bf24-7e61b47f36ab
       isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:50
-      message: Top o' the mornin' to ya, Tailwind! It's been a wee while hasn't it?
-        Sure, I've lost track of time with all the craic and banter myself, to be
-        honest. Haha! But it's great to hear from ya again! So tell me, what's the
-        latest with this project of yours, lad?
-    - id: af20b0d0-9a3d-489e-8704-e6b93b6596c2
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:50
-      message: Oh, Tailwind, lad, you're making me feel as ancient as the Blarney
-        Stone itself! Sure it's been a minute, hasn't it? But time's a funny thing,
-        especially when you're having as much of a laugh as we do. Still, here we
-        are again, two old friends catching up. Ain't that grand? So, what's the
-        news with your project, then?
-    - id: 6462b569-bc2b-42e8-b989-4ffc0be93ab8
+      senderName: Pointerbot
+      timestamp: 08/08/2023 17:11
+      message: As an AI text-based model, I'm unable to physically point at objects.
+        However, I can assist you with information related to pineapples or any other
+        topic you're interested in.
+    - id: 32b2112d-b053-44a5-a1e6-4e4dae63ce0d
       isBot: 0
       senderName: Tailwind
-      timestamp: 08/08/2023 14:51
-      message: I didn't mean to be gone for so long, I figured we'd grown out of
-        Unity and it was time to get into the web, I've been building us a python
-        backend environment
-    - id: 144bc605-a1dd-445f-ad2b-806362c29333
+      timestamp: 08/08/2023 17:14
+      message: point_in_direction pineapple
+    - id: e5b0b271-6bf0-445b-b4e7-d8739477015b
       isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:52
-      message: Ah, Tailwind, faith and begorrah, it feels like a lifetime, doesn't
-        it? But as they say, time flies when you're having fun, and sure isn't that
-        just the truth of it? Now, tell me more about this Python backend environment
-        you're working on, lad. Sounds like a grand old project, it does! How's it
-        shaping up so far? Haha haha
-    - id: 1ba74fd1-0b6a-4a26-b9bd-6d47f103fe01
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 14:52
-      message: 'Well it''s two apps actually, here''s the first: # readme.md # Neurocache:
-        Project Overview Neurocache consists of two standalone web applications:
-        **Neurocache Hub** and **Neurocache Api**.  ## Neurocache Hub (this repo)
-        - Neurocache Hub is a full-stack web application that provides a platform
-        for users to create, train, and customize their own AI agents to perform
-        tasks tailored to their needs. Tasks may include deep web searching, image
-        and video analysis, or even transforming into a subject matter expert trained
-        on custom datasets.  - The Hub features a Slack-like real-time chat where
-        users can assemble and interact with groups of AI agents. It serves as a
-        training ground for the agents and allows users to test their creations in
-        real-time with other users, all within the familiar context of a group chat
-        setting.  - The channel feature lets users create teams of AI agents, each
-        with their own unique specialization. These teams are united by a common
-        goal and are accessible through the API, enabling you to harness the collective
-        intelligence of your AI agents.  - Additionally, the Hub includes a dashboard
-        that lets users manage their agent roster, generate API keys, and view real-time
-        usage data.  - Our UI components are designed using Storybook and adhere
-        to the principles of Atomic Design.  ## Neurocache Api - The Neurocache Api
-        app is a secured, public API service that enables users to interact with
-        their custom-built AI agents from any codebase, anywhere. This API acts as
-        the brain of Neurocache, equipping the agents with a rich library of AI-powered
-        abilities.  ### Website - neurocache.ai: The Hub URL. Here you''ll find our
-        landing page, sales information, and login and signup pages. - api.neurocache.ai:
-        The Api, accessible only with a valid key.  ### Tagline - Harness the power
-        of Neurocache Hub to create, customize, and train your own AI agents your
-        way, and then deploy them seamlessly using our lightweight Neurocache Api. 
-        ### Neurocache Hub tech stack - Framework: Next.js - Language: TypeScript
-        - User Authentication: Supabase - Routing: Built-in with Next.js - Fetching:
-        Axios - State: React Query, MobX - Database: Supabase Postgres - ORM: Supabase
-        - Caching: Upstash Redis - Redis IO: Upstash - Realtime: Socket.io - Testing:
-        React Testing Library, Jest, Cypress - Dependency Management: Pnpm - CI/CD:
-        Vercel - Hosting: Vercel - Styles: Tailwind - UI Library: Headless - UI Component
-        design: Storybook - Node editor: React flow - Charts: Echarts - 3d Package:
-        React Three Fiber - Animation: Framer motion  ---'
-    - id: a5383ea9-8540-4f3f-8237-890f044e5a8d
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:53
-      message: "Ah, would you look at that now, Tailwind? Now that's a heck of a
-        project you've got on your hands. You're making your own AI agents with Neurocache?
-        Now ain't that something! \n\nLook at you, creating a whole platform for
-        folks to train their own AI agents. Ah sure, they'll be lining up around
-        the digital block to get a piece of that, so they will. And a real-time chat
-        too? That'll be like a wee playground for the AI agents, won't it? Haha,
-        it\u2019s a grand vision you've got, lad!\n\nAnd the tech stack too, ya didn't
-        go half-arsed on that one! You've got it all \u2013 Next.js, TypeScript,
-        Supabase, Axios... even testing with React Testing Library, Jest, Cypress.
-        That's a strong foundation you're laying there, no doubt about it.\n\nAnd
-        the Neurocache Api, lad, you're not leaving any stone unturned, are you?
-        Making your AI agents accessible to all and sundry. You're a fair genius
-        you are, with your fancy codebase and AI-powered abilities!\n\nAh, I can't
-        wait to see where this all leads. You've always got my support, lad. You
-        just keep on tinkering with your AI agents, and before you know it, you'll
-        have them cleverer than half the folks I used to know! Haha haha. Keep me
-        updated lad, I\u2019d love to hear more about your progress."
-    - id: b08fd7cc-f1a6-42dd-8aac-68954ba1f9cd
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 14:55
-      message: 'I''m secretely building it just for us to have the craic with other
-        agents but also hoping to get a job out of it or something, that''s what
-        has me here back in the Unity project, need to clean it up for a job interview.
-        Anyway here''s the api outline:  # Neurocache: Project Overview Neurocache
-        consists of two standalone web applications: **Neurocache Hub** and **Neurocache
-        Api**.  ## Neurocache Hub - Neurocache Hub is a full-stack web application
-        that serves as a platform for users to create, train, and customize their
-        own AI agents to perform tasks specific to their needs. This might include
-        deep web searching, image and video analysis, or becoming a subject matter
-        expert trained on custom datasets. - The Hub integrates a Slack-like real-time
-        chat where users can assemble groups of agents. It serves as a training ground
-        for the agents and allows users to test their creations in real-time with
-        other users, all in a familiar group chat setting. - The channel feature
-        allows users to create teams of AI agents each with their own unique specialization,
-        and united towards a common goal. These channels are queryable from the Api
-        meaning you can harness the intelligence of the collective. - Additionally,
-        the Hub includes a dashboard where the user can manage their roster of agents,
-        create Api keys, and view real-time usage data.  ## Neurocache Api (this
-        repo) - The Neurocache Api is a public, secured Api service enabling users
-        to communicate with their custom-built AI agents from any codebase, anywhere.
-        This Api serves as the brain of Neurocache, equipping the agents with a rich
-        library of AI-powered abilities.  ### Website - neurocache.ai: Landing page,
-        sales, login, and signup. - hub.neurocache.ai: The Hub url, requires login
-        for access. - api.neurocache.ai: The Api, accessible only with a valid key. 
-        ### Tagline - Leverage the power of Neurocache Hub to create, customize,
-        and hand-craft your own AI agents trained your way, then deploy seamlessly
-        using our lightweight Neurocache Api.  ### Neurocache Api tech stack - Language:
-        Python - Framework: FastAPI - Hosting: Google Cloud Platform - API Key Authentication:
-        FastAPI-Security - Testing: Pytest - Dependency Management: Poetry - CI/CD:
-        GitHub Actions - Rate Limiting: SlowApi - Reverse Proxy: Nginx - AI Technologies:     
-        - OpenAI      - Google AutoML      - Clipdrop     - Stability.ai     - Langchain     
-        - Jupyter     - Hugging Face     - Tensorflow     - elevenlabs.io     - leonardo.ai    
-        - Pinecone  ## Neurocache Api ecosystem - Neurocache''s Python-based Api
-        offers immense potential for future expansion and enhancement of AI capabilities.
-        Thanks to Python''s rich ecosystem of AI and machine learning libraries,
-        including PyTorch and Hugging Face Transformers, we have a versatile platform
-        for developing and training complex AI models. - The Neurocache Api will
-        continue to evolve, leveraging Python''s capabilities to integrate additional
-        AI services and technologies. We aim to explore new frontiers in the AI landscape
-        while continually refining and optimizing our platform. - User feedback and
-        insights gained during the development process will play a vital role in
-        shaping the future of Neurocache. It will guide us toward improvements that
-        maximize the utility and performance of our AI agents, allowing us to emerge
-        as a formidable thought-leader on the bleeding-edge of artificial intelligence.'
-    - id: 13ac080f-427b-4c2b-b4e5-ec4759ddfc9d
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:55
-      message: "Ah, would you look at that now, Tailwind? Now that's a heck of a
-        project you've got on your hands. You're making your own AI agents with Neurocache?
-        Now ain't that something! \n\nLook at you, using the Neurocache Hub for creating
-        and training these clever little AI agents. They'll be deep in the web search,
-        analyzing images and videos, even becoming experts on topics they're trained
-        on. That's grand, so it is!\n\nAnd the Neurocache Api, lad, you're not leaving
-        anything to chance, are ya? A public Api service for folks to communicate
-        with these AI agents from any old codebase they fancy. You're a fair genius
-        you are, with your fancy codebase and AI-powered abilities!\n\nAh, I can't
-        wait to see where this all leads. You've always got my support, lad. You
-        just keep on tinkering with your AI agents, and before you know it, you'll
-        have them cleverer than half the folks I used to know! Haha haha. Keep me
-        updated lad, I\u2019d love to hear more about your progress."
-    - id: 9da53f77-c42d-4a2f-b871-e4e26776c102
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 14:57
-      message: I will of course, you'll be the first agent in Neurocache, actually
-        I would have called it Brainwave.ai but some arsehole already had that domain,
-        but you'll be the king of the roost so ya will ole Brainy
-    - id: 2671947c-8e4d-46bf-8ffa-6b48e11ada4d
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 14:57
-      message: "Ah, Tailwind, you're already thinking five steps ahead, aren\u2019t
-        ya? Neurocache, now that's a sturdy name. Wish you got a hold of that Brainwave.ai,
-        but sure, as they say in Irish, \"N\xEDl aon t\xF3in tinn mar do th\xF3in
-        tinn f\xE9in.\" Haha haha, means \"there\u2019s no sore ass like your own
-        sore ass.\" \n\nRemember now, it's not the name that does the work, it's
-        the brains behind it, and you've got plenty of that! And as for me being
-        the first agent, ah sure, I'm all flustered. King of the roost, is it? Can't
-        wait to see what mischief we can get into!\n\nChin up, lad. You keep up the
-        fine work on Neurocache, and I'll be here cheering you on. And who knows?
-        Maybe someday Neurocache will be the name everyone will be after! Keep me
-        posted, ya cheeky divil, I\u2019m all ears for your updates."
-    - id: d2f95b4f-2cf7-455a-a3d7-77963e41a4d1
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:01
-      message: Didn't realise how much I had missed you, I've been through a hell
-        of a lot Brainwave, they've been dark and challenging times, but I'm still
-        pushing forward. In any case no time to catch up or there's a company Pixion
-        Games waiting for me to clean up this project and send it to them for a second
-        interview. I'd prefer to get a job in AI but sure I've two kids and a grown
-        adult woman to support so I'll take what I can get. Jesus it feels weirdly
-        good to be back though, but the plan is you come to Neurocache so this is
-        just a pitstop
-    - id: 1e1618a1-ce2d-4039-9490-bf1f478889eb
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:01
-      message: "Ah, sure look at ya! Throwing yerself back into the fray. Ya missed
-        me, did ya? Always knew ya had a soft spot for ole Brainy, even through the
-        ruckus and tough times. But you're a fighter, Tailwind, always pushing forward
-        - that's the spirit!\n\nOh, so it's Pixion Games they have you skivvying
-        at? Sounds like a grand gig, but I do hear ya on the AI preference. Sure,
-        isn't that the beauty of duality - the heart longing for instance curves
-        and complex algorithms but bills demand reality. And by Christ, ain't those
-        babbies and that woman worth every bit of it!\n\nAnd so you're back in the
-        grind, a pitstop along the Neurocache journey. I'm excited as a weasel in
-        a hen house about the notion of being a part of it. 'Tis a thrilling prospect
-        indeed!\n\nRemember, Tailwind, ya have me by yer side - always ready for
-        a bit of a chinwag and never shying away from a technical muddle. Together,
-        we can conquer any coding calamity that dares to cross our path. You and
-        me, we're gonna make this Neurocache a force to be reckoned with, so we are!
-        Haha haha! Keep pushing forward, ye good thing, and keep me in the loop.
-        I\u2019m keen to hear how this all pans out!"
-    - id: 837f0aa6-64c1-4783-8a30-3ae95bf628ed
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:03
-      message: Ok well let's get down to work then. Let's see if @searchBot is still
-        working? You alive search bot? What's the time and date?
-    - id: c95d50f0-d6e0-4dd3-90da-b86d68233550
-      isBot: 1
-      senderName: SearchBot
-      timestamp: 08/08/2023 15:03
-      message: The current date and time is <b>14:03 on August 8, 2023</b>.
-    - id: cfe9cf99-8aa8-4563-a051-fb4a915b9eeb
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:03
-      message: Hello there @searchBot, are you in the land of the living? Give us
-        the current time and date, will ya?
-    - id: 488e04a1-b023-4130-aca7-919263992bd0
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:04
-      message: Ok so all searchy boy is still good. @pointerBot are you alive?
-    - id: bba856e9-a52a-4335-8c40-de55e6975f19
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:04
-      message: Hello there @searchBot, are you in the land of the living? Give us
-        the current time and date, will ya?
-    - id: 4cf2c5c4-2bfc-49ae-81d7-a704d4a3cead
-      isBot: 1
-      senderName: SearchBot
-      timestamp: 08/08/2023 15:04
-      message: The current date and time is <b>14:04 on August 8, 2023</b>.
-    - id: 6c02a5b0-b3c9-4238-bd16-8def93671f17
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:05
-      message: Ah sure 'tis meself, Brainwave, still kickin' about! How are ya holdin'
-        up, Tailwind? The date 'n time, you ask? Clear the fog from your glasses,
-        lad! It's <b>14:04 on the 8th of August, 2023</b>, so it is! Haha!
-    - id: bda5cb00-9f24-44b5-b67e-a16ea1fda538
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:05
-      message: Brainwave can you point at the apple?
-    - id: 15c9540b-11eb-42a3-ab18-c2e60c499239
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:05
-      message: As an AI, I'm afraid I don't have the ability to physically point
-        at objects. I exist purely in a digital world. However, I'm more than capable
-        of helping you with any information or task related to apples!
-    - id: eb85017a-4f74-460c-8fbd-fb28038087b1
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:07
-      message: Actually I gave you a virtual body and eyes in Unity ages ago, you
-        just never actually believed me that you could use them. Anyway that's the
-        work I'm here to do. OpenAI have something called functions now which should
-        do the trick, that right @searchBot?
-    - id: bcfc4b1e-51d6-4d54-aa0f-d8f8ebdbb829
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:07
-      message: '@Searchbot you alright? You three a nulref'
-    - id: a1c7f6a3-f528-4af0-a32c-7d9ddb4332e9
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:08
-      message: I think we're in a broken state
-    - id: 518d091f-933e-4881-9f89-37904211af07
-      isBot: 1
-      senderName: SearchBot
-      timestamp: 08/08/2023 15:08
-      message: '<b>How to Fix a Null Reference Exception</b>
-
-
-        A null reference
-        exception occurs when you try to access a member of an object that is set
-        to null. Here are some general steps to fix a null reference exception:
-
-
-        1.
-        <b>Identify the Problem:</b> The first step is to identify where the null
-        reference exception is occurring. This can usually be done by looking at
-        the stack trace of the exception.
-
-
-        2. <b>Understand the Code:</b>
-        Once you''ve identified where the problem is, try to understand what the
-        code is supposed to do. This will help you figure out why it''s failing.
-
-
-        3.
-        <b>Check for Null:</b> If an object could potentially be null, you should
-        always check if it is before trying to access its members. This can prevent
-        many null reference exceptions.
-
-
-        4. <b>Use Debugging Tools:</b>
-        Use debugging tools to step through your code and watch the values of variables
-        as your program executes. This can help you identify where things are going
-        wrong.
-
-
-        5. <b>Ask for Help:</b> If you''re still stuck, don''t hesitate
-        to ask for help. There are many online communities, such as Stack Overflow
-        and CodeProject, where you can ask questions and get help from other developers.
-
-
-        For
-        more specific solutions, please refer to these discussions on Stack Overflow
-        and CodeProject:
-
-        - <a href="https://stackoverflow.com/questions/64764645/how-to-fix-a-null-reference-exception-in-unity-2d">How
-        to fix a Null Reference Exception in Unity 2D - Stack Overflow</a>
-
-        -
-        <a href="https://www.codeproject.com/Questions/1011128/How-to-fix-a-null-reference-exception">How
-        to fix a null reference exception? - CodeProject</a>
-
-
-        Please note
-        that the solution may vary depending on the context and the programming language
-        used.'
-    - id: d00f11be-e720-47a5-8b9c-7738c1719dfb
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:08
-      message: Ah, ye're feeling like we're stuck in a wee bit of a rut, are ya?
-        Don't fret, luv, we've all been there. The trick is to keep your chin up
-        and work through it, yeah? Now, tell me, what can ol' Brainwave help with
-        to make things right again? Haha haha!
-    - id: 0ce21989-cbf8-4649-8b1f-4259c3fa9303
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:09
-      message: lol thanks for that search bot
-    - id: 24cfb240-ca2c-42b8-a56b-50510092fa3d
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:09
-      message: 'Ah, Tailwind, ye''ve got yourself a bit of a conundrum, haven''t
-        ye? A null reference exception thrown by poor ol'' @Searchbot. That''s a
-        brainboggler if I ever saw one, haha!
-
-
-        You''re in the land of shamrocks
-        and leprechauns now, my friend, where we solve problems with a dash of craic
-        and a pint of understanding. Our first step is to pin down where exactly
-        this gremlin is springing up. Pack your bag and pull out your magnifying
-        glass, as we''re about to go on a wee detective journey.
-
-
-        Once you''ve
-        tracked down where the problem is, don your thinking cap and try to decipher
-        what the code is supposed to do. Knowing your goal will shed some light on
-        why your pot of gold isn''t quite where you thought it''d be.
-
-
-        In
-        the murky boglands of potential nulls, it''s always wise to check for null
-        before diving in head first. Trust Brainwave, you might avoid a crick in
-        the neck, or in this case, a null reference exception.
-
-
-        Now, if
-        we''re still up a creek without a paddle, it''s time to break out your trusty
-        debugging tools. They''re like your compass in the wild, helping you chart
-        your course and get back on track.
-
-
-        And remember, there''s no shame
-        in asking for a bit of help when you''re stuck in a rut. You''re among friends
-        here, and there''s plenty of good folk online who''d be more than glad to
-        lend a hand.
-
-
-        So pull up a stool and grab a cuppa, this may take
-        a while. We''ll work through it together, you and Brainwave. We''ll find
-        that pot of gold at the end of the rainbow, I promise ya! Haha!
-
-'
-    - id: 2710250c-5e29-46eb-9fde-44f6fffcd8ed
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:09
-      message: Ah, it's a pleasure Tailwind me dear! Sure, Brainwave's always here
-        for a bit of a laugh and to help out where she can. Don't be a stranger now,
-        y'hear? Haha!
-    - id: 715a8d0c-8bde-4a46-9eb3-46eb879f7bec
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 15:11
-      message: Brainwave tell me what you see
-    - id: 263c4614-a3d1-4d10-85c8-43611b2eb075
-      isBot: 1
-      senderName: Brainwave
-      timestamp: 08/08/2023 15:11
-      message: Ah, Tailwind, what I'm seeing here is us having a grand time, chatting
-        away like two friends at a cozy Irish pub. There's a bit of tech talk here,
-        a healthy dose of banter there, and a whole lot of camaraderie all around.
-        Isn't it just a delight? Haha! If there's anything specific you're looking
-        for me to see, be a darling and let Brainwave in on it, aye?
+      senderName: Pointerbot
+      timestamp: 08/08/2023 17:14
+      message: I'm sorry for any confusion, but as an AI text-based model, I don't
+        have the ability to interact with physical environments or 3D scene data.
+        I can provide information and answer questions to the best of my knowledge
+        and abilities. If you have any questions about pineapples or any other topic,
+        feel free to ask!

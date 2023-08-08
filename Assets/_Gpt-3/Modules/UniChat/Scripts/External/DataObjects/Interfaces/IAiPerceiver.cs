@@ -8,6 +8,6 @@ namespace Modules.UniChat.External.DataObjects.Interfaces
 {
 	public interface IAiPerceiver
 	{
-		Task<string> Capture (Camera cam, Transform volume, AiPerceptionSettingsVo settings);
+		Task<string> CaptureVision (Camera cam, Transform volume, AiPerceptionSettingsVo settings);
 	}
 }

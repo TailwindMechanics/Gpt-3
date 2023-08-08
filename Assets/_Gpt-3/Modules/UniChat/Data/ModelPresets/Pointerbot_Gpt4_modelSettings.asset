@@ -24,7 +24,7 @@ MonoBehaviour:
     presencePenalty: 0.5
     frequencyPenalty: 0.5
     model:
-      model: gpt-4
+      model: gpt-4-0613
       allModels:
       - babbage
       - davinci
@@ -96,5 +96,9 @@ MonoBehaviour:
       - text-davinci:001
       - text-curie:001
       - text-babbage:001
+      - gpt-4-0613
+      - gpt-3.5-turbo-16k-0613
+      - gpt-3.5-turbo-16k
+      - gpt-3.5-turbo-0613
     perceptionSettings: {fileID: 11400000, guid: 272c9812fea3ee8498574b77a83be77f,
       type: 2}

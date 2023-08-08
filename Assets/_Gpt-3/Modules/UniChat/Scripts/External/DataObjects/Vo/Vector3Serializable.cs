@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 using System;
 
