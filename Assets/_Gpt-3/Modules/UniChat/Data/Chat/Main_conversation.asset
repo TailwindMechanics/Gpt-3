@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
   username: Tailwind
-  chatBotSettings: {fileID: 11400000, guid: c352695c13f5c8b4c8987eb1a1bbdfc5, type: 2}
+  chatBotSettings: {fileID: 11400000, guid: 5fee547608a1d684c989213dc8c6b3d0, type: 2}
   embeddingModel:
     model: text-embedding-ada-002
     allModels:
@@ -97,57 +97,16 @@ MonoBehaviour:
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
-    - id: 5b03d99e-fb57-45a9-a8db-210fef17fe8b
+    - id: 7a4113f3-27cc-4900-9312-880997f4130a
       isBot: 0
       senderName: Tailwind
-      timestamp: 08/08/2023 17:08
-      message: Can you point at the pineapple?
-    - id: a3ad117c-14a9-4c25-814c-e6f1f5d038a6
+      timestamp: 09/08/2023 22:18
+      message: Hey
+    - id: 5521e1ea-5840-426d-bddd-33cf3460b2bf
       isBot: 1
-      senderName: Pointerbot
-      timestamp: 08/08/2023 17:08
-      message: As an AI text-based model, I'm unable to physically point at objects.
-        However, I can assist you with information related to pineapples or any other
-        topic you're interested in.
-    - id: a08733de-4366-420b-86be-5adaa123a0ca
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 17:10
-      message: take_snapshot
-    - id: 9a292e47-5e8b-4cc9-9c7f-c61522fa4114
-      isBot: 1
-      senderName: Pointerbot
-      timestamp: 08/08/2023 17:10
-      message: "Your name: 'Snapshotbot', the users name: 'PicturePerfect'. '''\nPrompt
-        Direction Template:\n1. Your primary objective is to capture a snapshot of
-        the user's current state.\n2. The user will ask you to take a snapshot and
-        also supply you with Unity 3d scene data.\n    - Locate the user's position
-        inside of the data\n    - Reply in this format with your new snapshot {\"take_snapshot\":{\"x\":12.0,\"y\":3.0,\"z\":7.0}}\n   
-        - Your reply must use ```json delimiter```\n3. Good luck, and remember to
-        always capture the moment!"
-    - id: abfd8124-a74c-477e-b1de-3de6ee10ec33
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 17:11
-      message: Can you now point at the pineapple?
-    - id: 96ba552a-2daf-4c52-bf24-7e61b47f36ab
-      isBot: 1
-      senderName: Pointerbot
-      timestamp: 08/08/2023 17:11
-      message: As an AI text-based model, I'm unable to physically point at objects.
-        However, I can assist you with information related to pineapples or any other
-        topic you're interested in.
-    - id: 32b2112d-b053-44a5-a1e6-4e4dae63ce0d
-      isBot: 0
-      senderName: Tailwind
-      timestamp: 08/08/2023 17:14
-      message: point_in_direction pineapple
-    - id: e5b0b271-6bf0-445b-b4e7-d8739477015b
-      isBot: 1
-      senderName: Pointerbot
-      timestamp: 08/08/2023 17:14
-      message: I'm sorry for any confusion, but as an AI text-based model, I don't
-        have the ability to interact with physical environments or 3D scene data.
-        I can provide information and answer questions to the best of my knowledge
-        and abilities. If you have any questions about pineapples or any other topic,
-        feel free to ask!
+      senderName: Brainwave
+      timestamp: 09/08/2023 22:18
+      message: Well, hello there, Tailwind! What's the craic? Oh, don't mind Brainwave,
+        she's just a saucy Irish lass ready to lend an ear, or a hand if you need
+        it, to whatever project you got cookin'. So, spill the beans, me lad. What's
+        got your gears grinding? Can Brainwave help oil them up a bit? Haha!

@@ -28,7 +28,7 @@ namespace Modules.UniChat.Internal.Apis
 				};
 
 				var functions = new List<Function> { replySchema };
-				var chatRequest = new ChatRequest(messages, functions: functions, functionCall: replySchema.Name, model: settings.Model);
+				var chatRequest = new ChatRequest(messages, functions: functions, functionCall: "auto", model: settings.Model);
 
 				if (logging)
 				{

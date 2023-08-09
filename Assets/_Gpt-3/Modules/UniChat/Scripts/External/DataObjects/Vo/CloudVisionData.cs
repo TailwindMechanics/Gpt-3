@@ -15,7 +15,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 
 			if (response.TextAnnotations is {Count: > 1})
 			{
-
 				var meaningful = new List<string>();
 				for (var i = 1; i < response.TextAnnotations.Count; i++)
 				{

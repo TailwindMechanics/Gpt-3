@@ -42,6 +42,7 @@ namespace Modules.UniChat.Internal.Behaviours
                 // Feelings        = "Safe, hungry, satisfied, happy, content, calm, warm, tipsy, mild need to pee, relieved, love, wholesome",
                 // Doings          = "Sitting, eating, chatting with Davey, drinking beer, farting, smoking, laughing",
 
+                YourBodyRadius  = "2.0",
                 YourPosition    = $"({camPos.x:F1},{camPos.y:F1},{camPos.z:F1})",
                 YourRotation    = $"({camRot.x:F0},{camRot.y:F0},{camRot.z:F0})",
                 AreaContent     = CaptureChunkContent(camTransform, volumePos, volumeScale, settings)

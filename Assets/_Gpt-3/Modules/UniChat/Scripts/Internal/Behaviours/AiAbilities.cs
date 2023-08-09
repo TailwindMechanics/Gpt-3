@@ -47,16 +47,16 @@ namespace Modules.UniChat.Internal.Behaviours
 				true
 			);
 
-			return response.Direction.Value();
+			return -response.Direction.Value();
 		}
 
 		public void MoveInDirection(Vector3 direction, AiNavigationSettingsVo settings, Action<bool> callback)
 		{
 			completed.OnNext(false);
 
-			var position = Player.Mover.position;
-			destination = position + direction;
-			destination.y = position.y;
+			destination = Player.Camera.transform.position + direction;
+			destination.y = Player.Mover.position.y;
+
 			moveSpeed = settings.MoveSpeed;
 			turnSpeed = settings.TurnSpeed;
 
@@ -76,9 +76,17 @@ namespace Modules.UniChat.Internal.Behaviours
 		{
 			if (!move) return;
 
+			Player.transform.position = Vector3.Lerp(Player.transform.position, destination, moveSpeed * Time.deltaTime);
+			if (Vector3.Distance(Player.transform.position, destination) < 0.1f)
+			{
+				Arrived();
+			}
+
+			return;
 			if (!isFacingDestination)
 			{
-				var directionToFace = (destination - Player.transform.position).normalized;
+				var directionToFace = (destination - Player.Camera.transform.position).normalized;
+				directionToFace.y = 0; // Ensure rotation only around Y-axis
 				var targetRotation = Quaternion.LookRotation(directionToFace);
 				Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 

@@ -23,11 +23,16 @@ namespace Modules.UniChat.Internal.Behaviours
         [FoldoutGroup("References"), InlineEditor, SerializeField]
         ModelSettingsSo model;
 
-
-        [TextArea, SerializeField]
+        [FoldoutGroup("Sight Nav"), TextArea, SerializeField]
         string prompt;
-        [Button(ButtonSizes.Medium)]
-        async void SolveObjective()
+        [FoldoutGroup("Sight Nav"), Button(ButtonSizes.Large)]
+        void SolveObjective() => Solve();
+        [FoldoutGroup("Sight Nav/$VisionDataLabel"), HideLabel, TextArea(20, 20), PropertyOrder(1), SerializeField]
+        string visionResult;
+        [FoldoutGroup("Sight Nav"), SerializeField]
+        Vector3 direction;
+
+        async void Solve ()
         {
             var aiAbilities = GetComponent<AiAbilities>();
             Log("Capturing vision data...");
@@ -37,23 +42,14 @@ namespace Modules.UniChat.Internal.Behaviours
             Log($"Moving in direction: {direction}");
             aiAbilities.MoveInDirection(direction, Model.Vo.Navigation.Vo, OnComplete);
         }
-        [FoldoutGroup("$VisionDataLabel"), HideLabel, TextArea(20, 20), PropertyOrder(1), SerializeField]
-        string visionResult;
-        [UsedImplicitly]
-        string VisionDataLabel => $"Vision Data ({StringUtilities.Ellipses(visionResult)})";
-
-        [SerializeField] Vector3 direction;
-        [Button(ButtonSizes.Medium)]
-        void ForceMove ()
-        {
-            var aiAbilities = GetComponent<AiAbilities>();
-            aiAbilities.MoveInDirection(direction, Model.Vo.Navigation.Vo, OnComplete);
-        }
-
         void OnComplete (bool arrived)
         {
             Log($"OnComplete, arrived at new destination: {arrived}");
         }
+
+        [UsedImplicitly]
+        string VisionDataLabel
+            => $"Vision Data ({StringUtilities.Ellipses(visionResult)})";
 
         void Log (string message)
             => Debug.Log($"<color=#976ccc><b>>>> AiPlayer: {message.Replace("\n", "")}</b></color>");

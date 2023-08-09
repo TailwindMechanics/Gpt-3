@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9140693175429045034
 Transform:
   m_ObjectHideFlags: 0
@@ -279,8 +279,8 @@ Transform:
   m_GameObject: {fileID: 4843840709508675575}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 3}
-  m_LocalScale: {x: 5, y: 2, z: 6}
+  m_LocalPosition: {x: 0, y: -0.5, z: 5.6782}
+  m_LocalScale: {x: 6.4494996, y: 2, z: 11.356199}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4521513525685973277}
@@ -451,9 +451,32 @@ MonoBehaviour:
   pointer: {fileID: 9140693175429045034}
   playerMover: {fileID: 1792439245086302728}
   model: {fileID: 11400000, guid: c352695c13f5c8b4c8987eb1a1bbdfc5, type: 2}
-  prompt: Could you move to the tomato please
-  visionResult: 
-  direction: {x: -1.7, y: 0.6, z: -4.3}
+  prompt: Could you move to the watermelon please
+  visionResult: "{\r\n  \"time\": \"21:22\",\r\n  \"day\": \"9\",\r\n  \"season\":
+    \"Summer\",\r\n  \"year\": \"2023\",\r\n  \"your_position\": \"(-13.9,1.6,50.3)\",\r\n 
+    \"your_rotation\": \"(0,3,0)\",\r\n  \"area_content\": [\r\n    \"Cafe_Table_Folding:
+    dir:(1.1, 1.1, -5.6), size:(2.2, 0.9, 0.9)\",\r\n    \"Food_Watermelon: dir:(1.9,
+    0.5, -5.6), size:(0.5, 0.3, 0.5)\",\r\n    \"Tree: dir:(-4.7, -1.0, -5.9), size:(4.0,
+    5.2, 4.1)\",\r\n    \"Food_Pineapple_Whole: dir:(0.3, 0.6, -5.6), size:(0.5,
+    0.3, 0.6)\"\r\n  ],\r\n  \"cloud_vision_data\": {\r\n    \"label_annotations\":
+    [\r\n      \"Sky: 0.9705669\",\r\n      \"Plant: 0.9439508\",\r\n      \"Cloud:
+    0.8723036\",\r\n      \"Shade: 0.8294179\",\r\n      \"Tree: 0.8143197\",\r\n     
+    \"Landscape: 0.811139\",\r\n      \"Urban design: 0.7982894\",\r\n      \"Grass:
+    0.7797334\",\r\n      \"Terrestrial plant: 0.7632058\",\r\n      \"Arecales:
+    0.7518771\"\r\n    ],\r\n    \"text_annotations\": null,\r\n    \"image_properties_annotation\":
+    \"R147,G206,B223: [score: 0.5164134, fraction:0.1979555], R113,G112,B115: [score:
+    0.06363768, fraction:0.0856], R95,G179,B208: [score: 0.1084842, fraction:0.06346667],
+    R80,G174,B214: [score: 0.1077666, fraction:0.08888889], R171,G215,B221: [score:
+    0.05748875, fraction:0.02462222], R88,G89,B90: [score: 0.03785814, fraction:0.2283556],
+    R148,G152,B156: [score: 0.02917411, fraction:0.04648889], R188,G201,B205: [score:
+    0.0113408, fraction:0.0384], R205,G239,B242: [score: 0.0111138, fraction:0.008622223],
+    R206,G231,B237: [score: 0.01016118, fraction:0.01511111]\",\r\n    \"web_detection\":
+    \"Plant: 0.5966407, Water: 0.547778, Palms: 0.384553, Screenshot: 0.3399349,
+    House: 0.3397409, Tree: 0.3299, Science: 0, Biology: 0\",\r\n    \"localized_object_annotations\":
+    [\r\n      \"Table: 0.8297547\",\r\n      \"Lighting: 0.7561939\"\r\n    ]\r\n 
+    }\r\n}"
+  direction: {x: 1.9, y: 0.5, z: -5.6}
+  target: {fileID: 0}
 --- !u!114 &5840111036261048883
 MonoBehaviour:
   m_ObjectHideFlags: 0
