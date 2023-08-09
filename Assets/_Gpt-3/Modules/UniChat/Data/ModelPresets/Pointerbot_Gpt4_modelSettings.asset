@@ -102,3 +102,5 @@ MonoBehaviour:
       - gpt-3.5-turbo-0613
     perceptionSettings: {fileID: 11400000, guid: 272c9812fea3ee8498574b77a83be77f,
       type: 2}
+    navigationSettings: {fileID: 11400000, guid: e7e940ffbf4b99c4ba0192b3d23724cd,
+      type: 2}

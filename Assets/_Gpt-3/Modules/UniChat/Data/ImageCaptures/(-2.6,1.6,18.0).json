@@ -1,0 +1,32 @@
+{
+  "time": "20:20",
+  "day": "9",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-2.6,1.6,18.0)",
+  "your_rotation": "(0,124,0)",
+  "area_content": [
+    "Small_Rocks_(22): dir:(-2.0, 1.5, 4.3), size:(0.5, 0.1, 0.6)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.8950922",
+      "Infrastructure: 0.892578",
+      "Road surface: 0.8845057",
+      "Asphalt: 0.8634315",
+      "Cloud: 0.858512",
+      "Urban design: 0.8566124",
+      "Plant: 0.8432893",
+      "Building: 0.8412271",
+      "Street light: 0.8231819",
+      "Public space: 0.811328"
+    ],
+    "text_annotations": "lothing, Supermarket, PACIFIC",
+    "image_properties_annotation": "R83,G86,B91: [score: 0.2010754, fraction:0.4440889], R143,G201,B217: [score: 0.07248432, fraction:0.0384], R78,G170,B214: [score: 0.06979065, fraction:0.06924444], R112,G117,B121: [score: 0.1999508, fraction:0.1251556], R99,G170,B193: [score: 0.06755804, fraction:0.0304], R75,G87,B104: [score: 0.05223548, fraction:0.02604445], R144,G148,B152: [score: 0.0461027, fraction:0.04088889], R57,G56,B59: [score: 0.04334872, fraction:0.09591111], R101,G115,B133: [score: 0.03553322, fraction:0.01493333], R197,G202,B208: [score: 0.02938828, fraction:0.0144]",
+    "web_detection": "Plaza M: 0.6544, Urban design: 0.6396437, Mixed-use: 0.5588438, Neighbourhood: 0.5245237, Design: 0.416, Street: 0.4126623, Metropolitan area: 0.3744101, Façade: 0.3628629, Screenshot: 0.3222063, Molar concentration: 0.2918883",
+    "localized_object_annotations": [
+      "Building: 0.7214885",
+      "Lighting: 0.5965246"
+    ]
+  }
+}

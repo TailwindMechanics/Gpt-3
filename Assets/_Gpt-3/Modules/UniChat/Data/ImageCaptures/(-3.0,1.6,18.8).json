@@ -1,0 +1,41 @@
+{
+  "time": "20:20",
+  "day": "9",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-3.0,1.6,18.8)",
+  "your_rotation": "(0,1,0)",
+  "area_content": [
+    "Tree: dir:(2.4, -0.7, -2.8), size:(2.2, 4.5, 2.4)",
+    "Small_Rocks: dir:(2.7, 1.5, -1.5), size:(0.5, 0.1, 0.3)",
+    "Plant_(14): dir:(2.1, 1.3, -3.3), size:(1.1, 0.5, 1.1)",
+    "Ground_Divider: dir:(7.0, 1.5, -3.1), size:(12.8, 0.2, 1.3)",
+    "Plant_(28): dir:(1.5, 1.3, -3.0), size:(1.4, 0.5, 1.4)",
+    "Small_Rocks_(32): dir:(0.1, 1.5, -3.3), size:(0.3, 0.1, 0.3)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.9700503",
+      "Cloud: 0.9661903",
+      "Plant: 0.9606352",
+      "Street light: 0.8804263",
+      "Tree: 0.870735",
+      "Arecales: 0.8632647",
+      "Asphalt: 0.849578",
+      "Biome: 0.8334527",
+      "Woody plant: 0.8130267",
+      "Landscape: 0.8049725"
+    ],
+    "text_annotations": "TOILETS",
+    "image_properties_annotation": "R136,G200,B219: [score: 0.3348548, fraction:0.1138667], R81,G173,B213: [score: 0.1741588, fraction:0.1314667], R88,G90,B94: [score: 0.1422897, fraction:0.3419555], R96,G179,B208: [score: 0.1330881, fraction:0.0752], R169,G212,B217: [score: 0.05104922, fraction:0.0192], R50,G46,B44: [score: 0.04287599, fraction:0.08497778], R111,G116,B120: [score: 0.02527744, fraction:0.03946667], R197,G233,B237: [score: 0.01352242, fraction:0.005333333], R209,G231,B236: [score: 0.0121398, fraction:0.008088889], R123,G163,B164: [score: 0.009096944, fraction:0.006844445]",
+    "web_detection": "Plant: 0.6093915, Palms: 0.5036771, Street light: 0.5009455, Light: 0.492228, Street: 0.4854043, Light fixture: 0.4435692, Residential area: 0.3597978, Tree: 0.3266, Arecales: 0.06954, Biology: 0",
+    "localized_object_annotations": [
+      "Lighting: 0.6750436",
+      "Lighting: 0.6513935",
+      "Lighting: 0.5696261",
+      "Lighting: 0.5499642",
+      "Houseplant: 0.5205267",
+      "Houseplant: 0.501582"
+    ]
+  }
+}

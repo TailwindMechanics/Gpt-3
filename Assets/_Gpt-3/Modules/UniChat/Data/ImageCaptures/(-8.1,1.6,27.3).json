@@ -1,0 +1,37 @@
+{
+  "time": "20:18",
+  "day": "9",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-8.1,1.6,27.3)",
+  "your_rotation": "(0,1,0)",
+  "area_content": [
+    "Planter_Box_Wood: dir:(1.9, 0.7, -5.1), size:(1.8, 1.8, 2.8)",
+    "Wheel_Stop_(16): dir:(1.2, 1.5, -6.9), size:(0.3, 0.2, 2.4)",
+    "Wheel_Stop_(18): dir:(1.2, 1.5, -0.2), size:(0.3, 0.2, 2.4)",
+    "Streetlight_Double: dir:(1.9, -3.4, -1.9), size:(4.7, 9.9, 0.4)",
+    "Wheel_Stop_(17): dir:(1.2, 1.5, -3.4), size:(0.3, 0.2, 2.4)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.9463126",
+      "Plant: 0.9360166",
+      "Cloud: 0.891102",
+      "Asphalt: 0.8564855",
+      "Street light: 0.8516584",
+      "Urban design: 0.8297169",
+      "Line: 0.8165722",
+      "Screenshot: 0.753773",
+      "Landscape: 0.74467",
+      "Tree: 0.7375798"
+    ],
+    "text_annotations": "FRAGILE, TOILETS",
+    "image_properties_annotation": "R51,G43,B44: [score: 0.4346528, fraction:0.1518222], R80,G173,B215: [score: 0.1027858, fraction:0.1353778], R131,G198,B218: [score: 0.07706892, fraction:0.07644445], R45,G58,B33: [score: 0.05060356, fraction:0.01111111], R195,G205,B210: [score: 0.002821901, fraction:0.03448889], R99,G177,B203: [score: 0.07495476, fraction:0.07377778], R83,G85,B87: [score: 0.0598925, fraction:0.2856], R49,G52,B33: [score: 0.03944173, fraction:0.01262222], R38,G32,B34: [score: 0.02645536, fraction:0.01306667], R71,G83,B57: [score: 0.02144179, fraction:0.007733333]",
+    "web_detection": "House: 0.5345699, Roof: 0.4164282, Plant: 0.3999929, Residential area: 0.3912802, Tree: 0.3536831, Screenshot: 0.3504962, Architecture: 0.3165261, Architecture:m: 0.3157, : 0.2644, Biology: 0",
+    "localized_object_annotations": [
+      "Houseplant: 0.6153608",
+      "Lighting: 0.5473578",
+      "Lighting: 0.5356387"
+    ]
+  }
+}

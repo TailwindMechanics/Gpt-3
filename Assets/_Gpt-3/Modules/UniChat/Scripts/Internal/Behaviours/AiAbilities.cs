@@ -1,22 +1,27 @@
 using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Sirenix.OdinInspector;
 using UnityEngine;
+using System;
+using UniRx;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.Internal.DataObjects.Schemas;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Apis;
-using Modules.Utilities.External;
 
 
 namespace Modules.UniChat.Internal.Behaviours
 {
-	[RequireComponent(typeof(AiPlayer))]
+	[RequireComponent(typeof(AiPlayer)), ExecuteAlways]
 	public class AiAbilities : MonoBehaviour
 	{
-		AiPlayer AiPlayer => aiPlayer ? aiPlayer : aiPlayer = GetComponent<AiPlayer>();
-		AiPlayer aiPlayer;
+		readonly ISubject<bool> completed = new Subject<bool>();
+		AiPlayer Player => player ??= GetComponent<AiPlayer>();
+		bool isFacingDestination;
+		Vector3 destination;
+		float turnSpeed;
+		float moveSpeed;
+		AiPlayer player;
+		bool move;
 
 
 		public async Task<string> CaptureVision(Camera cam, Transform volume, AiPerceptionSettingsVo settings)
@@ -25,33 +30,12 @@ namespace Modules.UniChat.Internal.Behaviours
 			return await perceiver.CaptureVision(cam, volume, settings);
 		}
 
-		public async Task MoveInDirection (Vector3 direction)
-		{
-			// AiPlayer.PlayerMover.Domove(direction);
-		}
-
-
-		/*
-
-
-		[UsedImplicitly]
-		string VisionDataLabel => $"Vision Data ({StringUtilities.Ellipses(visionResult)})";
-		[TextArea, SerializeField] string prompt;
-		[FoldoutGroup("$VisionDataLabel"), HideLabel, TextArea(20, 20), PropertyOrder(1), SerializeField]
-		string visionResult;
-		[Button(ButtonSizes.Medium)]
-		async void Capture ()
-		{
-			visionResult = await CaptureVision(AiPlayer.Camera, AiPlayer.Sensor, AiPlayer.Model.Vo.Perception.Vo);
-			await PointInDirection(prompt, visionResult);
-		}
-
-		async Task PointInDirection(string prompt, string context)
+		public async Task<Vector3> DeduceDirection(string prompt, string context, ModelSettingsVo settings)
 		{
 			var chatbotApi = new StructuredChatApi() as IStructuredChatApi;
 			var schemaGenerator = new VectorSchema(
-				"PointInDirection",
-				"Points in the direction of the given vector.",
+				"MoveInDirection",
+				"Moves the AI agent in the direction.",
 				"direction"
 			);
 
@@ -59,19 +43,58 @@ namespace Modules.UniChat.Internal.Behaviours
 				prompt,
 				context,
 				schemaGenerator.Schema,
-				AiPlayer.Model.Vo,
+				settings,
 				true
 			);
 
-			var direction = response.Direction.Value();
-			Debug.Log($"<color=magenta><b>>>> direction: {direction}</b></color>");
-			direction = direction == Vector3.zero ? Vector3.one : direction;
-
-			AiPlayer.Pointer.rotation = Quaternion.LookRotation(-direction);
-			var scale = AiPlayer.Pointer.localScale;
-			AiPlayer.Pointer.localScale = new Vector3(scale.x, scale.y, direction.magnitude);
+			return response.Direction.Value();
 		}
 
-		*/
+		public void MoveInDirection(Vector3 direction, AiNavigationSettingsVo settings, Action<bool> callback)
+		{
+			completed.OnNext(false);
+
+			var position = Player.Mover.position;
+			destination = position + direction;
+			destination.y = position.y;
+			moveSpeed = settings.MoveSpeed;
+			turnSpeed = settings.TurnSpeed;
+
+			isFacingDestination = false;
+			move = true;
+			completed.Take(1).Subscribe(callback);
+		}
+
+		void Arrived ()
+		{
+			move = false;
+			completed.OnNext(true);
+		}
+
+		// Update is used here so it can be run in edit mode
+		void LateUpdate()
+		{
+			if (!move) return;
+
+			if (!isFacingDestination)
+			{
+				var directionToFace = (destination - Player.transform.position).normalized;
+				var targetRotation = Quaternion.LookRotation(directionToFace);
+				Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+				if (Quaternion.Angle(Player.transform.rotation, targetRotation) < 1f)
+				{
+					isFacingDestination = true;
+				}
+			}
+			else
+			{
+				Player.transform.position = Vector3.Lerp(Player.transform.position, destination, moveSpeed * Time.deltaTime);
+				if (Vector3.Distance(Player.transform.position, destination) < 0.1f)
+				{
+					Arrived();
+				}
+			}
+		}
 	}
 }

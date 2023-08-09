@@ -11,18 +11,19 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	[Serializable]
 	public class ModelSettingsVo
 	{
-		public string BotName				=> botName;
-		public string Direction				=> direction.text;
-		public int SendSimilarChatCount		=> sendSimilarChatCount;
-		public int SendChatHistoryCount		=> sendChatHistoryCount;
-		public float MemoryAccuracy			=> memoryAccuracy;
-		public int MaxTokens				=> maxTokens;
-		public double Temperature			=> temperature;
-		public double TopP					=> topP;
-		public double PresencePenalty		=> presencePenalty;
-		public double FrequencyPenalty		=> frequencyPenalty;
-		public Model Model					=> model.Model;
-		public AiPerceptionSettingsSo Perception => perceptionSettings;
+		public string BotName						=> botName;
+		public string Direction						=> direction.text;
+		public int SendSimilarChatCount				=> sendSimilarChatCount;
+		public int SendChatHistoryCount				=> sendChatHistoryCount;
+		public float MemoryAccuracy					=> memoryAccuracy;
+		public int MaxTokens						=> maxTokens;
+		public double Temperature					=> temperature;
+		public double TopP							=> topP;
+		public double PresencePenalty				=> presencePenalty;
+		public double FrequencyPenalty				=> frequencyPenalty;
+		public Model Model							=> model.Model;
+		public AiPerceptionSettingsSo Perception	=> perceptionSettings;
+		public AiNavigationSettingsSo Navigation	=> navigationSettings;
 
 		[Tooltip("Display name of the model"), SerializeField]
 		string botName = "Bot";
@@ -48,5 +49,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		SerializableModelVo model;
 		[Tooltip("Settings for how this bot perceives"), InlineEditor, SerializeField]
 		AiPerceptionSettingsSo perceptionSettings;
+		[Tooltip("Settings for how this bot perceives"), InlineEditor, SerializeField]
+		AiNavigationSettingsSo navigationSettings;
 	}
 }

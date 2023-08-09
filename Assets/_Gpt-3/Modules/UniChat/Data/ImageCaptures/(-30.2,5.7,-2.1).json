@@ -1,0 +1,32 @@
+{
+  "time": "20:00",
+  "day": "9",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-30.2,5.7,-2.1)",
+  "your_rotation": "(0,54,0)",
+  "area_content": [
+    "Streetlight_(14): dir:(-2.7, 0.8, 0.2), size:(0.4, 9.9, 2.6)",
+    "Tree_(14): dir:(-4.5, 2.4, 1.4), size:(5.0, 5.8, 4.5)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Building: 0.9104288",
+      "Window: 0.886198",
+      "Sky: 0.8861527",
+      "Street light: 0.8799453",
+      "Urban design: 0.8428435",
+      "Residential area: 0.7920189",
+      "Condominium: 0.7830376",
+      "Tree: 0.7783525",
+      "Facade: 0.76647",
+      "City: 0.7652906"
+    ],
+    "text_annotations": "___",
+    "image_properties_annotation": "R135,G199,B219: [score: 0.3001091, fraction:0.06435555], R75,G169,B213: [score: 0.1733643, fraction:0.08524445], R95,G108,B125: [score: 0.06389286, fraction:0.1856889], R83,G88,B96: [score: 0.05231519, fraction:0.2556444], R70,G87,B55: [score: 0.001785555, fraction:0.0112], R105,G174,B200: [score: 0.1687616, fraction:0.03662222], R164,G205,B209: [score: 0.05250028, fraction:0.0096], R81,G92,B110: [score: 0.04273585, fraction:0.0992], R71,G131,B153: [score: 0.01744939, fraction:0.001688889], R49,G52,B59: [score: 0.01650349, fraction:0.06648889]",
+    "web_detection": "House: 0.7088551, Urban design: 0.6381354, Residential area: 0.5088133, Real Estate: 0.4896, Architecture: 0.4786471, Apartment: 0.4453512, Design: 0.4244, Mixed-use: 0.4171036, Façade: 0.3926547, Condominium: 0.3925225",
+    "localized_object_annotations": [
+      "Building: 0.5684192"
+    ]
+  }
+}

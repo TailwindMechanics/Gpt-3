@@ -58,6 +58,6 @@ namespace Modules.UniChat.Internal.Apis
 		}
 
 		void Log(string message)
-			=> Debug.Log($"<color=#5ead8f><b>>>> StructuredChatApi: {message.Replace("\n", "")}</b></color>");
+			=> Debug.Log($"<color=#6ccca8><b>>>> StructuredChatApi: {message.Replace("\n", "")}</b></color>");
 	}
 }
