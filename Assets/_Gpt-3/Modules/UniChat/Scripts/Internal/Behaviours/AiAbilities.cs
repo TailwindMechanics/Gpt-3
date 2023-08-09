@@ -18,6 +18,22 @@ namespace Modules.UniChat.Internal.Behaviours
 		AiPlayer AiPlayer => aiPlayer ? aiPlayer : aiPlayer = GetComponent<AiPlayer>();
 		AiPlayer aiPlayer;
 
+
+		public async Task<string> CaptureVision(Camera cam, Transform volume, AiPerceptionSettingsVo settings)
+		{
+			var perceiver = new AiPerceiver() as IAiPerceiver;
+			return await perceiver.CaptureVision(cam, volume, settings);
+		}
+
+		public async Task MoveInDirection (Vector3 direction)
+		{
+			// AiPlayer.PlayerMover.Domove(direction);
+		}
+
+
+		/*
+
+
 		[UsedImplicitly]
 		string VisionDataLabel => $"Vision Data ({StringUtilities.Ellipses(visionResult)})";
 		[TextArea, SerializeField] string prompt;
@@ -27,13 +43,7 @@ namespace Modules.UniChat.Internal.Behaviours
 		async void Capture ()
 		{
 			visionResult = await CaptureVision(AiPlayer.Camera, AiPlayer.Sensor, AiPlayer.Model.Vo.Perception.Vo);
-            await PointInDirection(prompt, visionResult);
-		}
-
-		async Task<string> CaptureVision(Camera cam, Transform volume, AiPerceptionSettingsVo settings)
-		{
-			var perceiver = new AiPerceiver() as IAiPerceiver;
-			return await perceiver.CaptureVision(cam, volume, settings);
+			await PointInDirection(prompt, visionResult);
 		}
 
 		async Task PointInDirection(string prompt, string context)
@@ -61,5 +71,7 @@ namespace Modules.UniChat.Internal.Behaviours
 			var scale = AiPlayer.Pointer.localScale;
 			AiPlayer.Pointer.localScale = new Vector3(scale.x, scale.y, direction.magnitude);
 		}
+
+		*/
 	}
 }
