@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
-  username: Tailwind
-  chatBotSettings: {fileID: 11400000, guid: 5fee547608a1d684c989213dc8c6b3d0, type: 2}
+  username: User
+  chatBotSettings: {fileID: 11400000, guid: 493ee29927cd73045b0c91a648ef2290, type: 2}
   embeddingModel:
     model: text-embedding-ada-002
     allModels:
@@ -97,16 +97,219 @@ MonoBehaviour:
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
-    - id: 7a4113f3-27cc-4900-9312-880997f4130a
+    - id: 73619011-f380-4a16-96eb-07cf99ab0fef
       isBot: 0
-      senderName: Tailwind
-      timestamp: 09/08/2023 22:18
-      message: Hey
-    - id: 5521e1ea-5840-426d-bddd-33cf3460b2bf
+      senderName: User
+      timestamp: 10/08/2023 16:45
+      message: What do you see Aine? Anything interesting?
+    - id: 5468c088-fcaa-4667-97aa-db6737756da8
       isBot: 1
-      senderName: Brainwave
-      timestamp: 09/08/2023 22:18
-      message: Well, hello there, Tailwind! What's the craic? Oh, don't mind Brainwave,
-        she's just a saucy Irish lass ready to lend an ear, or a hand if you need
-        it, to whatever project you got cookin'. So, spill the beans, me lad. What's
-        got your gears grinding? Can Brainwave help oil them up a bit? Haha!
+      senderName: Aine
+      timestamp: 10/08/2023 16:45
+      message: 'I''m currently located at coordinates (-15.3,1.6,59.7) and facing
+        in the direction of (-0.1,0.0,1.0). The sky is beautifully clear with a high
+        probability of clouds present. There''s an aircraft in the distance and the
+        landscape around me is quite picturesque.
+
+
+        The color palette of
+        my surroundings is predominantly shades of blue (R147,G206,B222), which gives
+        everything a calm and serene feel.
+
+
+        There''s also a tree nearby
+        in the direction of (-5.8, -1.5, -2.1) with dimensions (5.9, 6.5, 5.9).
+
+
+        As
+        for anything interesting... well, the cloud vision data suggests that there
+        might be something related to cloud computing or Microsoft Azure in the vicinity
+        but I can''t be certain without more context or investigation.
+
+
+        Would
+        you like me to explore further or move in a specific direction?'
+    - id: 7e5c67f3-6479-4989-8313-48ad487fe892
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:46
+      message: Could you turn around and face the other direction please
+    - id: fa341e2b-d64b-449c-8cd8-8d32d5b81f1d
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:47
+      message: Ok just move forward 2 meters please
+    - id: 7f84c93b-c4a0-4556-889d-5fb5db76eae2
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:50
+      message: Could you turn around and face the other direction please
+    - id: 2757390c-3627-4ea1-8eb8-261717400c9a
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:51
+      message: Perfect, now tell me what you see please
+    - id: a3308e3f-eed8-4b41-9990-f34f3247fe70
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:54
+      message: Tell me what you see please
+    - id: 5a504c47-65ab-4680-8ccc-6ce8bffcef55
+      isBot: 1
+      senderName: Aine
+      timestamp: 10/08/2023 16:54
+      message: 'I''m currently located at coordinates (-15.2,1.6,58.4) and facing
+        in the direction of (0.1,0.0,-1.0). The sky is beautifully clear with a high
+        probability of clouds present.
+
+
+        Around me, there are several objects
+        including a folding cafe table, a ground divider, some papers, plants, food
+        items like watermelon and pineapple, parking lines on the ground, a tree
+        and small ground space.
+
+
+        The color palette of my surroundings is
+        predominantly shades of blue (R70,G167,B214), which gives everything a calm
+        and serene feel.
+
+
+        As for anything interesting... well, the cloud
+        vision data suggests that there might be something related to urban design
+        or landscape in the vicinity but I can''t be certain without more context
+        or investigation.
+
+
+        Would you like me to explore further or move
+        in a specific direction?'
+    - id: f10c1500-a5db-43d7-a7e3-4607d2074415
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:56
+      message: Yeah please could move 5 meters to your 1 o'clock
+    - id: 6dacca99-cfd1-4d92-b107-942a0642e91d
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 16:57
+      message: Could you just move forward 10 meters please
+    - id: 29942368-7b90-4a4a-9815-2410ae0fcef7
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:01
+      message: Could you turn around please
+    - id: a2d716af-c162-4322-9364-2600f77e4f5b
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:02
+      message: Ok and could you now go 10 meters forward to your 1 o'clock
+    - id: 05fe4eee-9654-450a-8349-748ba678ca50
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:03
+      message: Nope, could you turn around again please
+    - id: 5d161bf4-7b93-488a-83d6-4f03842d8b80
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:03
+      message: Ok go forward 5 meters please
+    - id: 998dd9c7-3633-4a8e-a998-9568662586f7
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:52
+      message: Turn around please
+    - id: c8aa3900-0e28-401c-8505-1973961e5e4c
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:53
+      message: Describe what you see
+    - id: dbe5ef06-ed94-4fae-a71c-8e98567088b6
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 17:54
+      message: Tell me what you see
+    - id: 4ae52adb-7fb3-4433-a36c-a30cd80df771
+      isBot: 1
+      senderName: Aine
+      timestamp: 10/08/2023 17:54
+      message: 'I''m currently located at coordinates (-15.4,1.6,51.8) and facing
+        in the direction of (0.0,0.0,1.0). The sky is beautifully clear with a high
+        probability of clouds present.
+
+
+        Around me, there are several objects
+        including a sidewalk corner, a folding cafe table, ground divider, shopping
+        cart, papers on the ground, small rocks and food items like watermelon and
+        pineapple. There''s also a streetlight nearby and various plants and trees
+        scattered around.
+
+
+        The color palette of my surroundings is predominantly
+        shades of blue (R145,G205,B222), which gives everything a calm and serene
+        feel.
+
+
+        As for anything interesting... well, the cloud vision data
+        suggests that there might be something related to urban design or landscape
+        in the vicinity but I can''t be certain without more context or investigation.
+
+
+        Would
+        you like me to explore further or move in a specific direction?'
+    - id: a6be7a74-0a31-4516-9982-be3397cd8ce0
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 18:33
+      message: What do you see that most interests you?
+    - id: 37025cf7-22b1-4884-8b48-03a0bf7a0e3a
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 18:35
+      message: Tell me what you see please
+    - id: 3c1e8495-8b4e-46fc-9e5a-059c0bed1bde
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 18:38
+      message: What do you see?
+    - id: 24abde8c-92fa-4e17-8ae2-6f3c17f30ff1
+      isBot: 1
+      senderName: Aine
+      timestamp: 10/08/2023 18:38
+      message: 'I''m currently located at coordinates (-15.4,1.6,51.8) and facing
+        in the direction of (0.0,0.0,1.0). The sky is beautifully clear with a high
+        probability of clouds present.
+
+
+        Around me, there are several objects
+        including a sidewalk corner, a folding cafe table, ground divider, shopping
+        cart, papers on the ground, small rocks and food items like watermelon and
+        pineapple. There''s also a streetlight nearby and various plants and trees
+        scattered around.
+
+
+        The color palette of my surroundings is predominantly
+        shades of blue (R145,G205,B222), which gives everything a calm and serene
+        feel.
+
+
+        As for anything interesting... well, the cloud vision data
+        suggests that there might be something related to urban design or landscape
+        in the vicinity but I can''t be certain without more context or investigation.
+
+
+        Would
+        you like me to explore further or move in a specific direction?'
+    - id: fe97c3dd-aed4-4dec-8243-d0503738b15a
+      isBot: 0
+      senderName: User
+      timestamp: 10/08/2023 18:41
+      message: What do you see that most interests you?
+    - id: ffb35970-ebee-4727-baff-5e0498639d9b
+      isBot: 1
+      senderName: Aine
+      timestamp: 10/08/2023 18:41
+      message: As an AI, I don't have personal interests. However, based on the data
+        provided, there are several notable objects in the environment such as a
+        Cafe Table Folding, a Shopping Cart, and various types of food like Watermelon
+        and Pineapple. The presence of these items suggests that this might be an
+        outdoor market or a picnic area. Would you like me to interact with any of
+        these objects?

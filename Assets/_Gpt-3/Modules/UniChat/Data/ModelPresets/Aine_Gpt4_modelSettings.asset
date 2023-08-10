@@ -15,8 +15,8 @@ MonoBehaviour:
   settings:
     botName: Aine
     direction: {fileID: 4900000, guid: d523f6e7d96ce594e9baddff3648536c, type: 3}
-    sendSimilarChatCount: 1
-    sendChatHistoryCount: 1
+    sendSimilarChatCount: 2
+    sendChatHistoryCount: 0
     memoryAccuracy: 0.8
     maxTokens: 4096
     temperature: 0.5
@@ -24,7 +24,7 @@ MonoBehaviour:
     presencePenalty: 0.5
     frequencyPenalty: 0.5
     model:
-      model: gpt-4
+      model: gpt-4-0613
       allModels:
       - babbage
       - davinci
@@ -96,5 +96,11 @@ MonoBehaviour:
       - text-davinci:001
       - text-curie:001
       - text-babbage:001
+      - gpt-3.5-turbo-16k-0613
+      - gpt-3.5-turbo-16k
+      - gpt-4-0613
+      - gpt-3.5-turbo-0613
     perceptionSettings: {fileID: 11400000, guid: 976142cef945d7c48ac67ae5a4b90cf8,
+      type: 2}
+    navigationSettings: {fileID: 11400000, guid: e7e940ffbf4b99c4ba0192b3d23724cd,
       type: 2}

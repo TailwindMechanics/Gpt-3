@@ -1,12 +1,11 @@
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using OpenAI.Chat;
 using UnityEngine;
 using System;
 using UniRx;
 
-using Modules.UniChat.External.DataObjects.Interfaces;
-using Modules.UniChat.Internal.DataObjects.Schemas;
 using Modules.UniChat.External.DataObjects.Vo;
-using Modules.UniChat.Internal.Apis;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -24,38 +23,44 @@ namespace Modules.UniChat.Internal.Behaviours
 		bool move;
 
 
-		public async Task<string> CaptureVision(Camera cam, Transform volume, AiPerceptionSettingsVo settings)
+		public void ReceivedFunction(Function function, ModelSettingsVo settings, Action<string, bool> callback)
 		{
-			var perceiver = new AiPerceiver() as IAiPerceiver;
-			return await perceiver.CaptureVision(cam, volume, settings);
+			Log($" ReceivedFunction: {JsonConvert.SerializeObject(function)}");
+			switch (function.Name)
+			{
+				case "MoveInDirection":
+					var arguments = JObject.Parse(function.Arguments.ToString());
+					var directionObj = arguments["direction"];
+					if (directionObj == null)
+					{
+						Log($"No direction found in function: {function.Name}");
+						callback(function.Name, false);
+						return;
+					}
+
+					var directionSerializable = directionObj.ToObject<Vector3Serializable>();
+					var direction = directionSerializable.Value();
+					Log($"direction: {direction}");
+					MoveInDirection(direction, settings.Navigation.Vo, success =>
+					{
+						callback(function.Name, success);
+					});
+					break;
+			}
 		}
 
-		public async Task<Vector3> DeduceDirection(string prompt, string context, ModelSettingsVo settings)
-		{
-			var chatbotApi = new StructuredChatApi() as IStructuredChatApi;
-			var schemaGenerator = new VectorSchema(
-				"MoveInDirection",
-				"Moves the AI agent in the direction.",
-				"direction"
-			);
-
-			var response = await chatbotApi.GetStructuredReply<VectorSchema.Response>(
-				prompt,
-				context,
-				schemaGenerator.Schema,
-				settings,
-				true
-			);
-
-			return -response.Direction.Value();
-		}
-
-		public void MoveInDirection(Vector3 direction, AiNavigationSettingsVo settings, Action<bool> callback)
+		void MoveInDirection(Vector3 direction, AiNavigationSettingsVo settings, Action<bool> callback)
 		{
 			completed.OnNext(false);
 
-			destination = Player.Camera.transform.position + direction;
+			// Transform the direction vector based on the camera's rotation
+			direction = Player.Camera.transform.TransformDirection(direction);
+
+			var playerPos = Player.transform.position;
+			destination = playerPos + direction;
 			destination.y = Player.Mover.position.y;
+
+			Log($"MoveInDirection: {direction}, destination: {destination}, distance: {Vector3.Distance(playerPos, destination)}");
 
 			moveSpeed = settings.MoveSpeed;
 			turnSpeed = settings.TurnSpeed;
@@ -71,22 +76,15 @@ namespace Modules.UniChat.Internal.Behaviours
 			completed.OnNext(true);
 		}
 
-		// Update is used here so it can be run in edit mode
+		// todo Update is used here so it can be run in edit mode
 		void LateUpdate()
 		{
 			if (!move) return;
 
-			Player.transform.position = Vector3.Lerp(Player.transform.position, destination, moveSpeed * Time.deltaTime);
-			if (Vector3.Distance(Player.transform.position, destination) < 0.1f)
-			{
-				Arrived();
-			}
-
-			return;
 			if (!isFacingDestination)
 			{
 				var directionToFace = (destination - Player.Camera.transform.position).normalized;
-				directionToFace.y = 0; // Ensure rotation only around Y-axis
+				directionToFace.y = 0;
 				var targetRotation = Quaternion.LookRotation(directionToFace);
 				Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
@@ -97,12 +95,16 @@ namespace Modules.UniChat.Internal.Behaviours
 			}
 			else
 			{
-				Player.transform.position = Vector3.Lerp(Player.transform.position, destination, moveSpeed * Time.deltaTime);
+				// Use Vector3.MoveTowards to move at a constant speed
+				Player.transform.position = Vector3.MoveTowards(Player.transform.position, destination, moveSpeed * Time.deltaTime);
 				if (Vector3.Distance(Player.transform.position, destination) < 0.1f)
 				{
 					Arrived();
 				}
 			}
 		}
+
+		void Log (string message)
+			=> Debug.Log($"<color=#d6952d><b>>>> AiAbilities: {message.Replace("\n", "")}</b></color>");
 	}
 }

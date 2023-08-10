@@ -1,0 +1,32 @@
+{
+  "time": "17:52",
+  "day": "10",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-16.4,1.6,68.3)",
+  "your_rotation": "(0,310,0)",
+  "your_facing_direction": "(-0.8,0.0,0.6)",
+  "your_body_radius": "2.0",
+  "area_content": [],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.9590935",
+      "Atmosphere: 0.9481808",
+      "Cloud: 0.9427844",
+      "Azure: 0.8925107",
+      "Gesture: 0.8526049",
+      "Rectangle: 0.8320991",
+      "Air travel: 0.8055908",
+      "Horizon: 0.7969421",
+      "Wing: 0.7875103",
+      "Cumulus: 0.7818349"
+    ],
+    "text_annotations": null,
+    "image_properties_annotation": "R150,G207,B223: [score: 0.6198669, fraction:0.2488], R105,G99,B96: [score: 0.07107531, fraction:0.3384889], R165,G216,B220: [score: 0.08921266, fraction:0.02586667], R113,G113,B113: [score: 0.0700516, fraction:0.1081778], R189,G200,B204: [score: 0.05993105, fraction:0.03182222], R210,G239,B243: [score: 0.04346664, fraction:0.01226667], R147,G156,B156: [score: 0.01271295, fraction:0.008088889], R108,G181,B205: [score: 0.01110788, fraction:0.06088889], R206,G226,B233: [score: 0.01094713, fraction:0.01057778], R93,G181,B220: [score: 0.003844667, fraction:0.1450667]",
+    "web_detection": "Air travel: 0.6031851, Wallpaper: 0.3838786, Cumulus: 0.3696865, Travel: 0.3665, Ecoregion: 0.3608323, Daytime: 0.3498569, Computer: 0.2799, Wallpaper: 0.2613, M: 0.2609, Microsoft Azure: 0.2385",
+    "localized_object_annotations": [
+      "Animal: 0.6488743",
+      "Animal: 0.5886664"
+    ]
+  }
+}

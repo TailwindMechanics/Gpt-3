@@ -17,38 +17,37 @@ namespace Modules.UniChat.Internal.Behaviours
     [Serializable]
     public class AiPerceiver : IAiPerceiver
     {
-        public async Task<string> CaptureVision (Camera cam, Transform volume, AiPerceptionSettingsVo settings)
+        public async Task<string> CaptureVision (Camera cam, AiPerceptionSettingsVo settings)
         {
             Log($"Capturing from camera: {cam.name}");
 
-            var camTransform    = cam.transform;
-            var camPos          = camTransform.position;
-            var camRot          = camTransform.eulerAngles;
-            var volumeScale     = volume.localScale;
-            var volumePos       = volume.position;
+            var camTransform = cam.transform;
+            var camPos = camTransform.position;
+            var camRot = camTransform.eulerAngles;
 
-            volume.gameObject.SetActive(false);
+            var forward = camTransform.forward;
             var chunkData = new AiPerceivedData
             {
+                // todo create service for querying in-game datetime
                 Time            = DateUtils.CurrentTime(),
                 Day             = DateUtils.CurrentDay(),
                 Season          = DateUtils.CurrentSeason(),
                 Year            = DateUtils.CurrentYear(),
 
+                // todo create services to query world for below types of data
                 // Weather         = "Cel:22/21/19, hum:2%, pre:65%, wind/11kmh, partly cloudy",
                 // Sounds          = "Close: children playing, music small speaker, cutlery, plates, spatula on grill, cooking, jovial walla. Med: seagulls overhead, car park sounds. Far: main road. Distant: arcade sounds",
                 // Smells          = "Strong: pizza, ketchup, onions, cooking. Med: exhaust, beer. Subtle: tarmac",
-                // Geographic      = "I am 14km nnw of home. At 'Canesbury Market' strip mall 6th time this year. Drove here with Davey in my Flatbed Truck. Local Events: Food truck jamboree 17/04/23, 13:00-17:00",
-                // Feelings        = "Safe, hungry, satisfied, happy, content, calm, warm, tipsy, mild need to pee, relieved, love, wholesome",
-                // Doings          = "Sitting, eating, chatting with Davey, drinking beer, farting, smoking, laughing",
+                // Geographic      = "I am 14km nnw of home. At 'Canesbury Market' strip mall 6th time this year.",
+                // Feelings        = "Safe, hungry, satisfied, happy, content, calm, warm, relieved, wholesome",
+                // Doings          = "Sitting, eating, laughing",
 
+                YourFacingDirection = $"({forward.x:F1},{forward.y:F1},{forward.z:F1})",
                 YourBodyRadius  = "2.0",
-                YourPosition    = $"({camPos.x:F1},{camPos.y:F1},{camPos.z:F1})",
-                YourRotation    = $"({camRot.x:F0},{camRot.y:F0},{camRot.z:F0})",
-                AreaContent     = CaptureChunkContent(camTransform, volumePos, volumeScale, settings)
+                YourPosition = $"({camPos.x:F1},{camPos.y:F1},{camPos.z:F1})",
+                YourRotation = $"({camRot.x:F0},{camRot.y:F0},{camRot.z:F0})",
+                AreaContent = CaptureFrustumContent(camTransform, settings)
             };
-
-            volume.gameObject.SetActive(true);
 
             var fileName = $"{chunkData.YourPosition}";
             var visionResponse = await GoogleCloudVisionAnalyse(cam, fileName, settings);
@@ -60,15 +59,15 @@ namespace Modules.UniChat.Internal.Behaviours
             return tuple.json;
         }
 
-        List<string> CaptureChunkContent(Transform cam, Vector3 chunkPos, Vector3 chunkSize, AiPerceptionSettingsVo settings)
+        List<string> CaptureFrustumContent(Transform cam, AiPerceptionSettingsVo settings)
         {
-            var bounds = new Bounds(chunkPos, chunkSize);
+            // todo: create service for capturing chunks of data
             var allRenderers = Object.FindObjectsOfType<Renderer>();
 
-            return allRenderers.Where(renderer => bounds.Intersects(renderer.bounds))
+            return allRenderers
+                .Where(renderer => IsWithinCameraFrustum(cam, renderer, settings.MaxSightDistance))
                 .Where(renderer => !settings.BlackList.Contains(renderer.gameObject.name))
-                .Select(renderer => new { renderer, rendTransform = renderer.transform })
-                .Select(tuple => AreaObjectData(cam, tuple.renderer, settings))
+                .Select(renderer => AreaObjectData(cam, renderer, settings))
                 .ToList();
         }
 
@@ -89,6 +88,16 @@ namespace Modules.UniChat.Internal.Behaviours
             var size        = $"{bounds.size:F1}";
 
             return $"{objectName}: dir:{direction}, size:{size}";
+        }
+
+        bool IsWithinCameraFrustum(Transform cam, Renderer renderer, double maxDistance)
+        {
+            var bounds = renderer.bounds;
+            var centerToCam = cam.position - bounds.center;
+            if (centerToCam.magnitude > maxDistance) return false;
+
+            var planes = GeometryUtility.CalculateFrustumPlanes(cam.GetComponent<Camera>());
+            return GeometryUtility.TestPlanesAABB(planes, bounds);
         }
 
         string StripUnityLabels (string input)

@@ -47,6 +47,9 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		[JsonProperty("your_rotation")]
 		public string YourRotation { get; set; }
 
+		[JsonProperty("your_facing_direction")]
+		public string YourFacingDirection { get; set; }
+
 		[JsonProperty("your_body_radius")]
 		public string YourBodyRadius { get; set; }
 

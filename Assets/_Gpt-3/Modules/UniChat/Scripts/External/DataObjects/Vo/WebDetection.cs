@@ -9,9 +9,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	public class WebDetection
 	{
 		[JsonProperty("webEntities")]
-		public List<WebEntity> WebEntities { get; set; }
-
-
+		public List<WebEntity> WebEntities { get; set; } = new();
 
 		public override string ToString()
 		{

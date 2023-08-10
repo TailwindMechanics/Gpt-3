@@ -31,7 +31,7 @@ namespace Modules.UniChat.External.DataObjects.Vo
 			}
 
 			// FaceAnnotations = response.FaceAnnotations?.ConvertAll(item => item.ToString());
-			// LandmarkAnnotations = response.LandmarkAnnotations?.ConvertAll(item => item.ToString());
+			LandmarkAnnotations = response.LandmarkAnnotations?.ConvertAll(item => item.ToString());
 			// LogoAnnotations = response.LogoAnnotations?.ConvertAll(item => item.ToString());
 			// SafeSearchAnnotation = response.SafeSearchAnnotation?.ToString();
 
@@ -49,8 +49,8 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		// [JsonProperty("face_annotations")]
 		// public List<string> FaceAnnotations { get; set; }
 
-		// [JsonProperty("landmark_annotations")]
-		// public List<string> LandmarkAnnotations { get; set; }
+		[JsonProperty("landmark_annotations")]
+		public List<string> LandmarkAnnotations { get; set; }
 
 		// [JsonProperty("logo_annotations")]
 		// public List<string> LogoAnnotations { get; set; }

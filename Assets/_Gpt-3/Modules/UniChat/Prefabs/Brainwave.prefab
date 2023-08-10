@@ -252,89 +252,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4843840709508675575
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2486339764807145988}
-  - component: {fileID: 9081040501806773668}
-  - component: {fileID: 3604032462821352843}
-  m_Layer: 0
-  m_Name: VolumeSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2486339764807145988
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4843840709508675575}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 5.6782}
-  m_LocalScale: {x: 6.4494996, y: 2, z: 11.356199}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4521513525685973277}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &9081040501806773668
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4843840709508675575}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3604032462821352843
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4843840709508675575}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a6bca41a742663c4d96dfb5aaf4784ae, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6534879837856092524
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,38 +283,6 @@ Transform:
   m_Children:
   - {fileID: 3844644145408023429}
   m_Father: {fileID: 1792439245086302728}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6668715126386060789
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4521513525685973277}
-  m_Layer: 0
-  m_Name: VolumeSensor_pivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4521513525685973277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6668715126386060789}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2486339764807145988}
-  m_Father: {fileID: 3844644145408023429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7046979613105805272
 GameObject:
@@ -447,36 +332,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 7607720734384969895}
-  sensor: {fileID: 2486339764807145988}
+  sensor: {fileID: 0}
   pointer: {fileID: 9140693175429045034}
   playerMover: {fileID: 1792439245086302728}
   model: {fileID: 11400000, guid: c352695c13f5c8b4c8987eb1a1bbdfc5, type: 2}
-  prompt: Could you move to the watermelon please
-  visionResult: "{\r\n  \"time\": \"21:22\",\r\n  \"day\": \"9\",\r\n  \"season\":
-    \"Summer\",\r\n  \"year\": \"2023\",\r\n  \"your_position\": \"(-13.9,1.6,50.3)\",\r\n 
-    \"your_rotation\": \"(0,3,0)\",\r\n  \"area_content\": [\r\n    \"Cafe_Table_Folding:
-    dir:(1.1, 1.1, -5.6), size:(2.2, 0.9, 0.9)\",\r\n    \"Food_Watermelon: dir:(1.9,
-    0.5, -5.6), size:(0.5, 0.3, 0.5)\",\r\n    \"Tree: dir:(-4.7, -1.0, -5.9), size:(4.0,
-    5.2, 4.1)\",\r\n    \"Food_Pineapple_Whole: dir:(0.3, 0.6, -5.6), size:(0.5,
-    0.3, 0.6)\"\r\n  ],\r\n  \"cloud_vision_data\": {\r\n    \"label_annotations\":
-    [\r\n      \"Sky: 0.9705669\",\r\n      \"Plant: 0.9439508\",\r\n      \"Cloud:
-    0.8723036\",\r\n      \"Shade: 0.8294179\",\r\n      \"Tree: 0.8143197\",\r\n     
-    \"Landscape: 0.811139\",\r\n      \"Urban design: 0.7982894\",\r\n      \"Grass:
-    0.7797334\",\r\n      \"Terrestrial plant: 0.7632058\",\r\n      \"Arecales:
-    0.7518771\"\r\n    ],\r\n    \"text_annotations\": null,\r\n    \"image_properties_annotation\":
-    \"R147,G206,B223: [score: 0.5164134, fraction:0.1979555], R113,G112,B115: [score:
-    0.06363768, fraction:0.0856], R95,G179,B208: [score: 0.1084842, fraction:0.06346667],
-    R80,G174,B214: [score: 0.1077666, fraction:0.08888889], R171,G215,B221: [score:
-    0.05748875, fraction:0.02462222], R88,G89,B90: [score: 0.03785814, fraction:0.2283556],
-    R148,G152,B156: [score: 0.02917411, fraction:0.04648889], R188,G201,B205: [score:
-    0.0113408, fraction:0.0384], R205,G239,B242: [score: 0.0111138, fraction:0.008622223],
-    R206,G231,B237: [score: 0.01016118, fraction:0.01511111]\",\r\n    \"web_detection\":
-    \"Plant: 0.5966407, Water: 0.547778, Palms: 0.384553, Screenshot: 0.3399349,
-    House: 0.3397409, Tree: 0.3299, Science: 0, Biology: 0\",\r\n    \"localized_object_annotations\":
-    [\r\n      \"Table: 0.8297547\",\r\n      \"Lighting: 0.7561939\"\r\n    ]\r\n 
-    }\r\n}"
+  prompt: Could you go up to the watermelon please
+  visionResult: "{\r\n  \"time\": \"22:10\",\r\n  \"day\": \"9\",\r\n  \"season\":
+    \"Summer\",\r\n  \"year\": \"2023\",\r\n  \"your_position\": \"(-12.2,1.6,45.3)\",\r\n 
+    \"your_rotation\": \"(0,344,0)\",\r\n  \"your_body_radius\": \"2.0\",\r\n  \"area_content\":
+    [\r\n    \"Cafe_Table_Folding: dir:(2.8, 1.1, -10.6), size:(2.2, 0.9, 0.9)\",\r\n   
+    \"Plant_(20): dir:(1.2, 1.3, 0.7), size:(1.4, 0.5, 1.4)\",\r\n    \"Plant: dir:(-0.3,
+    1.3, 0.7), size:(1.2, 0.5, 1.2)\",\r\n    \"Food_Watermelon: dir:(3.6, 0.5, -10.6),
+    size:(0.5, 0.3, 0.5)\",\r\n    \"Tree: dir:(2.5, -0.6, 0.5), size:(2.2, 4.5,
+    2.4)\",\r\n    \"Tree: dir:(-2.9, -1.0, -10.9), size:(4.0, 5.2, 4.1)\",\r\n   
+    \"Food_Pineapple_Whole: dir:(2.0, 0.6, -10.6), size:(0.5, 0.3, 0.6)\",\r\n   
+    \"Tree: dir:(-2.0, -1.1, 0.9), size:(5.0, 5.6, 4.5)\",\r\n    \"Plant_(21): dir:(3.3,
+    1.3, 0.8), size:(1.4, 0.5, 1.4)\"\r\n  ],\r\n  \"cloud_vision_data\": {\r\n   
+    \"label_annotations\": [\r\n      \"Sky: 0.969072\",\r\n      \"Plant: 0.9095663\",\r\n     
+    \"Cloud: 0.8759332\",\r\n      \"Asphalt: 0.8716574\",\r\n      \"Road surface:
+    0.8604169\",\r\n      \"Road: 0.7957987\",\r\n      \"Shade: 0.7842867\",\r\n     
+    \"Gas: 0.7759382\",\r\n      \"Landscape: 0.7550118\",\r\n      \"Urban design:
+    0.7489039\"\r\n    ],\r\n    \"text_annotations\": null,\r\n    \"image_properties_annotation\":
+    \"R149,G206,B222: [score: 0.4800942, fraction:0.1816889], R85,G87,B91: [score:
+    0.06851833, fraction:0.3721778], R171,G215,B218: [score: 0.08510096, fraction:0.02346667],
+    R105,G176,B202: [score: 0.06512544, fraction:0.0696], R115,G118,B122: [score:
+    0.0556074, fraction:0.05431111], R188,G206,B209: [score: 0.05459608, fraction:0.02124444],
+    R79,G174,B214: [score: 0.04822045, fraction:0.1387556], R152,G159,B162: [score:
+    0.04507734, fraction:0.02106667], R205,G229,B233: [score: 0.02552553, fraction:0.009955555],
+    R205,G239,B240: [score: 0.01831477, fraction:0.007822222]\",\r\n    \"web_detection\":
+    \"Transport: 0.760509, Car: 0.7434021, Road: 0.5901871, Road surface: 0.5124874,
+    Lane: 0.4587028, Plant: 0.3962049, Asphalt concrete: 0.383, Tree: 0.3528828,
+    Bridge\u2013tunnel: 0.3285347, Screenshot: 0.3224962\",\r\n    \"localized_object_annotations\":
+    [\r\n      \"Houseplant: 0.7087572\",\r\n      \"Lighting: 0.6397818\"\r\n   
+    ]\r\n  }\r\n}"
   direction: {x: 1.9, y: 0.5, z: -5.6}
-  target: {fileID: 0}
 --- !u!114 &5840111036261048883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +545,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6739725815350109786}
-  - {fileID: 4521513525685973277}
   - {fileID: 9140693175429045034}
   m_Father: {fileID: 6273653296851109534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

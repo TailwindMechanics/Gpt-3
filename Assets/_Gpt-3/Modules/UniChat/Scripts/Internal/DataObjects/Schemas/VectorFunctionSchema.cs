@@ -7,9 +7,9 @@ using Modules.UniChat.External.DataObjects.Vo;
 
 namespace Modules.UniChat.Internal.DataObjects.Schemas
 {
-	public class VectorSchema
+	public class VectorFunctionSchema
 	{
-		public Function Schema { get; private set; }
+		public Function Function { get; private set; }
 
 		public class Response
 		{
@@ -17,10 +17,10 @@ namespace Modules.UniChat.Internal.DataObjects.Schemas
 			public Vector3Serializable Direction { get; set; }
 		}
 
-		public VectorSchema(string functionName, string functionDescription, string vectorKeyName)
-			=> Schema = GenerateSchema(functionName, functionDescription, vectorKeyName);
+		public VectorFunctionSchema(string functionName, string functionDescription, string vectorKeyName)
+			=> Function = GenerateFunction(functionName, functionDescription, vectorKeyName);
 
-		Function GenerateSchema(string functionName, string functionDescription, string vectorKeyName)
+		Function GenerateFunction(string functionName, string functionDescription, string vectorKeyName)
 		{
 			return new Function(
 				functionName,

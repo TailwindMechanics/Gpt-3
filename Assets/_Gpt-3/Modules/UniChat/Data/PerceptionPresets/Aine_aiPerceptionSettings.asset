@@ -15,6 +15,7 @@ MonoBehaviour:
   settings:
     resolution: {x: 1920, y: 960}
     savePath: Assets/_Gpt-3/Modules/UniChat/Data/ImageCaptures
+    maxSightDistance: 10
     cloudVisionCreds: {fileID: 11400000, guid: dbd1fee1ece84af42884b03792466de2, type: 2}
     areaBlackList:
     - SM_Generic_SkyDome_01

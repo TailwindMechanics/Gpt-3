@@ -15,6 +15,8 @@ using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Behaviours;
 using Modules.UniChat.Internal.Apis;
+using Modules.UniChat.Internal.DataObjects.Schemas;
+using OpenAI.Chat;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -127,102 +129,47 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		    Log($"Requesting bot reply for user message: '{message}'");
 
-		    var botPlayer           = FindObjectOfType<AiPlayer>();
+		    var functions = new List<Function>();
+		    var schema = new VectorFunctionSchema(
+			    "MoveInDirection",
+			    "Moves the AI agent in the direction.",
+			    "direction"
+		    );
+		    functions.Add(schema.Function);
+
+		    var agentPlayer         = FindObjectOfType<AiPlayer>();
 		    var embeddingsApi       = new EmbeddingsApi() as IEmbeddingsApi;
 		    var vectorDatabaseApi   = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 		    var chatBotApi          = new ChatBotApi() as IChatBotApi;
-		    var botPerceiver        = new AiPerceiver() as IAiPerceiver;
+		    var agentPerceiver      = new AiPerceiver() as IAiPerceiver;
 
-		    var queryResult			= await DoQuery(botPlayer, botPerceiver, history.GetPreviousBotReply(), true);
-		    var senderVector		= await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
-		    var contextMessageIds	= await vectorDatabaseApi.Query(chatBotSettings.Vo.BotName, senderVector, chatBotSettings.Vo.MemoryAccuracy, chatBotSettings.Vo.SendSimilarChatCount, true);
-		    var contextMessages		= history.GetManyByIdList(contextMessageIds, true);
-		    var recentMessages		= history.GetMostRecent(chatBotSettings.Vo.SendChatHistoryCount, true);
-		    var botReply			= await chatBotApi.GetReply(message, $"{BotDirection}\n{queryResult}", chatBotSettings.Vo, contextMessages, recentMessages, true);
-		    var botVector			= await embeddingsApi.ConvertToVector(embeddingModel.Model, chatBotSettings.Vo.BotName, botReply, true);
+		    var sightData			= await agentPerceiver.CaptureVision(agentPlayer.Camera, chatBotSettings.Vo.Perception.Vo);
+		    var contextMessages		= new List<MessageVo>();
 
-		    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
-		    history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
+		    if (chatBotSettings.Vo.SendSimilarChatCount > 0)
+		    {
+			    var senderVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, sender, message, true);
+			    var contextMessageIds = await vectorDatabaseApi.Query(chatBotSettings.Vo.BotName, senderVector, chatBotSettings.Vo.MemoryAccuracy, chatBotSettings.Vo.SendSimilarChatCount, true);
+			    contextMessages = history.GetManyByIdList(contextMessageIds, true);
+		    }
 
-		    DoCommand(botReply);
+			var recentMessages = history.GetMostRecent(chatBotSettings.Vo.SendChatHistoryCount, true);
+			contextMessages.Add(new MessageVo(Guid.NewGuid(), "sight_data", sightData, true));
+		    var agentReply = await chatBotApi.GetReply(message, BotDirection, chatBotSettings.Vo, contextMessages, recentMessages, functions, true);
+		    var botReply = agentReply.Message.Content;
+			agentPlayer.ReceivedFunction(agentReply.Function, chatBotSettings.Vo);
 
+			if (!string.IsNullOrWhiteSpace(botReply))
+			{
+			    var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, chatBotSettings.Vo.BotName, botReply, true);
+			    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
+				history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
+				return botReply;
+			}
+
+			botReply = $"<i>... Performing action: {agentReply.Function.Name}</i>";
 		    Log($"Returning chat bot reply: '{botReply}'");
 		    return botReply;
-		}
-
-		void DoCommand(string botReply)
-		{
-			var json = ParseJsonFromAIResponse(botReply);
-			if (json == null) return;
-
-			if (json.ContainsKey("point_in_direction"))
-			{
-				PointInDirection(json);
-			}
-		}
-
-		async Task<string> DoQuery (AiPlayer botPlayer, IAiPerceiver botPerceiver, string previousBotReply, bool logging = false)
-		{
-			if (string.IsNullOrWhiteSpace(previousBotReply))
-			{
-				if (logging)
-				{
-					Log("No previous bot reply to query from");
-				}
-
-				return null;
-			}
-
-			var json = ParseJsonFromAIResponse(previousBotReply);
-			if (json == null) return null;
-
-			if (json.ContainsKey("take_snapshot"))
-			{
-				return await TakeSnapshot(botPlayer, botPerceiver);
-			}
-
-			return null;
-		}
-
-		void PointInDirection (JObject json)
-		{
-			var pointer = GameObject.Find("Pointer").transform;
-			var newDir = JsonConvert.DeserializeObject<PointCommand>(json.ToString());
-			pointer.rotation = Quaternion.LookRotation(-newDir.Direction.Value());
-			var scale = pointer.localScale;
-			pointer.localScale = new Vector3(scale.x, scale.y, newDir.Direction.Value().magnitude);
-		}
-
-		async Task<string> TakeSnapshot (AiPlayer botPlayer, IAiPerceiver botPerceiver)
-			=> await botPerceiver.CaptureVision(botPlayer.Camera, botPlayer.Sensor, chatBotSettings.Vo.Perception.Vo);
-
-		JObject ParseJsonFromAIResponse(string botReply)
-		{
-			var split = botReply.Split("```");
-			if (split.Length < 2)
-			{
-				Log("Could not find ```json delimiter in the AI response. Check the response format.");
-				return null;
-			}
-
-			var jsonString = split[1].Replace("```", "").Replace("json", "").Trim();
-
-			if (string.IsNullOrWhiteSpace(jsonString))
-			{
-				Log("Empty JSON string. Check the AI response format.");
-				return null;
-			}
-
-			try
-			{
-				var json = JObject.Parse(jsonString);
-				return json;
-			}
-			catch (JsonReaderException ex)
-			{
-				Log($"Error parsing JSON string: {ex.Message}");
-				return null;
-			}
 		}
 
 		[Serializable]

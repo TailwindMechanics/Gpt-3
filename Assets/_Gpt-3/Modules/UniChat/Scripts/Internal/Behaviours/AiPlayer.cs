@@ -1,55 +1,41 @@
-using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using OpenAI.Chat;
 
-using Modules.UniChat.External.DataObjects.So;
-using Modules.Utilities.External;
+using Modules.UniChat.External.DataObjects.Vo;
 
 
 namespace Modules.UniChat.Internal.Behaviours
 {
     public class AiPlayer : MonoBehaviour
     {
-        public ModelSettingsSo Model    => model;
-        public Camera Camera            => cam;
-        public Transform Sensor         => sensor;
-        public Transform Pointer        => pointer;
-        public Transform Mover    => playerMover;
+        public Transform Mover => playerMover;
+        public Camera Camera => cam;
 
-        [FoldoutGroup("References"), SerializeField] Camera cam;
-        [FoldoutGroup("References"), SerializeField] Transform sensor;
-        [FoldoutGroup("References"), SerializeField] Transform pointer;
-        [FoldoutGroup("References"), SerializeField] Transform playerMover;
-        [FoldoutGroup("References"), InlineEditor, SerializeField]
-        ModelSettingsSo model;
+        [FoldoutGroup("References"), SerializeField]
+        Camera cam;
+        [FoldoutGroup("References"), SerializeField]
+        Transform playerMover;
 
-        [FoldoutGroup("Sight Nav"), TextArea, SerializeField]
-        string prompt;
-        [FoldoutGroup("Sight Nav"), Button(ButtonSizes.Large)]
-        void SolveObjective() => Solve();
-        [FoldoutGroup("Sight Nav/$VisionDataLabel"), HideLabel, TextArea(20, 20), PropertyOrder(1), SerializeField]
-        string visionResult;
-        [FoldoutGroup("Sight Nav"), SerializeField]
-        Vector3 direction;
+        AiAbilities Abilities => abilities ??= GetComponent<AiAbilities>();
+        AiAbilities abilities;
 
-        async void Solve ()
+
+        public void ReceivedFunction (Function function, ModelSettingsVo settings)
         {
-            var aiAbilities = GetComponent<AiAbilities>();
-            Log("Capturing vision data...");
-            visionResult = await aiAbilities.CaptureVision(Camera, Sensor, Model.Vo.Perception.Vo);
-            Log("Deducing direction...");
-            direction = await aiAbilities.DeduceDirection(prompt, visionResult, Model.Vo);
-            Log($"Moving in direction: {direction}");
-            aiAbilities.MoveInDirection(direction, Model.Vo.Navigation.Vo, OnComplete);
-        }
-        void OnComplete (bool arrived)
-        {
-            Log($"OnComplete, arrived at new destination: {arrived}");
+            if (function == null)
+            {
+                Log($"No functions received.");
+                return;
+            }
+
+            Abilities.ReceivedFunction(function, settings, OnFunctionComplete);
         }
 
-        [UsedImplicitly]
-        string VisionDataLabel
-            => $"Vision Data ({StringUtilities.Ellipses(visionResult)})";
+        void OnFunctionComplete (string functionName, bool success)
+        {
+            Log($"OnFunctionComplete: {functionName}, success: {success}");
+        }
 
         void Log (string message)
             => Debug.Log($"<color=#976ccc><b>>>> AiPlayer: {message.Replace("\n", "")}</b></color>");

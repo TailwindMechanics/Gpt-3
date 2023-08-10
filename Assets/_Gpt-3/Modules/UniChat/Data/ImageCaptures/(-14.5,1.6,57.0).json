@@ -1,0 +1,42 @@
+{
+  "time": "16:57",
+  "day": "10",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-14.5,1.6,57.0)",
+  "your_rotation": "(0,153,0)",
+  "your_facing_direction": "(0.4,0.0,-0.9)",
+  "your_body_radius": "2.0",
+  "area_content": [
+    "Cafe_Table_Folding: dir:(0.5, 1.1, 1.1), size:(2.2, 0.9, 0.9)",
+    "Ground_Divider: dir:(-5.2, 1.5, 0.1), size:(1.3, 0.2, 11.3)",
+    "Plant_(13): dir:(-5.2, 0.5, 1.5), size:(1.1, 2.1, 1.1)",
+    "SM_Props_Papers: dir:(-3.0, 1.5, 1.5), size:(2.4, 0.0, 2.0)",
+    "Plant_(11): dir:(-5.2, 1.3, 4.7), size:(1.7, 0.5, 1.9)",
+    "Ground_ParkingLines: dir:(0.5, 1.6, 4.5), size:(10.0, 0.0, 10.0)",
+    "Tree: dir:(-5.3, -1.0, 0.8), size:(4.0, 5.2, 4.1)",
+    "Ground_Small: dir:(-7.0, 1.6, 2.0), size:(5.0, 0.0, 5.0)",
+    "Food_Pineapple_Whole: dir:(-0.4, 0.6, 1.2), size:(0.5, 0.3, 0.6)",
+    "Plant_(23): dir:(-5.3, 1.3, 2.7), size:(1.0, 0.5, 1.0)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.9597858",
+      "Plant: 0.955839",
+      "Daytime: 0.9449566",
+      "Street light: 0.9015051",
+      "Nature: 0.9006244",
+      "Asphalt: 0.879666",
+      "Biome: 0.8446857",
+      "Urban design: 0.8440648",
+      "Building: 0.8222089",
+      "Public space: 0.8188153"
+    ],
+    "text_annotations": "___",
+    "image_properties_annotation": "R64,G55,B50: [score: 0.3427073, fraction:0.1136889], R71,G167,B213: [score: 0.06928214, fraction:0.1895111], R207,G148,B64: [score: 0.01660311, fraction:0.002133333], R229,G176,B120: [score: 0.002200901, fraction:0.0003555556], R82,G81,B80: [score: 0.1768777, fraction:0.3699556], R82,G75,B57: [score: 0.05745556, fraction:0.008], R63,G58,B39: [score: 0.054903, fraction:0.0096], R97,G169,B193: [score: 0.03726848, fraction:0.05528889], R111,G114,B112: [score: 0.02887077, fraction:0.04622222], R43,G57,B31: [score: 0.01988815, fraction:0.008]",
+    "web_detection": "Biome: 0.4839495, Urban design: 0.4376678, Design: 0.4081, Plant: 0.407903, Tree: 0.3614706, Screenshot: 0.3394074, CityMD: 0.2317, Science: 0, Biology: 0, Ecology: 0",
+    "localized_object_annotations": [
+      "Luggage & bags: 0.5079488"
+    ]
+  }
+}

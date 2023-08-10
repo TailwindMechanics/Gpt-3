@@ -42,11 +42,11 @@ namespace Modules.UniChat.Internal.Apis
                                 new(){Type = "TEXT_DETECTION"},
                                 new(){Type = "OBJECT_LOCALIZATION"},
                                 // new(){Type = "FACE_DETECTION"},
-                                // new(){Type = "LANDMARK_DETECTION"},
+                                new(){Type = "LANDMARK_DETECTION"},
                                 // new(){Type = "LOGO_DETECTION"},
                                 new(){Type = "IMAGE_PROPERTIES"},
                                 // new(){Type = "SAFE_SEARCH_DETECTION"},
-                                new(){Type = "WEB_DETECTION"},
+                                // new(){Type = "WEB_DETECTION"},
                             }
                         }
                     }
@@ -68,7 +68,7 @@ namespace Modules.UniChat.Internal.Apis
 
                 if (logging)
                 {
-                    Log($"Received Google Cloud Vision");
+                    Log($"Received Google Cloud Vision data: {responseContent}");
                 }
 
                 if (visionResponse.Responses.Count > 0 && visionResponse.Responses[0].LabelAnnotations != null)

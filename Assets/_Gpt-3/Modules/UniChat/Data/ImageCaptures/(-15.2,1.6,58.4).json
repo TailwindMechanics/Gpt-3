@@ -1,0 +1,41 @@
+{
+  "time": "16:56",
+  "day": "10",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-15.2,1.6,58.4)",
+  "your_rotation": "(0,174,0)",
+  "your_facing_direction": "(0.1,0.0,-1.0)",
+  "your_body_radius": "2.0",
+  "area_content": [
+    "Cafe_Table_Folding: dir:(-0.2, 1.1, 2.5), size:(2.2, 0.9, 0.9)",
+    "Ground_Divider: dir:(-5.9, 1.5, 1.5), size:(1.3, 0.2, 11.3)",
+    "SM_Props_Papers: dir:(-3.7, 1.5, 2.9), size:(2.4, 0.0, 2.0)",
+    "Plant_(11): dir:(-5.9, 1.3, 6.0), size:(1.7, 0.5, 1.9)",
+    "Food_Watermelon: dir:(0.6, 0.5, 2.5), size:(0.5, 0.3, 0.5)",
+    "Ground_ParkingLines: dir:(-0.2, 1.6, 5.9), size:(10.0, 0.0, 10.0)",
+    "Tree: dir:(-6.0, -1.0, 2.2), size:(4.0, 5.2, 4.1)",
+    "Ground_Small: dir:(-7.7, 1.6, 3.4), size:(5.0, 0.0, 5.0)",
+    "Food_Pineapple_Whole: dir:(-1.1, 0.6, 2.5), size:(0.5, 0.3, 0.6)"
+  ],
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.9450553",
+      "Cloud: 0.9388642",
+      "Table: 0.8940282",
+      "Biome: 0.8347719",
+      "Urban design: 0.8216063",
+      "Plant: 0.810472",
+      "Street light: 0.8059276",
+      "Shade: 0.802593",
+      "Landscape: 0.7524649",
+      "Asphalt: 0.7477949"
+    ],
+    "text_annotations": "nkeic",
+    "image_properties_annotation": "R62,G54,B49: [score: 0.2106926, fraction:0.1032889], R70,G167,B214: [score: 0.1817939, fraction:0.1810667], R186,G194,B203: [score: 0.06068229, fraction:0.04133333], R41,G56,B32: [score: 0.03138792, fraction:0.01244444], R82,G83,B85: [score: 0.1528319, fraction:0.3340445], R114,G118,B118: [score: 0.09027843, fraction:0.05404444], R91,G173,B200: [score: 0.06943371, fraction:0.0552], R145,G152,B156: [score: 0.0369307, fraction:0.02995555], R48,G51,B31: [score: 0.01779751, fraction:0.006222222], R73,G88,B58: [score: 0.01465384, fraction:0.008266667]",
+    "web_detection": "Biome: 0.4862788, Plant: 0.4261445, Tree: 0.362329, Screenshot: 0.3269066, Recreation: 0.3260031, Ecology: 0, Science: 0, Biology: 0",
+    "localized_object_annotations": [
+      "Table: 0.7815017"
+    ]
+  }
+}
