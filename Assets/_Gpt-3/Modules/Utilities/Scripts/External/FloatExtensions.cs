@@ -11,5 +11,11 @@ namespace Modules.Utilities.External
 			array[index] = query;
 			return array.Average();
 		}
+
+		public static float NormalizeDegrees(this float inputDegrees)
+		{
+			if (inputDegrees is >= 0 and <= 360) return inputDegrees;
+			return (inputDegrees % 360 + 360) % 360;
+		}
 	}
 }

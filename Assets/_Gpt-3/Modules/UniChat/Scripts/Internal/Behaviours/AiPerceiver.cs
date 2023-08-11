@@ -9,7 +9,9 @@ using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.External.DataObjects;
 using Modules.UniChat.Internal.Apis;
+using Modules.UniChat.Internal.DepthPerceiver;
 using Modules.Utilities.External;
+using Newtonsoft.Json;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -26,6 +28,8 @@ namespace Modules.UniChat.Internal.Behaviours
             var camRot = camTransform.eulerAngles;
 
             var forward = camTransform.forward;
+            var grid = new GridManager();
+
             var chunkData = new AiPerceivedData
             {
                 // todo create service for querying in-game datetime
@@ -46,32 +50,46 @@ namespace Modules.UniChat.Internal.Behaviours
                 YourBodyRadius  = "2.0",
                 YourPosition = $"({camPos.x:F1},{camPos.y:F1},{camPos.z:F1})",
                 YourRotation = $"({camRot.x:F0},{camRot.y:F0},{camRot.z:F0})",
-                AreaContent = CaptureFrustumContent(camTransform, settings)
+                SceneObjects = grid.GetSceneObjects(cam, settings)
             };
 
             var fileName = $"{chunkData.YourPosition}";
             var visionResponse = await GoogleCloudVisionAnalyse(cam, fileName, settings);
             chunkData.CloudVisionData = new CloudVisionData(visionResponse);
 
-            var tuple = JsonUtilities.SaveAsJsonFile(settings.SavePath, fileName, chunkData);
+            var tuple = JsonUtilities.SaveAsJsonFile(settings.SavePath, fileName, chunkData, Formatting.None);
 
             Log($"Captured data saved at path: {tuple.filePath}");
             return tuple.json;
         }
 
-        List<string> CaptureFrustumContent(Transform cam, AiPerceptionSettingsVo settings)
+        SceneObjects CaptureFrustumContent(Transform cam, AiPerceptionSettingsVo settings)
         {
-            // todo: create service for capturing chunks of data
+            var result = new SceneObjects();
             var allRenderers = Object.FindObjectsOfType<Renderer>();
 
-            return allRenderers
-                .Where(renderer => IsWithinCameraFrustum(cam, renderer, settings.MaxSightDistance))
-                .Where(renderer => !settings.BlackList.Contains(renderer.gameObject.name))
-                .Select(renderer => AreaObjectData(cam, renderer, settings))
-                .ToList();
+            foreach (var renderer in allRenderers.Where(renderer => IsWithinCameraFrustum(cam, renderer, settings.MaxSightDistance) && !settings.BlackList.Contains(renderer.gameObject.name)))
+            {
+                var objectData = SceneObjectData(cam, renderer, settings);
+                var directionVector = cam.position - renderer.bounds.center;
+                var distance = directionVector.magnitude;
+
+                if (distance <= 1)
+                    result.WithinOne.Add(objectData);
+                else if (distance <= 3)
+                    result.WithinThree.Add(objectData);
+                else if (distance <= 5)
+                    result.WithinFive.Add(objectData);
+                else if (distance <= 10)
+                    result.WithinTen.Add(objectData);
+                else if (distance > 15)
+                    result.Beyond.Add(objectData);
+            }
+
+            return result;
         }
 
-        string AreaObjectData(Transform cam, Renderer renderer, AiPerceptionSettingsVo settings)
+        string SceneObjectData(Transform cam, Renderer renderer, AiPerceptionSettingsVo settings)
         {
             var objectName = renderer.name;
             settings.RemoveFromNames.ForEach(item =>
@@ -82,10 +100,10 @@ namespace Modules.UniChat.Internal.Behaviours
                 }
             });
 
-            objectName      = StripUnityLabels(objectName);
-            var bounds      = renderer.bounds;
-            var direction   = $"{cam.position - bounds.center:F1}";
-            var size        = $"{bounds.size:F1}";
+            objectName = StripUnityLabels(objectName);
+            var bounds = renderer.bounds;
+            var direction = $"{cam.position - bounds.center:F1}";
+            var size = $"{bounds.size:F1}";
 
             return $"{objectName}: dir:{direction}, size:{size}";
         }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Default_aiNavigationSettings
   m_EditorClassIdentifier: 
   settings:
-    moveSpeed: 0.1
-    turnSpeed: 0.5
+    moveSpeed: 0.2
+    turnSpeed: 0.1

@@ -14,10 +14,8 @@ namespace Modules.UniChat.Internal.Behaviours
 {
 	public class WebSearchAndSummaryTest : MonoBehaviour
 	{
-		[Range(1, 5), SerializeField] int resultCount = 1;
 		[FolderPath, SerializeField] string savePath;
 		[SerializeField] string fileName;
-		[SerializeField] OpenAiSettingsSo openAiSettings;
 		[SerializeField] WebSearchSettingsSo settings;
 		[SerializeField, TextArea(5,5)] string query;
 

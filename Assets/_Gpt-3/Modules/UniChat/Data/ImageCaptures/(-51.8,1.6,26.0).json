@@ -1,0 +1,49 @@
+{
+  "time": "00:07",
+  "day": "11",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-51.8,1.6,26.0)",
+  "your_rotation": "(0,91,0)",
+  "your_facing_direction": "(1.0,0.0,0.0)",
+  "your_body_radius": "2.0",
+  "scene_objects": {
+    "objects_within_1m": [],
+    "objects_within_1_to_3m": [],
+    "objects_within_3_to_5m": [
+      "Plant",
+      "SM_Props_Papers"
+    ],
+    "objects_within_5_to_10m": [
+      "Ground_ParkingLines_(17)",
+      "Ground_Divider",
+      "Plant",
+      "Tree",
+      "Plant_(10)",
+      "Plant_(11)",
+      "Small_Rocks_(15)",
+      "Tree",
+      "Plant_(18)"
+    ],
+    "objects_beyond_15m": []
+  },
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Cloud: 0.962077",
+      "Sky: 0.9538645",
+      "Street light: 0.9066661",
+      "Road surface: 0.8908041",
+      "Infrastructure: 0.8869557",
+      "Asphalt: 0.8715568",
+      "Mode of transport: 0.851867",
+      "Tree: 0.8484972",
+      "Plant: 0.8451889",
+      "Urban design: 0.8450782"
+    ],
+    "text_annotations": "___",
+    "landmark_annotations": null,
+    "image_properties_annotation": "R133,G198,B220: [score: 0.3367164, fraction:0.04968889], R82,G84,B86: [score: 0.09422908, fraction:0.4178667], R153,G194,B244: [score: 0.009995835, fraction:0.001511111], R24,G91,B115: [score: 0.009449761, fraction:0.003733333], R34,G52,B29: [score: 0.006468573, fraction:0.01448889], R103,G174,B200: [score: 0.2467337, fraction:0.05093333], R80,G171,B213: [score: 0.158906, fraction:0.1614222], R53,G56,B54: [score: 0.02072547, fraction:0.05066667], R167,G231,B251: [score: 0.01835384, fraction:0.002933333], R166,G205,B206: [score: 0.01019878, fraction:0.01102222]",
+    "web_detection": null,
+    "localized_object_annotations": null
+  }
+}

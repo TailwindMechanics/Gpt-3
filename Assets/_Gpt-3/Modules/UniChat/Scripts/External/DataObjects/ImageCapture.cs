@@ -29,5 +29,12 @@ namespace Modules.UniChat.External.DataObjects
 
 			return filePath;
 		}
+
+		public static async Task<Texture2D> LoadImageAsTexture(string imagePath)
+		{
+			var imageBytes = await File.ReadAllBytesAsync(imagePath);
+			var texture = new Texture2D(2, 2);
+			return texture.LoadImage(imageBytes) ? texture : null;
+		}
 	}
 }

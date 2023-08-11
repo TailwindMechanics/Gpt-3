@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 
 
@@ -8,9 +7,6 @@ namespace Modules.UniChat.External.DataObjects.Vo
 	[Serializable]
 	public class AiPerceivedData
 	{
-		public AiPerceivedData()
-			=> AreaContent = new List<string>();
-
 		[JsonProperty("time")]
 		public string Time { get; set; }
 
@@ -53,8 +49,8 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		[JsonProperty("your_body_radius")]
 		public string YourBodyRadius { get; set; }
 
-		[JsonProperty("area_content")]
-		public List<string> AreaContent { get; set; }
+		[JsonProperty("scene_objects")]
+		public SceneObjects SceneObjects { get; set; } = new();
 
 		[JsonProperty("cloud_vision_data")]
 		public CloudVisionData CloudVisionData { get; set; }

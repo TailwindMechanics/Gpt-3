@@ -9,6 +9,6 @@ namespace Modules.UniChat.External.DataObjects.Interfaces
 {
 	public interface IChatBotApi
 	{
-		Task<AgentReply> GetReply(string senderMessage, string direction, ModelSettingsVo settings, List<MessageVo> context, List<MessageVo> history, List<Function> functions, bool logging = false);
+		Task<AgentReply> GetReply(string senderName, string senderMessage, string direction, ModelSettingsVo settings, List<MessageVo> context, List<MessageVo> history, List<Function> functions, bool logging = false);
 	}
 }

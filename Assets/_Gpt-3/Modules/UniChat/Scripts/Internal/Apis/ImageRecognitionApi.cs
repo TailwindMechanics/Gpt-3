@@ -68,7 +68,7 @@ namespace Modules.UniChat.Internal.Apis
 
                 if (logging)
                 {
-                    Log($"Received Google Cloud Vision data: {responseContent}");
+                    Log($"Received Google Cloud Vision data: {JsonConvert.SerializeObject(visionResponse)}");
                 }
 
                 if (visionResponse.Responses.Count > 0 && visionResponse.Responses[0].LabelAnnotations != null)

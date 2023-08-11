@@ -3,20 +3,20 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.Internal.DataObjects.Schemas;
 using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Behaviours;
 using Modules.UniChat.Internal.Apis;
-using Modules.UniChat.Internal.DataObjects.Schemas;
+using Newtonsoft.Json;
 using OpenAI.Chat;
+using UniRx;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -129,20 +129,11 @@ namespace Modules.UniChat.Internal.DataObjects
 
 		    Log($"Requesting bot reply for user message: '{message}'");
 
-		    var functions = new List<Function>();
-		    var schema = new VectorFunctionSchema(
-			    "MoveInDirection",
-			    "Moves the AI agent in the direction.",
-			    "direction"
-		    );
-		    functions.Add(schema.Function);
-
-		    var agentPlayer         = FindObjectOfType<AiPlayer>();
+		    var agentPlayer = FindObjectOfType<AiPlayer>();
 		    var embeddingsApi       = new EmbeddingsApi() as IEmbeddingsApi;
 		    var vectorDatabaseApi   = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 		    var chatBotApi          = new ChatBotApi() as IChatBotApi;
 		    var agentPerceiver      = new AiPerceiver() as IAiPerceiver;
-
 		    var sightData			= await agentPerceiver.CaptureVision(agentPlayer.Camera, chatBotSettings.Vo.Perception.Vo);
 		    var contextMessages		= new List<MessageVo>();
 
@@ -155,37 +146,32 @@ namespace Modules.UniChat.Internal.DataObjects
 
 			var recentMessages = history.GetMostRecent(chatBotSettings.Vo.SendChatHistoryCount, true);
 			contextMessages.Add(new MessageVo(Guid.NewGuid(), "sight_data", sightData, true));
-		    var agentReply = await chatBotApi.GetReply(message, BotDirection, chatBotSettings.Vo, contextMessages, recentMessages, functions, true);
-		    var botReply = agentReply.Message.Content;
-			agentPlayer.ReceivedFunction(agentReply.Function, chatBotSettings.Vo);
 
+			var functions = new List<Function>
+			{
+				new MoveInDirectionFunction().Function()
+			};
+
+			AddUserMessage(sender, message);
+
+			var agentReply = await chatBotApi.GetReply(sender, message, BotDirection, chatBotSettings.Vo, contextMessages, recentMessages, functions, true);
+
+		    var botReply = agentReply.Message.Content;
 			if (!string.IsNullOrWhiteSpace(botReply))
 			{
 			    var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, chatBotSettings.Vo.BotName, botReply, true);
 			    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
 				history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
-				return botReply;
+			}
+			else
+			{
+				botReply = $"<i>... Performing action: {JsonConvert.SerializeObject(agentReply.Function)}...</i>";
+				agentPlayer.OnFunctionReceived(agentReply.Function, chatBotSettings.Vo);
 			}
 
-			botReply = $"<i>... Performing action: {agentReply.Function.Name}</i>";
+
 		    Log($"Returning chat bot reply: '{botReply}'");
 		    return botReply;
-		}
-
-		[Serializable]
-		public class PointCommand
-		{
-			[JsonProperty("point_in_direction")]
-			public Vector3Serializable Direction {get;set;}
-		}
-
-		[Serializable]
-		public class BotNavigateCommand
-		{
-			[JsonProperty("new_position")]
-			public Vector3Serializable NewPosition {get;set;}
-			[JsonProperty("new_rotation")]
-			public Vector3Serializable NewRotation {get;set;}
 		}
 
 		void Log (string message)

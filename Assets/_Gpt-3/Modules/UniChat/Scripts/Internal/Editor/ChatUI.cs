@@ -89,16 +89,30 @@ namespace Modules.UniChat.Internal.Editor
             var userMessage = inputBoxTextField.text.Trim();
             ResetInputField();
 
-            conversation.AddUserMessage(conversation.Username, userMessage);
+            DisplayMessage(conversation.Username, userMessage);
+            var chatBotReply = await conversation.GetChatBotReply(conversation.Username, userMessage);
+            DisplayMessage(conversation.BotName, chatBotReply);
+        }
 
-            if (userMessage.Contains($"@{SearchBotName}", StringComparison.OrdinalIgnoreCase))
-            {
-                await ProcessMessagesWithSearchBot(userMessage);
-            }
-            else
-            {
-                await ProcessMessagesWithoutSearchBot(userMessage);
-            }
+        void ResetInputField ()
+        {
+            inputBoxTextField.SetValueWithoutNotify("");
+            inputBoxTextField.Focus();
+        }
+
+        void DisplayMessage(string senderName, string messageText)
+        {
+            var newMessageVe = new ChatMessageVisualElement(senderName, messageText, DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            newMessageVe.ToggleAlignment(senderName == conversation.Username);
+            chatBoxScrollView.Add(newMessageVe);
+            SetEditorDirty();
+        }
+
+        void SetEditorDirty ()
+        {
+            EditorUtility.SetDirty(conversation);
+            AssetDatabase.SaveAssetIfDirty(conversation);
+            AssetDatabase.Refresh();
         }
 
         async Task ProcessMessagesWithSearchBot(string userMessage)
@@ -132,13 +146,7 @@ namespace Modules.UniChat.Internal.Editor
             }
         }
 
-        void ResetInputField ()
-        {
-            inputBoxTextField.SetValueWithoutNotify("");
-            inputBoxTextField.Focus();
-        }
-
-        void DisplayMessage(string senderName, string messageText)
+        void OldDisplayMessage(string senderName, string messageText)
         {
             messageText = Regex.Replace(messageText, $"@{SearchBotName}", _ =>
             {
@@ -150,13 +158,6 @@ namespace Modules.UniChat.Internal.Editor
             newMessageVe.ToggleAlignment(senderName == conversation.Username);
             chatBoxScrollView.Add(newMessageVe);
             SetEditorDirty();
-        }
-
-        void SetEditorDirty ()
-        {
-            EditorUtility.SetDirty(conversation);
-            AssetDatabase.SaveAssetIfDirty(conversation);
-            AssetDatabase.Refresh();
         }
     }
 }

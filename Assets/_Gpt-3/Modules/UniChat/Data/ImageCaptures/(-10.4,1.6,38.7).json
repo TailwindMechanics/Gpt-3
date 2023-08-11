@@ -1,0 +1,74 @@
+{
+  "time": "23:43",
+  "day": "10",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-10.4,1.6,38.7)",
+  "your_rotation": "(0,154,0)",
+  "your_facing_direction": "(0.4,0.0,-0.9)",
+  "your_body_radius": "2.0",
+  "scene_objects": {
+    "objects_within_1m": [
+      "Base_Wall_(305): dir:(-0.4, 0.1, -0.1), size:(0.2, 3.0, 2.5)",
+      "Toilet_Stall: dir:(0.3, 0.5, 0.5), size:(1.5, 2.2, 1.2)"
+    ],
+    "objects_within_1_to_3m": [
+      "Toilet_Stall_Door: dir:(-1.9, 0.4, 0.5), size:(0.1, 1.9, 0.9)",
+      "Toilet_Stall: dir:(-1.2, 0.5, 0.5), size:(1.5, 2.2, 1.1)",
+      "Base_Wall_(293): dir:(-1.7, 0.1, 1.2), size:(2.5, 3.0, 0.2)",
+      "Base_Wall_(294): dir:(0.8, 0.1, 1.2), size:(2.5, 3.0, 0.2)",
+      "SM_Sign_Toilet: dir:(-0.4, -0.8, 1.3), size:(1.1, 0.8, 0.2)"
+    ],
+    "objects_within_3_to_5m": [
+      "Ground_Trim: dir:(-4.2, 1.5, 2.0), size:(2.5, 0.1, 1.6)",
+      "Roof_Edge_(11): dir:(-4.2, -1.5, 1.2), size:(2.5, 0.2, 0.6)",
+      "Lighting_Ceiling_Cage: dir:(-2.9, -0.7, 1.6), size:(0.2, 0.3, 0.2)",
+      "Ground_Trim: dir:(-1.7, 1.5, 2.0), size:(2.5, 0.1, 1.6)",
+      "Base_Floor_Combined_(75): dir:(-4.2, 1.6, -0.1), size:(2.5, 0.1, 2.5)",
+      "Lighting_Wall_Glass: dir:(-2.9, -0.7, 1.6), size:(0.1, 0.2, 0.1)",
+      "Lighting_Wall_(14): dir:(-2.9, -0.9, 1.5), size:(0.3, 0.6, 0.4)",
+      "Base_Wall_(292): dir:(-4.2, 0.1, 1.2), size:(2.5, 3.0, 0.2)",
+      "Base_Floor_Combined_(74): dir:(-4.2, -1.4, -0.1), size:(2.5, 0.1, 2.5)",
+      "Ground_ParkingLines_Single: dir:(4.6, 1.6, 1.2), size:(10.0, 0.0, 10.0)",
+      "Small_Rocks_(10): dir:(-1.7, 1.5, 3.2), size:(0.3, 0.1, 0.3)",
+      "Wheel_Stop_(12): dir:(0.3, 1.5, 4.4), size:(0.3, 0.2, 2.4)",
+      "Wheel_Stop_(16): dir:(-1.2, 1.5, 4.4), size:(0.3, 0.2, 2.4)"
+    ],
+    "objects_within_5_to_10m": [
+      "Warehouse_Boxes_Stacked: dir:(2.6, 1.0, 5.4), size:(1.5, 1.1, 1.7)",
+      "Wheel_Stop_(17): dir:(-1.2, 1.5, 7.9), size:(0.3, 0.2, 2.4)",
+      "Food_Banana: dir:(2.2, 0.1, 6.9), size:(0.4, 0.1, 0.3)",
+      "Ground_ParkingLines_Single: dir:(-5.4, 1.6, 1.2), size:(10.0, 0.0, 10.0)",
+      "SM_Props_Papers: dir:(1.6, 1.5, 5.9), size:(2.1, 0.0, 2.7)",
+      "Wheel_Stop_(13): dir:(0.3, 1.5, 7.9), size:(0.3, 0.2, 2.4)",
+      "Gazebo: dir:(2.0, 0.1, 7.8), size:(2.5, 3.0, 2.5)",
+      "Clothes_Shirt_Set: dir:(2.2, 0.5, 7.8), size:(0.9, 1.0, 1.7)",
+      "Ground_Trim_Corner: dir:(-6.3, 1.5, 2.0), size:(1.6, 0.1, 1.6)",
+      "Planter_Box_Wood: dir:(-0.4, 0.7, 6.2), size:(1.8, 1.8, 2.8)",
+      "Clothes_Sweater_Set: dir:(2.8, 0.6, 7.8), size:(0.8, 1.1, 1.0)",
+      "Clothes_Rack: dir:(2.5, 0.8, 7.8), size:(1.2, 1.5, 1.9)"
+    ],
+    "objects_beyond_15m": []
+  },
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Rectangle: 0.831027",
+      "Flooring: 0.7842182",
+      "Tints and shades: 0.7726888",
+      "Wood: 0.7722918",
+      "Parallel: 0.7596405",
+      "Electric blue: 0.7499078",
+      "Pattern: 0.7249539",
+      "Glass: 0.7030395",
+      "Facade: 0.6916662",
+      "Symmetry: 0.6595448"
+    ],
+    "text_annotations": null,
+    "landmark_annotations": null,
+    "image_properties_annotation": "R110,G119,B139: [score: 0.9729494, fraction:0.4297778], R89,G98,B116: [score: 0.02705055, fraction:0.5176889], R53,G84,B81: [score: 7.859508E-11, fraction:0.004088889], R55,G65,B82: [score: 1.31471E-09, fraction:0.04462222], R128,G147,B157: [score: 5.125766E-12, fraction:0.0002666667], R57,G80,B86: [score: 6.150919E-11, fraction:0.0032], R109,G131,B138: [score: 3.417178E-12, fraction:0.0001777778], R126,G140,B153: [score: 1.708589E-12, fraction:8.888889E-05], R97,G129,B124: [score: 1.708589E-12, fraction:8.888889E-05]",
+    "web_detection": null,
+    "localized_object_annotations": [
+      "Wardrobe: 0.7308767"
+    ]
+  }
+}

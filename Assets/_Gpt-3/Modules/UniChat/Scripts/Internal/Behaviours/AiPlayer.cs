@@ -1,40 +1,37 @@
-using Sirenix.OdinInspector;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using OpenAI.Chat;
 
 using Modules.UniChat.External.DataObjects.Vo;
+using Modules.UniChat.Internal.DataObjects.Schemas;
 
 
 namespace Modules.UniChat.Internal.Behaviours
 {
     public class AiPlayer : MonoBehaviour
     {
-        public Transform Mover => playerMover;
         public Camera Camera => cam;
 
-        [FoldoutGroup("References"), SerializeField]
-        Camera cam;
-        [FoldoutGroup("References"), SerializeField]
-        Transform playerMover;
-
-        AiAbilities Abilities => abilities ??= GetComponent<AiAbilities>();
-        AiAbilities abilities;
+        [SerializeField] Camera cam;
+        [SerializeField] AiAbilities abilities;
 
 
-        public void ReceivedFunction (Function function, ModelSettingsVo settings)
+        public void OnFunctionReceived(Function function, ModelSettingsVo settings)
         {
-            if (function == null)
+            var args = JObject.Parse(function.Arguments.ToString());
+            var heading = (float) args["heading_degrees"];
+            var travel = (float) args["travel_meters"];
+
+            Log($"OnFunctionReceived: {function.Name}");
+
+            if (function.Name == MoveInDirectionFunction.Name)
             {
-                Log($"No functions received.");
-                return;
+                Log($"MoveInDirection: {heading}, {travel}");
+                abilities.MoveInDirection(heading, travel, settings.Navigation.Vo, arrived =>
+                {
+                    Log($"MoveInDirection, arrived: {arrived}");
+                });
             }
-
-            Abilities.ReceivedFunction(function, settings, OnFunctionComplete);
-        }
-
-        void OnFunctionComplete (string functionName, bool success)
-        {
-            Log($"OnFunctionComplete: {functionName}, success: {success}");
         }
 
         void Log (string message)

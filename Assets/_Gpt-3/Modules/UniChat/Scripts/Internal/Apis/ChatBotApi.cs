@@ -16,7 +16,7 @@ namespace Modules.UniChat.Internal.Apis
 	{
 		readonly OpenAIClient openAiApi = new();
 
-		public async Task<AgentReply> GetReply(string senderMessage, string direction, ModelSettingsVo settings,
+		public async Task<AgentReply> GetReply(string senderName, string senderMessage, string direction, ModelSettingsVo settings,
 			List<MessageVo> context, List<MessageVo> history, List<Function> functions, bool logging = false)
 		{
 			try
@@ -26,16 +26,16 @@ namespace Modules.UniChat.Internal.Apis
 				context.ForEach(item =>
 				{
 					var key = item.IsBot ? Role.Assistant : Role.User;
-					chatPrompts.Add(new Message(key, item.Message));
+					chatPrompts.Add(new Message(key, item.Message, $"MEMORY-{item.SenderName}"));
 				});
 				history.ForEach(item =>
 				{
 					var key = item.IsBot ? Role.Assistant : Role.User;
-					chatPrompts.Add(new Message(key, item.Message));
+					chatPrompts.Add(new Message(key, item.Message, $"HISTORY-{item.SenderName}"));
 				});
 
-				chatPrompts.Add(new Message(Role.User, senderMessage));
-				chatPrompts.Add(new Message(Role.System, direction));
+				chatPrompts.Add(new Message(Role.User, senderMessage, $"NEW-{senderName}"));
+				chatPrompts.Add(new Message(Role.System, direction, "AGENT-Direction"));
 
 				var chatRequest = new ChatRequest
 				(

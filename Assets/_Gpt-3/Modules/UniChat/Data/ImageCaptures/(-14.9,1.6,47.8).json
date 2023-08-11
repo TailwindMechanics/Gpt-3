@@ -1,0 +1,59 @@
+{
+  "time": "23:42",
+  "day": "10",
+  "season": "Summer",
+  "year": "2023",
+  "your_position": "(-14.9,1.6,47.8)",
+  "your_rotation": "(0,5,0)",
+  "your_facing_direction": "(0.1,0.0,1.0)",
+  "your_body_radius": "2.0",
+  "scene_objects": {
+    "objects_within_1m": [],
+    "objects_within_1_to_3m": [],
+    "objects_within_3_to_5m": [
+      "Ground_ParkingLines: dir:(0.1, 1.6, -4.7), size:(10.0, 0.0, 10.0)"
+    ],
+    "objects_within_5_to_10m": [
+      "Cafe_Table_Folding: dir:(0.1, 1.1, -8.1), size:(2.2, 0.9, 0.9)",
+      "ShoppingCart_Wheel_rr: dir:(4.8, 1.5, -8.3), size:(0.2, 0.1, 0.1)",
+      "ShoppingCart_Wheel_rl: dir:(4.5, 1.5, -7.6), size:(0.2, 0.1, 0.1)",
+      "ShoppingCart_Wheel_fr: dir:(5.6, 1.5, -7.9), size:(0.2, 0.1, 0.1)",
+      "ShoppingCart_Wheel_Guard_fr: dir:(5.6, 1.4, -7.9), size:(0.1, 0.1, 0.1)",
+      "ShoppingCart_Wheel_fl: dir:(5.3, 1.5, -7.3), size:(0.2, 0.1, 0.1)",
+      "ShoppingCart_Wheel_Guard_fl: dir:(5.3, 1.4, -7.3), size:(0.1, 0.1, 0.1)",
+      "ShoppingCart_(40): dir:(5.0, 1.0, -7.8), size:(1.6, 1.1, 1.3)",
+      "Plant_(13): dir:(-5.6, 0.5, -7.7), size:(1.1, 2.1, 1.1)",
+      "SM_Props_Papers: dir:(-3.4, 1.5, -7.7), size:(2.4, 0.0, 2.0)",
+      "Wheel_Stop_(54): dir:(0.1, 1.5, -8.9), size:(2.4, 0.2, 0.3)",
+      "Plant_(11): dir:(-5.6, 1.3, -4.5), size:(1.7, 0.5, 1.9)",
+      "Food_Watermelon: dir:(0.9, 0.5, -8.1), size:(0.5, 0.3, 0.5)",
+      "Wheel_Stop_(55): dir:(3.3, 1.5, -8.9), size:(2.4, 0.2, 0.3)",
+      "Food_Pineapple_Whole: dir:(-0.7, 0.6, -8.0), size:(0.5, 0.3, 0.6)",
+      "Wheel_Stop_(53): dir:(-3.2, 1.5, -8.9), size:(2.4, 0.2, 0.3)",
+      "Plant_(23): dir:(-5.7, 1.3, -6.5), size:(1.0, 0.5, 1.0)"
+    ],
+    "objects_beyond_15m": []
+  },
+  "cloud_vision_data": {
+    "label_annotations": [
+      "Sky: 0.9689286",
+      "Cloud: 0.9526934",
+      "Plant: 0.940719",
+      "Tree: 0.840213",
+      "Asphalt: 0.8355972",
+      "Road surface: 0.8277066",
+      "Urban design: 0.8096155",
+      "Landscape: 0.7958958",
+      "Shade: 0.7878952",
+      "Arecales: 0.7773507"
+    ],
+    "text_annotations": null,
+    "landmark_annotations": null,
+    "image_properties_annotation": "R142,G203,B221: [score: 0.4242572, fraction:0.1865778], R79,G174,B214: [score: 0.1431042, fraction:0.1028444], R115,G115,B118: [score: 0.07674559, fraction:0.06408889], R97,G179,B209: [score: 0.138827, fraction:0.06604444], R172,G216,B219: [score: 0.05296502, fraction:0.02906667], R87,G88,B92: [score: 0.05175059, fraction:0.3096889], R146,G149,B152: [score: 0.03855704, fraction:0.03262222], R53,G57,B61: [score: 0.01012866, fraction:0.03306667], R47,G87,B83: [score: 0.0078613, fraction:0.01013333], R124,G164,B163: [score: 0.006687928, fraction:0.0072]",
+    "web_detection": null,
+    "localized_object_annotations": [
+      "Table: 0.8005143",
+      "Lighting: 0.5212348"
+    ]
+  }
+}
