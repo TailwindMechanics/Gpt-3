@@ -7,7 +7,6 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System;
-
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.Internal.DataObjects.Schemas;
 using Modules.UniChat.External.DataObjects.So;
@@ -108,7 +107,7 @@ namespace Modules.UniChat.Internal.DataObjects
 			return botReply;
 		}
 
-		public async void AddUserMessage(string userName, string message)
+		async void AddUserMessage(string userName, string message)
 		{
 			var userMessageId = Guid.NewGuid();
 			if (chatBotSettings != null)
@@ -134,7 +133,7 @@ namespace Modules.UniChat.Internal.DataObjects
 		    var vectorDatabaseApi   = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 		    var chatBotApi          = new ChatBotApi() as IChatBotApi;
 		    var agentPerceiver      = new AiPerceiver() as IAiPerceiver;
-		    var sightData			= await agentPerceiver.CaptureVision(agentPlayer.Camera, chatBotSettings.Vo.Perception.Vo);
+		    var sightData			= await agentPerceiver.CaptureVision(agentPlayer.Camera, agentPlayer.transform, chatBotSettings.Vo.Perception.Vo);
 		    var contextMessages		= new List<MessageVo>();
 
 		    if (chatBotSettings.Vo.SendSimilarChatCount > 0)
@@ -145,8 +144,6 @@ namespace Modules.UniChat.Internal.DataObjects
 		    }
 
 			var recentMessages = history.GetMostRecent(chatBotSettings.Vo.SendChatHistoryCount, true);
-			contextMessages.Add(new MessageVo(Guid.NewGuid(), "sight_data", sightData, true));
-
 			var functions = new List<Function>
 			{
 				new MoveInDirectionFunction().Function()
@@ -154,21 +151,24 @@ namespace Modules.UniChat.Internal.DataObjects
 
 			AddUserMessage(sender, message);
 
-			var agentReply = await chatBotApi.GetReply(sender, message, BotDirection, chatBotSettings.Vo, contextMessages, recentMessages, functions, true);
+			var agentReply = await chatBotApi.GetReply(sender, message, sightData, BotDirection, chatBotSettings.Vo, contextMessages, recentMessages, functions, true);
 
-		    var botReply = agentReply.Message.Content;
-			if (!string.IsNullOrWhiteSpace(botReply))
+			var botReply = agentReply.Message.Content;
+			if (!string.IsNullOrWhiteSpace(agentReply.Message.Content))
 			{
 			    var botVector = await embeddingsApi.ConvertToVector(embeddingModel.Model, chatBotSettings.Vo.BotName, botReply, true);
 			    var botMessageId = await vectorDatabaseApi.Upsert(chatBotSettings.Vo.BotName, botVector, true);
 				history.Add(new MessageVo(botMessageId, chatBotSettings.Vo.BotName, botReply, true), true);
 			}
-			else
+			if (agentReply.Function != null)
 			{
-				botReply = $"<i>... Performing action: {JsonConvert.SerializeObject(agentReply.Function)}...</i>";
+				if (string.IsNullOrWhiteSpace(botReply))
+				{
+					botReply = $"<color=#ECC492><b>... Moving...</b></color>";
+				}
+
 				agentPlayer.OnFunctionReceived(agentReply.Function, chatBotSettings.Vo);
 			}
-
 
 		    Log($"Returning chat bot reply: '{botReply}'");
 		    return botReply;

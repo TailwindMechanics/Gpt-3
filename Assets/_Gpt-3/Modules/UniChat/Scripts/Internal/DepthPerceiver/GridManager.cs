@@ -7,32 +7,35 @@ namespace Modules.UniChat.Internal.DepthPerceiver
 {
 	public class GridManager
 	{
-		public SceneObjects GetSceneObjects(Camera cam, AiPerceptionSettingsVo settings)
+		public SceneObjects GetSceneObjects(Camera cam, Transform player, AiPerceptionSettingsVo settings)
 		{
-			var frustumObjects = new FrustumCaptor()
-				.CaptureObjectsInFrustum(cam, settings.MaxSightDistance);
-
-			var filteredObjects = new PixelCalculator()
-				.FilterObjectsByPixelThreshold(frustumObjects, cam, settings.MinPixelThreshold);
-
+			var frustumObjects = new FrustumCaptor().CaptureObjectsInFrustum(cam, player, settings.MaxSightDistance);
+			var pixelCalculator = new PixelCalculator();
 			var result = new SceneObjects();
-			foreach (var objectData in filteredObjects)
+
+			foreach (var obj in frustumObjects)
 			{
-				var distance = objectData.DirectionFromCamera.Value().magnitude;
+				obj.PixelPercentage = pixelCalculator.CalculatePixelPercentage(obj, cam);
+				var distance = obj.Direction.Value().magnitude;
 
 				if (distance <= 1)
-					result.WithinOne.Add(objectData.Name);
+					result.WithinOne.Add(NlpReadable(obj));
 				else if (distance <= 3)
-					result.WithinThree.Add(objectData.Name);
+					result.WithinThree.Add(NlpReadable(obj));
 				else if (distance <= 5)
-					result.WithinFive.Add(objectData.Name);
+					result.WithinFive.Add(NlpReadable(obj));
 				else if (distance <= 10)
-					result.WithinTen.Add(objectData.Name);
-				else if (distance > 15)
-					result.Beyond.Add(objectData.Name);
+					result.WithinTen.Add(NlpReadable(obj));
+				else if (distance > 10 && obj.PixelPercentage > settings.MinPixelThreshold)
+					result.Beyond.Add(NlpReadable(obj));
 			}
 
 			return result;
 		}
+
+		string NlpReadable(ObjectData objectData)
+			=> $"{objectData.Name}:" +
+			   $"direction:[{objectData.Direction.X:F2}m,{objectData.Direction.Y:F2}m,{objectData.Direction.Z:F2}m]," +
+			   $"D:[{objectData.Size.Y:F2}m,{objectData.Size.X:F2}m,{objectData.Size.Z:F2}m]H:{objectData.AbsoluteHeading:F2}°";
 	}
 }

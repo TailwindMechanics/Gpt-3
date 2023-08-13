@@ -37,17 +37,8 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		// [JsonProperty("doings")]
 		// public string Doings { get; set; }
 
-		[JsonProperty("your_position")]
-		public string YourPosition { get; set; }
-
-		[JsonProperty("your_rotation")]
-		public string YourRotation { get; set; }
-
-		[JsonProperty("your_facing_direction")]
-		public string YourFacingDirection { get; set; }
-
-		[JsonProperty("your_body_radius")]
-		public string YourBodyRadius { get; set; }
+		[JsonProperty("agent_body_radius")]
+		public string AgentBodyRadius { get; set; }
 
 		[JsonProperty("scene_objects")]
 		public SceneObjects SceneObjects { get; set; } = new();

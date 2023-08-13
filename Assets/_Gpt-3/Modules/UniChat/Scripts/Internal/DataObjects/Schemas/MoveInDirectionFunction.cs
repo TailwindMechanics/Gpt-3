@@ -8,23 +8,23 @@ namespace Modules.UniChat.Internal.DataObjects.Schemas
     public class MoveInDirectionFunction
     {
         public const string Name = "MoveAndOrTurn";
+        public const string Bearing = "agent_relative_bearing_degrees";
+        public const string Travel = "agent_relative_travel_meters";
+        public const string Description = "Agent can use this to move and/or turn.";
 
         public class ResponseSchema
         {
-            [JsonProperty("heading_degrees")]
-            public float HeadingDegrees { get; set; }
+            [JsonProperty(Bearing)]
+            public float BearingDegrees { get; set; }
 
-            [JsonProperty("travel_meters")]
+            [JsonProperty(Travel)]
             public float TravelMeters { get; set; }
         }
 
         public Function Function ()
-            => FunctionSchema(Name,
-                "You can use this to move and/or turn",
-                "heading_degrees",
-                "travel_meters");
+            => FunctionSchema(Name, Description, Bearing, Travel);
 
-        Function FunctionSchema(string functionName, string functionDescription, string heading, string travel)
+        Function FunctionSchema(string functionName, string functionDescription, string bearing, string travel)
             => new (
                 functionName,
                 functionDescription,
@@ -33,10 +33,10 @@ namespace Modules.UniChat.Internal.DataObjects.Schemas
                     ["type"] = "object",
                     ["properties"] = new JObject
                     {
-                        [heading] = new JObject
+                        [bearing] = new JObject
                         {
                             ["type"] = "number",
-                            ["description"] = "Your local rotation in degrees -360 to 360, 0:Forward, 180:Backward, -90:Left, 90:Right."
+                            ["description"] = "Your relative bearing in degrees."
                         },
                         [travel] = new JObject
                         {
@@ -44,7 +44,7 @@ namespace Modules.UniChat.Internal.DataObjects.Schemas
                             ["description"] = "The quantity of meters you want to advance from your current position, pass in zero if you just want to turn."
                         },
                     },
-                    ["required"] = new JArray { functionName, heading, travel }
+                    ["required"] = new JArray { functionName, bearing, travel }
                 }
             );
     }

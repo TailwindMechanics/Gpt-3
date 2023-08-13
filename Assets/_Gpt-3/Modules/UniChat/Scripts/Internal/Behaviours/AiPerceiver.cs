@@ -1,17 +1,14 @@
-using Object = UnityEngine.Object;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
-using System.Linq;
 using System;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
+using Modules.UniChat.Internal.DepthPerceiver;
 using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.External.DataObjects;
 using Modules.UniChat.Internal.Apis;
-using Modules.UniChat.Internal.DepthPerceiver;
 using Modules.Utilities.External;
-using Newtonsoft.Json;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -19,17 +16,11 @@ namespace Modules.UniChat.Internal.Behaviours
     [Serializable]
     public class AiPerceiver : IAiPerceiver
     {
-        public async Task<string> CaptureVision (Camera cam, AiPerceptionSettingsVo settings)
+        public async Task<AiPerceivedData> CaptureVision (Camera cam, Transform player, AiPerceptionSettingsVo settings)
         {
             Log($"Capturing from camera: {cam.name}");
 
-            var camTransform = cam.transform;
-            var camPos = camTransform.position;
-            var camRot = camTransform.eulerAngles;
-
-            var forward = camTransform.forward;
             var grid = new GridManager();
-
             var chunkData = new AiPerceivedData
             {
                 // todo create service for querying in-game datetime
@@ -46,90 +37,17 @@ namespace Modules.UniChat.Internal.Behaviours
                 // Feelings        = "Safe, hungry, satisfied, happy, content, calm, warm, relieved, wholesome",
                 // Doings          = "Sitting, eating, laughing",
 
-                YourFacingDirection = $"({forward.x:F1},{forward.y:F1},{forward.z:F1})",
-                YourBodyRadius  = "2.0",
-                YourPosition = $"({camPos.x:F1},{camPos.y:F1},{camPos.z:F1})",
-                YourRotation = $"({camRot.x:F0},{camRot.y:F0},{camRot.z:F0})",
-                SceneObjects = grid.GetSceneObjects(cam, settings)
+                AgentBodyRadius  = "1.0m",
+                SceneObjects = grid.GetSceneObjects(cam, player, settings)
             };
 
-            var fileName = $"{chunkData.YourPosition}";
+            var fileName = $"{chunkData.Time}-{chunkData.Day}-{chunkData.Season}-{chunkData.Year}-{cam.name}";
+            fileName = fileName.Replace(" ", "_").Replace("/", "-").Replace(":", "-");
             var visionResponse = await GoogleCloudVisionAnalyse(cam, fileName, settings);
             chunkData.CloudVisionData = new CloudVisionData(visionResponse);
 
-            var tuple = JsonUtilities.SaveAsJsonFile(settings.SavePath, fileName, chunkData, Formatting.None);
-
-            Log($"Captured data saved at path: {tuple.filePath}");
-            return tuple.json;
-        }
-
-        SceneObjects CaptureFrustumContent(Transform cam, AiPerceptionSettingsVo settings)
-        {
-            var result = new SceneObjects();
-            var allRenderers = Object.FindObjectsOfType<Renderer>();
-
-            foreach (var renderer in allRenderers.Where(renderer => IsWithinCameraFrustum(cam, renderer, settings.MaxSightDistance) && !settings.BlackList.Contains(renderer.gameObject.name)))
-            {
-                var objectData = SceneObjectData(cam, renderer, settings);
-                var directionVector = cam.position - renderer.bounds.center;
-                var distance = directionVector.magnitude;
-
-                if (distance <= 1)
-                    result.WithinOne.Add(objectData);
-                else if (distance <= 3)
-                    result.WithinThree.Add(objectData);
-                else if (distance <= 5)
-                    result.WithinFive.Add(objectData);
-                else if (distance <= 10)
-                    result.WithinTen.Add(objectData);
-                else if (distance > 15)
-                    result.Beyond.Add(objectData);
-            }
-
-            return result;
-        }
-
-        string SceneObjectData(Transform cam, Renderer renderer, AiPerceptionSettingsVo settings)
-        {
-            var objectName = renderer.name;
-            settings.RemoveFromNames.ForEach(item =>
-            {
-                if (objectName.Contains(item))
-                {
-                    objectName = objectName.Replace(item, "");
-                }
-            });
-
-            objectName = StripUnityLabels(objectName);
-            var bounds = renderer.bounds;
-            var direction = $"{cam.position - bounds.center:F1}";
-            var size = $"{bounds.size:F1}";
-
-            return $"{objectName}: dir:{direction}, size:{size}";
-        }
-
-        bool IsWithinCameraFrustum(Transform cam, Renderer renderer, double maxDistance)
-        {
-            var bounds = renderer.bounds;
-            var centerToCam = cam.position - bounds.center;
-            if (centerToCam.magnitude > maxDistance) return false;
-
-            var planes = GeometryUtility.CalculateFrustumPlanes(cam.GetComponent<Camera>());
-            return GeometryUtility.TestPlanesAABB(planes, bounds);
-        }
-
-        string StripUnityLabels (string input)
-        {
-            input = input.Replace("(Clone)", "");
-            for (var i = 0; i < 10; i++)
-            {
-                input = input.Replace($"({i})", "");
-                input = input.Replace($"_0{i}", "");
-            }
-
-            input = input.Trim().Replace(" ", "_");
-
-            return input;
+            Log($"Captured perception data: {JsonConvert.SerializeObject(chunkData)}");
+            return chunkData;
         }
 
         async Task<GoogleCloudVisionResponseVo> GoogleCloudVisionAnalyse(Camera cam, string fileName, AiPerceptionSettingsVo settings)

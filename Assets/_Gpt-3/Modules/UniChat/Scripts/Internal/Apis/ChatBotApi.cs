@@ -16,7 +16,7 @@ namespace Modules.UniChat.Internal.Apis
 	{
 		readonly OpenAIClient openAiApi = new();
 
-		public async Task<AgentReply> GetReply(string senderName, string senderMessage, string direction, ModelSettingsVo settings,
+		public async Task<AgentReply> GetReply(string senderName, string senderMessage, AiPerceivedData sightData, string direction, ModelSettingsVo settings,
 			List<MessageVo> context, List<MessageVo> history, List<Function> functions, bool logging = false)
 		{
 			try
@@ -34,8 +34,11 @@ namespace Modules.UniChat.Internal.Apis
 					chatPrompts.Add(new Message(key, item.Message, $"HISTORY-{item.SenderName}"));
 				});
 
+				var sight = JsonConvert.SerializeObject(sightData);
+
+				chatPrompts.Add(new Message(Role.System, sight, "AGENT-sight_data"));
+				chatPrompts.Add(new Message(Role.System, direction, "AGENT-direction"));
 				chatPrompts.Add(new Message(Role.User, senderMessage, $"NEW-{senderName}"));
-				chatPrompts.Add(new Message(Role.System, direction, "AGENT-Direction"));
 
 				var chatRequest = new ChatRequest
 				(
@@ -74,8 +77,7 @@ namespace Modules.UniChat.Internal.Apis
 			}
 		}
 
-
 		void Log(string message)
-			=> Debug.Log($"<color=#ADD9D9><b>>>> ChatBotApi: {message.Replace("\n", "")}</b></color>");
+			=> Debug.Log($"<color=#6ffcfc><b>>>> ChatBotApi: {message.Replace("\n", "")}</b></color>");
 	}
 }

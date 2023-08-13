@@ -1,9 +1,9 @@
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 using OpenAI.Chat;
+using UnityEngine;
 
-using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.DataObjects.Schemas;
+using Modules.UniChat.External.DataObjects.Vo;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -19,15 +19,15 @@ namespace Modules.UniChat.Internal.Behaviours
         public void OnFunctionReceived(Function function, ModelSettingsVo settings)
         {
             var args = JObject.Parse(function.Arguments.ToString());
-            var heading = (float) args["heading_degrees"];
-            var travel = (float) args["travel_meters"];
+            var bearing = (float) args[MoveInDirectionFunction.Bearing];
+            var travel = (float) args[MoveInDirectionFunction.Travel];
 
             Log($"OnFunctionReceived: {function.Name}");
 
             if (function.Name == MoveInDirectionFunction.Name)
             {
-                Log($"MoveInDirection: {heading}, {travel}");
-                abilities.MoveInDirection(heading, travel, settings.Navigation.Vo, arrived =>
+                Log($"MoveInDirection: {bearing}, {travel}");
+                abilities.MoveInDirection(bearing, travel, settings.Navigation.Vo, arrived =>
                 {
                     Log($"MoveInDirection, arrived: {arrived}");
                 });

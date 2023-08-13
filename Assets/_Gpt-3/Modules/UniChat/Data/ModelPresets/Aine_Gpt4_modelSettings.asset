@@ -15,7 +15,7 @@ MonoBehaviour:
   settings:
     botName: Aine
     direction: {fileID: 4900000, guid: d523f6e7d96ce594e9baddff3648536c, type: 3}
-    sendSimilarChatCount: 2
+    sendSimilarChatCount: 0
     sendChatHistoryCount: 3
     memoryAccuracy: 0.8
     maxTokens: 4096

@@ -7,7 +7,10 @@ namespace Modules.UniChat.Internal.DepthPerceiver
 	{
 		public string Name { get; set; }
 		public Vector3Serializable WorldPosition { get; set; }
-		public Vector3Serializable DirectionFromCamera { get; set; }
+		public Vector3Serializable Direction { get; set; }
+		public Vector3Serializable RelativePosition { get; set; }
 		public Vector3Serializable Size { get; set; }
+		public float PixelPercentage { get; set; }
+		public float AbsoluteHeading { get; set; }
 	}
 }

@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Modules.UniChat.Internal.DepthPerceiver
 {
 	public class PixelCalculator
 	{
-		public List<ObjectData> FilterObjectsByPixelThreshold(List<ObjectData> objects, Camera cam, double pixelThreshold)
-			=> objects.Where(obj => CalculatePixelPercentage(obj, cam) > pixelThreshold).ToList();
-
-		float CalculatePixelPercentage(ObjectData objectData, Camera cam)
+		public float CalculatePixelPercentage(ObjectData objectData, Camera cam)
 		{
 			var screenBounds = CalculateScreenBounds(objectData, cam);
 			var objectArea = screenBounds.size.x * screenBounds.size.y;
