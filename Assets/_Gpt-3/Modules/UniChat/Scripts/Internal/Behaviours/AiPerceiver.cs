@@ -16,7 +16,12 @@ namespace Modules.UniChat.Internal.Behaviours
     [Serializable]
     public class AiPerceiver : IAiPerceiver
     {
-        public async Task<AiPerceivedData> CaptureVision (Camera cam, Transform player, AiPerceptionSettingsVo settings)
+        GoogleCloudVisionSettingsVo creds;
+
+        public AiPerceiver(GoogleCloudVisionSettingsVo creds)
+            => this.creds = creds;
+
+        public async Task<AiPerceivedData> CaptureVision (Camera cam, AiPerceptionSettingsVo settings)
         {
             Log($"Capturing from camera: {cam.name}");
 
@@ -38,7 +43,9 @@ namespace Modules.UniChat.Internal.Behaviours
                 // Doings          = "Sitting, eating, laughing",
 
                 AgentBodyRadius  = "1.0m",
-                SceneObjects = grid.GetSceneObjects(cam, player, settings)
+                AgentWorldPosition = cam.transform.position.ToString("F2"),
+                AgentWorldHeading = cam.transform.eulerAngles.y.NormalizeDegrees().ToString("F2"),
+                SceneObjects = grid.GetSceneObjects(cam, settings)
             };
 
             var fileName = $"{chunkData.Time}-{chunkData.Day}-{chunkData.Season}-{chunkData.Year}-{cam.name}";
@@ -54,7 +61,7 @@ namespace Modules.UniChat.Internal.Behaviours
         {
             var imagePath = await ImageCapture.Capture(cam, settings.SavePath, fileName, settings.Resolution);
             var api = new ImageRecognitionApi() as IImageRecognitionApi;
-            return await api.AnalyzeImage(imagePath, settings.CloudVisionCreds, true);
+            return await api.AnalyzeImage(imagePath, creds, true);
         }
 
         void Log(string message)

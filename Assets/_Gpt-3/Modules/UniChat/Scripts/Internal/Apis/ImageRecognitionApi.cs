@@ -8,7 +8,6 @@ using System.IO;
 using System;
 
 using Modules.UniChat.External.DataObjects.Interfaces;
-using Modules.UniChat.External.DataObjects.So;
 using Modules.UniChat.External.DataObjects.Vo;
 
 
@@ -16,7 +15,7 @@ namespace Modules.UniChat.Internal.Apis
 {
 	public class ImageRecognitionApi : IImageRecognitionApi
 	{
-        public async Task<GoogleCloudVisionResponseVo> AnalyzeImage(string imagePath, GoogleCloudVisionSettingsSo settings, bool logging = false)
+        public async Task<GoogleCloudVisionResponseVo> AnalyzeImage(string imagePath, GoogleCloudVisionSettingsVo settings, bool logging = false)
         {
             try
             {
@@ -54,7 +53,7 @@ namespace Modules.UniChat.Internal.Apis
 
                 var requestBody = JsonConvert.SerializeObject(imageRequest);
 
-                var request = new HttpRequestMessage(HttpMethod.Post, settings.Vo.Url)
+                var request = new HttpRequestMessage(HttpMethod.Post, settings.Url)
                 {
                     Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
                 };

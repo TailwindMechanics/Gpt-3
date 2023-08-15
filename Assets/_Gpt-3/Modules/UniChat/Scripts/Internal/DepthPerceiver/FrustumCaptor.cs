@@ -4,36 +4,29 @@ using System.Linq;
 using UnityEngine;
 
 using Modules.UniChat.External.DataObjects.Vo;
-using Modules.Utilities.External;
 
 
 namespace Modules.UniChat.Internal.DepthPerceiver
 {
 	public class FrustumCaptor
     {
-        public List<ObjectData> CaptureObjectsInFrustum(Camera cam, Transform player, double maxDistance)
+        public List<ObjectData> CaptureObjectsInFrustum(Camera cam)
         {
             var allRenderers = Object.FindObjectsOfType<Renderer>();
 
             return allRenderers
-                .Where(renderer => IsWithinCameraFrustum(cam, renderer, maxDistance))
+                .Where(renderer => IsWithinCameraFrustum(cam, renderer))
                 .Where(renderer => IsObjectVisible(cam, renderer))
                 .Where(renderer => !LabelRules.Blacklist.Contains(renderer.gameObject.name))
-                .Select(renderer => CreateObjectData(player, renderer))
+                .Select(renderer => CreateObjectData(cam, renderer))
                 .ToList();
         }
 
-        bool IsWithinCameraFrustum(Camera cam, Renderer renderer, double maxDistance)
+        bool IsWithinCameraFrustum(Camera cam, Renderer renderer)
         {
-            var bounds = renderer.bounds;
-            var camPos = cam.transform.position;
-            var dir = camPos - bounds.center;
-
-            if (dir.magnitude > maxDistance) return false;
-
             var planes = GeometryUtility.CalculateFrustumPlanes(cam);
             var worldCorners = GetWorldSpaceBoxCorners(renderer);
-            return worldCorners.All(corner => IsPointInsideFrustum(planes, corner));
+            return worldCorners != null && worldCorners.All(corner => IsPointInsideFrustum(planes, corner));
         }
 
         bool IsObjectVisible(Camera cam, Renderer renderer)
@@ -75,31 +68,23 @@ namespace Modules.UniChat.Internal.DepthPerceiver
             return localCorners;
         }
 
-        ObjectData CreateObjectData(Transform player, Renderer renderer)
+        ObjectData CreateObjectData(Camera cam, Renderer renderer)
         {
             var objectName = StripUnityLabels(renderer.name);
             var bounds = renderer.bounds;
-            var worldDirection = bounds.center - player.position;
-            var localDirection = player.InverseTransformDirection(worldDirection);
+            var worldDirection = bounds.center - cam.transform.position;
+            var localDirection = cam.transform.InverseTransformDirection(worldDirection);
             var size = bounds.size;
 
             return new ObjectData
             {
                 Name = objectName,
                 WorldPosition = new Vector3Serializable(bounds.center),
-                RelativePosition = CalculateRelativePosition(bounds.center, player),
                 Direction = new Vector3Serializable(localDirection),
-                AbsoluteHeading = renderer.transform.eulerAngles.y.NormalizeDegrees(),
                 Size = new Vector3Serializable(size)
             };
         }
 
-        Vector3Serializable CalculateRelativePosition (Vector3 worldPos, Transform player)
-        {
-            var relativePos = worldPos - player.position;
-            var localPos = player.InverseTransformDirection(relativePos);
-            return new Vector3Serializable(localPos);
-        }
 
         string StripUnityLabels(string input)
         {

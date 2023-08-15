@@ -15,7 +15,9 @@
 			"SM_Generic_SkyDome_01",
 			"VolumeSensor",
 			"Capsule",
-			"Cube"
+			"Hairdo",
+			"Visor",
+			"Cube",
 		};
 	}
 }

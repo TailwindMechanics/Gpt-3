@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System;
+using System.Linq;
 using Modules.UniChat.External.DataObjects.Interfaces;
 using Modules.UniChat.Internal.DataObjects.Schemas;
 using Modules.UniChat.External.DataObjects.So;
@@ -14,8 +15,10 @@ using Modules.UniChat.External.DataObjects.Vo;
 using Modules.UniChat.Internal.Behaviours;
 using Modules.UniChat.Internal.Apis;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenAI.Chat;
 using UniRx;
+using UnityEngine.Serialization;
 
 
 namespace Modules.UniChat.Internal.DataObjects
@@ -45,6 +48,8 @@ namespace Modules.UniChat.Internal.DataObjects
 		PineConeSettingsSo pineConeSettings;
 		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
 		WebSearchSettingsSo webSearchSettings;
+		[FoldoutGroup("Settings"), InlineEditor, SerializeField]
+		GoogleCloudVisionSettingsSo cloudVisionCreds;
 
 		[FoldoutGroup("Tools"), FoldoutGroup("Tools/Vdb"), Button(ButtonSizes.Medium)]
 		async void DescribeIndexStats ()
@@ -132,8 +137,8 @@ namespace Modules.UniChat.Internal.DataObjects
 		    var embeddingsApi       = new EmbeddingsApi() as IEmbeddingsApi;
 		    var vectorDatabaseApi   = new VectorDatabaseApi(pineConeSettings.Vo) as IVectorDatabaseApi;
 		    var chatBotApi          = new ChatBotApi() as IChatBotApi;
-		    var agentPerceiver      = new AiPerceiver() as IAiPerceiver;
-		    var sightData			= await agentPerceiver.CaptureVision(agentPlayer.Camera, agentPlayer.transform, chatBotSettings.Vo.Perception.Vo);
+		    var agentPerceiver      = new AiPerceiver(cloudVisionCreds.Vo) as IAiPerceiver;
+		    var sightData			= await agentPerceiver.CaptureVision(agentPlayer.Camera, chatBotSettings.Vo.Perception.Vo);
 		    var contextMessages		= new List<MessageVo>();
 
 		    if (chatBotSettings.Vo.SendSimilarChatCount > 0)
@@ -146,7 +151,8 @@ namespace Modules.UniChat.Internal.DataObjects
 			var recentMessages = history.GetMostRecent(chatBotSettings.Vo.SendChatHistoryCount, true);
 			var functions = new List<Function>
 			{
-				new MoveInDirectionFunction().Function()
+				new GoToPositionSchema().Function(),
+				new TurnBySchema().Function()
 			};
 
 			AddUserMessage(sender, message);
@@ -164,11 +170,15 @@ namespace Modules.UniChat.Internal.DataObjects
 			{
 				if (string.IsNullOrWhiteSpace(botReply))
 				{
-					botReply = $"<color=#ECC492><b>... Moving...</b></color>";
+					var args = JObject.Parse(agentReply.Function.Arguments.ToString());
+					var formattedArgs = string.Join(", ", args.Values().Select(v => v is JObject ? string.Join(", ", v.Values()) : v.ToString()));
+					botReply = $"<color=#ECC492><b>... {agentReply.Function.Name}({formattedArgs})...</b></color>";
+					history.Add(new MessageVo(new Guid(), chatBotSettings.Vo.BotName, botReply, true), true);
 				}
 
 				agentPlayer.OnFunctionReceived(agentReply.Function, chatBotSettings.Vo);
 			}
+
 
 		    Log($"Returning chat bot reply: '{botReply}'");
 		    return botReply;

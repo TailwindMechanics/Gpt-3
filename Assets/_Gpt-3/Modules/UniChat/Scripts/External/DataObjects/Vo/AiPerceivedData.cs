@@ -40,6 +40,12 @@ namespace Modules.UniChat.External.DataObjects.Vo
 		[JsonProperty("agent_body_radius")]
 		public string AgentBodyRadius { get; set; }
 
+		[JsonProperty("agent_world_position")]
+		public string AgentWorldPosition { get; set; }
+
+		[JsonProperty("agent_world_heading")]
+		public string AgentWorldHeading { get; set; }
+
 		[JsonProperty("scene_objects")]
 		public SceneObjects SceneObjects { get; set; } = new();
 

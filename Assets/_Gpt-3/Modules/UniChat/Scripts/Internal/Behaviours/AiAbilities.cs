@@ -1,7 +1,5 @@
-using UnityEngine;
-using System;
-using Modules.UniChat.External.DataObjects.Vo;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 
 namespace Modules.UniChat.Internal.Behaviours
@@ -16,12 +14,24 @@ namespace Modules.UniChat.Internal.Behaviours
         [FoldoutGroup("Debug"), SerializeField] float turnSpeed;
         [FoldoutGroup("Debug"), SerializeField] float moveSpeed;
 
-        public void MoveInDirection(float bearingDegrees, float travelMeters, AiNavigationSettingsVo settings, Action<bool> onComplete)
+
+        public void TurnBy(float degreesDelta)
         {
-            var rotatedForward = Quaternion.Euler(0, bearingDegrees, 0) * player.forward;
+            var rotatedForward = Quaternion.Euler(0, degreesDelta, 0) * player.forward;
+            lookAtTarget = player.position + rotatedForward;
+            allowUpdate = true;
+        }
+
+
+        public void GoToPosition(Vector3 newDestination)
+        {
             var playerPos = player.position;
-            destination = playerPos + rotatedForward * travelMeters;
-            lookAtTarget = playerPos + rotatedForward * (travelMeters + 1);
+            newDestination.y = playerPos.y;
+            destination = newDestination;
+
+            var directionToDestination = (newDestination - playerPos).normalized;
+            lookAtTarget = playerPos + directionToDestination * 1f;
+
             allowUpdate = true;
         }
 

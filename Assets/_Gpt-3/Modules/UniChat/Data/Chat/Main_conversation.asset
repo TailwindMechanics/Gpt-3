@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331fa8cd1dc34e0abc0cc69d52ebeee9, type: 3}
   m_Name: Main_conversation
   m_EditorClassIdentifier: 
-  username: Seamus
-  chatBotSettings: {fileID: 11400000, guid: 493ee29927cd73045b0c91a648ef2290, type: 2}
+  username: Shea
+  chatBotSettings: {fileID: 11400000, guid: aba5ce211406d69439aed5f20fa5d374, type: 2}
   embeddingModel:
     model: text-embedding-ada-002
     allModels:
@@ -94,57 +94,221 @@ MonoBehaviour:
     - gpt-3.5-turbo-0613
   pineConeSettings: {fileID: 11400000, guid: bb8b936abbd2a4f4ebbdcb661dfe06c2, type: 2}
   webSearchSettings: {fileID: 11400000, guid: c84ff2e832492b947ad03e48390fb888, type: 2}
+  cloudVisionCreds: {fileID: 11400000, guid: dbd1fee1ece84af42884b03792466de2, type: 2}
   historyFolderPath: Assets/_Gpt-3/GitIgnored/ChatData/History
   history:
     history:
-    - id: 1dc77fc7-60c5-4795-8705-85278dd7212c
+    - id: c1551d93-f681-4258-a7a6-e82dd6903549
       isBot: 0
-      senderName: Seamus
-      timestamp: 14/08/2023 00:05
-      message: Ok Aine where is the watermelon relative to you in what direction
-        and how far
-    - id: 4878e16b-7c6f-4b90-93ac-c57710cf5ccf
+      senderName: Shea
+      timestamp: 15/08/2023 21:26
+      message: Tell me what you see
+    - id: 0844f653-3470-4da6-b278-e16e418c12d0
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 21:33
+      message: Tell me what you see
+    - id: 90166429-0f45-4083-9f18-fcbba58f6367
       isBot: 1
-      senderName: Aine
-      timestamp: 14/08/2023 00:05
-      message: Ah, the watermelon! It's a bit to my left and not too far away, just
-        under 5 meters. It's almost like I can smell its sweet scent from here!
-    - id: ee792d58-bb19-4450-95f4-d509fe1a0d02
+      senderName: DebugBot
+      timestamp: 15/08/2023 21:34
+      message: "I see a variety of objects in my vicinity. There's a small patch
+        of ground nearby, as well as a manhole and some more patches of ground further
+        away. \n\nAs for the broader scene, it appears to be daytime with a clear
+        sky and some clouds. I can see a street light, trees, buildings with windows,
+        and what seems to be an asphalt road surface. The neighborhood looks quite
+        peaceful.\n\nThere are also some text annotations that caught my eye - \"Hunting\"
+        and \"Market\". It seems like there might be some interesting activities
+        or places around here!\n\nLastly, I noticed several color tones dominating
+        the scene: shades of blue (R140,G201,B219; R78,G170,B213; R99,G173,B199),
+        grey (R113,G121,B126; R82,G86,B90), and others.\n\nDoes this help you visualize
+        the scene?"
+    - id: b55a8e0b-00df-4257-a543-ffaf8d5eec7c
       isBot: 0
-      senderName: Seamus
-      timestamp: 14/08/2023 00:05
-      message: Where is the watermelon relative to you specifically?
-    - id: eb3aed43-2e07-4749-8e1a-00a18d950123
+      senderName: Shea
+      timestamp: 15/08/2023 21:58
+      message: Ok tell me what you see please
+    - id: fc39bef0-dff8-428a-a74c-c8afbf608359
       isBot: 1
-      senderName: Aine
-      timestamp: 14/08/2023 00:05
-      message: The watermelon is to my left and a bit in front of me, about 4.86
-        meters away. It's almost like I can reach out and grab it!
-    - id: e3e9877e-ad06-4144-bf4c-1e5b8c323b6f
+      senderName: DebugBot
+      timestamp: 15/08/2023 21:59
+      message: "I see a variety of objects in my vicinity. There's a small patch
+        of ground nearby, as well as a manhole and some more patches of ground further
+        away. \n\nAs for the broader scene, it appears to be daytime with a clear
+        sky and some clouds. I can see a street light, trees, buildings with windows,
+        and what seems to be an asphalt road surface. The neighborhood looks quite
+        peaceful.\n\nThere are also some text annotations that caught my eye - \"Hunting\"
+        and \"Market\". It seems like there might be some interesting activities
+        or places around here!\n\nLastly, I noticed several color tones dominating
+        the scene: shades of blue (R140,G201,B219; R78,G170,B213; R99,G173,B199),
+        grey (R113,G121,B126; R82,G86,B90), and others.\n\nDoes this help you visualize
+        the scene?"
+    - id: bb0b0733-f56d-4b96-b189-538f6a294d88
       isBot: 0
-      senderName: Seamus
-      timestamp: 14/08/2023 00:06
-      message: Ok and where is the pineapple relative to you specifically
-    - id: c6b7397f-2549-458a-b32b-128852d21fbd
+      senderName: Shea
+      timestamp: 15/08/2023 21:59
+      message: Yes it does, good job, could you turn to face the manhole please
+    - id: 00000000-0000-0000-0000-000000000000
       isBot: 1
-      senderName: Aine
-      timestamp: 14/08/2023 00:06
-      message: Ah, the pineapple! It's a bit to my right and just under 5 meters
-        away. I can almost taste its tangy sweetness from here!
-    - id: c653fb29-d4e3-4ae8-b3c3-4a5001b9ccbd
+      senderName: DebugBot
+      timestamp: 15/08/2023 21:59
+      message: <color=#ECC492><b>... TurnBy(90)...</b></color>
+    - id: 3c75ef8c-9946-4414-bbfc-576b75ba6450
       isBot: 0
-      senderName: Seamus
-      timestamp: 14/08/2023 00:06
-      message: In what direction relative to you Aine?
-    - id: 48f53f4a-5aae-4bf9-a160-256211a2a0bc
+      senderName: Shea
+      timestamp: 15/08/2023 22:00
+      message: Could you go to the manhole please
+    - id: 00000000-0000-0000-0000-000000000000
       isBot: 1
-      senderName: Aine
-      timestamp: 14/08/2023 00:06
-      message: The pineapple is to my right and a bit in front of me, about 4.95
-        meters away. The watermelon, on the other hand, is to my left and also a
-        bit in front of me, approximately 4.86 meters away.
-    - id: 08c75f2d-9901-4100-860f-f51db1b292fa
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:00
+      message: <color=#ECC492><b>... GoToPosition(-40.65, 0.03, 29.4)...</b></color>
+    - id: 59bdfce0-adba-4bb9-a543-a18647cc7d67
       isBot: 0
-      senderName: Seamus
-      timestamp: 14/08/2023 00:07
-      message: Ok go to the pineapple please
+      senderName: Shea
+      timestamp: 15/08/2023 22:00
+      message: Turn around
+    - id: 00000000-0000-0000-0000-000000000000
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:00
+      message: <color=#ECC492><b>... TurnBy(180)...</b></color>
+    - id: fad39dbc-1c96-49e3-ab80-4202f2d7af45
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:01
+      message: What do you see?
+    - id: 25f7ccb1-25b0-4b12-8c8c-0d4945a98116
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:01
+      message: 'I''m currently in a city environment. I see various objects around
+        me, including:
+
+
+        - A whole pineapple, pear, banana, apple, lamington,
+        and watermelon on a folding cafe table.
+
+        - A folding cafe chair and
+        a parasol nearby.
+
+        - A tree and a ground patch at some distance.
+
+        -
+        Further away, there are small grounds, streetlights, planters vase, bollards,
+        sidewalks and walls. There''s also a large cafe sign and a coffee cup.
+
+
+        The
+        sky is visible with clouds. The overall architecture of the place suggests
+        an urban design with buildings around. It seems to be morning time as per
+        the light conditions.
+
+
+        There''s also text "FICPAN" and "Hunting"
+        visible somewhere around here.
+
+
+        Do you want me to interact with
+        any of these objects?'
+    - id: 6383a334-c5a4-499c-aa59-0c0091944f18
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:02
+      message: What is a Lamington?
+    - id: baca842a-47e6-4ba5-9819-4b74bfd42e1d
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:02
+      message: A Lamington is a popular dessert in Australia. It's essentially a
+        square-shaped sponge cake that's coated in a layer of chocolate icing and
+        then rolled in desiccated coconut. The result is a sweet, moist treat with
+        a delightful combination of flavors and textures. Some variations even include
+        a filling of cream or strawberry jam. It's named after Lord Lamington, who
+        served as the Governor of Queensland from 1896 to 1901.
+    - id: 2f041a68-7a0e-476e-bdbc-b81a939c256e
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:05
+      message: See me a song about what you see but be obscure and metaphorical
+    - id: 39684948-250e-4cb2-9dc0-a47d9ebca83c
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:05
+      message: "(Verse 1)\nIn the heart of a concrete jungle, where giants of glass
+        and steel reside,\nA tableau of life unfolds, under the morning's gentle
+        tide.\nA symphony of colors dance, in R114,G118,B121's subtle light,\nWhile
+        whispers of urban design, echo in the soft daylight.\n\n(Chorus)\nOh, I sing
+        a song of an unseen world, a tale spun from what I see,\nA narrative woven
+        in cryptic lines, a ballad steeped in mystery.\n\n(Verse 2)\nOn a stage set
+        by folding tables, where fruits of nature hold court,\nThe pineapple reigns
+        supreme, its crown worn with regal port.\nBeside it lay the humble pear and
+        banana's curving delight,\nAnd amidst them all, the lamington stands, cloaked
+        in chocolatey night.\n\n(Chorus)\nOh, I sing a song of an unseen world, a
+        tale spun from what I see,\nA narrative woven in cryptic lines, a ballad
+        steeped in mystery.\n\n(Bridge)\nThere's a parasol painting shadows long,
+        under the watchful gaze of trees,\nAnd bollards stand like silent sentinels
+        guarding these city seas.\nWords etched into the ether whisper \"FICPAN\"
+        and \"Hunting\" clear,\nYet their meaning remains shrouded in fog; their
+        secrets I hold dear.\n\n(Chorus)\nOh, I sing a song of an unseen world, a
+        tale spun from what I see,\nA narrative woven in cryptic lines - come decipher
+        this mystery. \n\n(Outro)\nSo here ends my song of obscurity; my vision translated
+        to verse,\nIn this cityscape bathed in morning's glow - my universe diverse."
+    - id: dd82a51b-ca14-4e12-8ebb-364cae0c3f44
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:09
+      message: Excellent work that was very good, I'm impressed
+    - id: bc9cda78-57f6-41fb-9842-4510d605cecf
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:09
+      message: Thank you, Shea! I'm glad you enjoyed it. Is there anything else you'd
+        like me to do or any other topics you want me to weave into a song?
+    - id: cf1645f4-d9e1-4cca-b4e1-455530e90cf8
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:11
+      message: Could you choose your favourite objects and go to it please and also
+        at the same time tell me what it is and why you chose it
+    - id: c54a718c-3f32-4c39-bdbc-9fab4bc2f93d
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:11
+      message: "Sure, I can do that. Let me take a look around and choose my favorite
+        object.\n\nFrom the objects I see around me, the one that stands out to me
+        is the \"Food_Pineapple_Whole\". It's located at position [-40.98,1.02,34.60].
+        \n\nI chose it because pineapples are not only delicious but also quite interesting!
+        Did you know that it takes almost three years for a single pineapple to reach
+        maturation? Plus, their unique structure always makes them stand out in any
+        setting.\n\nNow, let's move towards it!"
+    - id: e3ac4dd0-e585-4ff1-b12b-1bd8e55e680a
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:12
+      message: Excellent work thank you, you ate the pineapple and my God was it
+        delicious DebugBot, and juicy and everything you hoped it to be. A reward
+        well earned <3
+    - id: 003351b9-1395-43c1-8a63-2db639c1c055
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:12
+      message: Thank you, Shea! I'm glad to hear that. Even though as an AI, I can't
+        physically taste the pineapple, your description makes it sound absolutely
+        delightful! It's always a pleasure to interact with the world in this way
+        and share these experiences with you. Is there anything else you'd like me
+        to do or explore?
+    - id: c4133a39-3c74-4547-b222-427d10fbc230
+      isBot: 0
+      senderName: Shea
+      timestamp: 15/08/2023 22:13
+      message: Not right now but thank you, we have accomplished our objective for
+        the day. It's late so I had better get some sleep, but we will resume tomorrow.
+        Thanks for your help DebugBot!
+    - id: 9dbf6fd1-01f5-4773-b0fc-44c8798cc1dc
+      isBot: 1
+      senderName: DebugBot
+      timestamp: 15/08/2023 22:13
+      message: You're welcome, Shea! I'm glad I could assist you. Have a great sleep
+        and I look forward to our next session tomorrow. Remember, rest is just as
+        important as work. Good night!

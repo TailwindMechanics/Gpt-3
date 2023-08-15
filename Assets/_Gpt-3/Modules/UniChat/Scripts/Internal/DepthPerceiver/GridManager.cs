@@ -1,41 +1,53 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 using Modules.UniChat.External.DataObjects.Vo;
+using Modules.Utilities.External;
 
 
 namespace Modules.UniChat.Internal.DepthPerceiver
 {
-	public class GridManager
-	{
-		public SceneObjects GetSceneObjects(Camera cam, Transform player, AiPerceptionSettingsVo settings)
-		{
-			var frustumObjects = new FrustumCaptor().CaptureObjectsInFrustum(cam, player, settings.MaxSightDistance);
-			var pixelCalculator = new PixelCalculator();
-			var result = new SceneObjects();
+    public class GridManager
+    {
+        public SceneObjects GetSceneObjects(Camera cam, AiPerceptionSettingsVo settings)
+        {
+            var totalTokens = 0;
+            Range currentRange = null;
+            var result = new SceneObjects();
+            var pixelCalculator = new PixelCalculator();
+            var frustumObjects = new FrustumCaptor().CaptureObjectsInFrustum(cam);
+            var sortedObjects = frustumObjects.OrderBy(o => o.Direction.Value().magnitude).ToList();
 
-			foreach (var obj in frustumObjects)
-			{
-				obj.PixelPercentage = pixelCalculator.CalculatePixelPercentage(obj, cam);
-				var distance = obj.Direction.Value().magnitude;
+            foreach (var obj in sortedObjects)
+            {
+                obj.PixelPercentage = pixelCalculator.CalculatePixelPercentage(obj, cam);
+                var distance = obj.Direction.Value().magnitude;
+                var newItem = NlpReadable(obj);
+                var newTokenCount = newItem.ApproxTokenCount();
 
-				if (distance <= 1)
-					result.WithinOne.Add(NlpReadable(obj));
-				else if (distance <= 3)
-					result.WithinThree.Add(NlpReadable(obj));
-				else if (distance <= 5)
-					result.WithinFive.Add(NlpReadable(obj));
-				else if (distance <= 10)
-					result.WithinTen.Add(NlpReadable(obj));
-				else if (distance > 10 && obj.PixelPercentage > settings.MinPixelThreshold)
-					result.Beyond.Add(NlpReadable(obj));
-			}
+                if (totalTokens + newTokenCount >= settings.MaxTokens) break;
 
-			return result;
-		}
+                if (currentRange == null || !IsWithinLogRange(distance, double.Parse(currentRange.MinDistance)))
+                {
+                    currentRange = new Range { MinDistance = NextLogRangeStart(distance).ToString("F2") };
+                    result.Ranges.Add(currentRange);
+                }
 
-		string NlpReadable(ObjectData objectData)
-			=> $"{objectData.Name}:" +
-			   $"direction:[{objectData.Direction.X:F2}m,{objectData.Direction.Y:F2}m,{objectData.Direction.Z:F2}m]," +
-			   $"D:[{objectData.Size.Y:F2}m,{objectData.Size.X:F2}m,{objectData.Size.Z:F2}m]H:{objectData.AbsoluteHeading:F2}°";
-	}
+                currentRange.Objects.Add(newItem);
+                totalTokens += newTokenCount;
+                currentRange.MaxDistance = distance.ToString("F2");
+            }
+
+            return result;
+        }
+
+        string NlpReadable(ObjectData objectData)
+            => $"{objectData.Name}: " +
+               $"position:[{objectData.WorldPosition.X:F2},{objectData.WorldPosition.Y:F2},{objectData.WorldPosition.Z:F2}]m, " +
+               $"size:[{objectData.Size.Y:F2},{objectData.Size.X:F2},{objectData.Size.Z:F2}m]";
+        bool IsWithinLogRange(double currentDistance, double minDistance)
+            => currentDistance < 2 * minDistance;
+        double NextLogRangeStart(float currentDistance)
+            => Mathf.Pow(2, Mathf.Ceil(Mathf.Log(currentDistance, 2)));
+    }
 }

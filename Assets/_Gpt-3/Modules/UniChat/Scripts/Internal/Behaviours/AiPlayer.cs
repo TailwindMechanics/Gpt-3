@@ -19,18 +19,24 @@ namespace Modules.UniChat.Internal.Behaviours
         public void OnFunctionReceived(Function function, ModelSettingsVo settings)
         {
             var args = JObject.Parse(function.Arguments.ToString());
-            var bearing = (float) args[MoveInDirectionFunction.Bearing];
-            var travel = (float) args[MoveInDirectionFunction.Travel];
 
             Log($"OnFunctionReceived: {function.Name}");
 
-            if (function.Name == MoveInDirectionFunction.Name)
+            if (function.Name == TurnBySchema.Name)
             {
-                Log($"MoveInDirection: {bearing}, {travel}");
-                abilities.MoveInDirection(bearing, travel, settings.Navigation.Vo, arrived =>
-                {
-                    Log($"MoveInDirection, arrived: {arrived}");
-                });
+                var heading = (float) args[TurnBySchema.DegreesDelta];
+
+                Log($"MoveInDirection: {heading}");
+                abilities.TurnBy(heading);
+            }
+            else if (function.Name == GoToPositionSchema.Name)
+            {
+                var jToken = args[GoToPositionSchema.DestinationParam];
+                if (jToken == null) return;
+
+                var parsedDestination = jToken.ToObject<Vector3Serializable>();
+                Log($"GoToPosition: {parsedDestination}");
+                abilities.GoToPosition(parsedDestination.Value());
             }
         }
 
